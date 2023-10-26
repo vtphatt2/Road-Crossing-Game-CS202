@@ -4,7 +4,7 @@ project(cross-the-road-game)
 
 set(CMAKE_CXX_STANDARD 17)
 
-file(GLOB SOURCES "src/*.cpp")
+file(GLOB SOURCES "src/main.cpp")
 
 if (APPLE) 
     set(SFML_DIR "/opt/homebrew/Cellar/sfml/2.6.0")

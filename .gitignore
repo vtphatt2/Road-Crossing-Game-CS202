@@ -34,3 +34,5 @@
 # Some other files
 .DS_Store
 *.sh
+build/
+vscode/

@@ -27,3 +27,6 @@ We mainly use OOP concepts and SFML library to work on this project.
 
 # Class diagram
 https://lucid.app/lucidchart/05320549-ca9c-4697-bddc-c3cb98e0b898/edit?view_items=cFuH-s5.5b0a&invitationId=inv_a5aaf977-7ca9-4541-831d-2010953b9f84
+
+# Figma design
+https://www.figma.com/file/dkPQutnZhf3pSaMOs2o8fI/CS202-Crossing-Road?type=design&node-id=0%3A1&mode=design&t=KlGvvCuStL2SMRDZ-1

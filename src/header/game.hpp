@@ -7,8 +7,6 @@ class Game {
         int level;
         int score;
         int highScore;
-
-    private :         
         int widthWindow;
         int heightWindow;
 };

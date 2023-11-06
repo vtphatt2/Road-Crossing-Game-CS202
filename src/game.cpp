@@ -14,6 +14,12 @@ void Game::run() {
     sf::Sprite backgroundImage(backgroundTexture);
     backgroundImage.setPosition(0, -50);
 
+    sf::Texture playbuttonTexture;
+    playbuttonTexture.loadFromFile("../resource/Play_Button.png");
+    sf::Sprite playbuttonImage(playbuttonTexture);
+    playbuttonImage.setPosition(673, 636);
+    sf::IntRect playButtonRect(673, 636, 84, 84);
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -27,8 +33,17 @@ void Game::run() {
             }
         }
 
+        sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+        if (playButtonRect.contains(mousePosition)) {
+            playbuttonImage.setColor(sf::Color::Red);
+        } 
+        else {
+            playbuttonImage.setColor(sf::Color::White);
+        }
+
         window.clear();
         window.draw(backgroundImage);
+        window.draw(playbuttonImage);
         window.display();
     }
 }

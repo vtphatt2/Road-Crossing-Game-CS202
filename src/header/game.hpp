@@ -1,12 +1,15 @@
+#include "SFML/Graphics.hpp"
+#include <iostream>
+
 class Game {
     public :
         Game();
         void run();
 
-    protected :
+    private :
         int level;
         int score;
         int highScore;
-        int widthWindow;
-        int heightWindow;
+        const int widthWindow;
+        const int heightWindow;
 };

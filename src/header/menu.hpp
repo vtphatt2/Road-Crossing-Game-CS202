@@ -8,6 +8,7 @@
 class Menu: public State {
     public :
         Menu(sf::RenderWindow* window, std::stack <State*>* states);
+        void initRectChoice();
         void handleEvent();
         void update();
         void render();
@@ -18,6 +19,9 @@ class Menu: public State {
         std::stack <State*>* states;
         sf::Texture backgroundTexture;
         sf::Sprite backgroundImage;
+        sf::RectangleShape rectChoice;
+
+        sf::RectangleShape rectChoices[5];
 };
 
 #endif

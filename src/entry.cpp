@@ -1,7 +1,7 @@
 #include "header/entry.hpp"
 #include <iostream>
 
-entry::entry(sf::RenderWindow* window, std::stack <State*>* states) : window(window), states(states) {
+Entry::Entry(sf::RenderWindow* window, std::stack <State*>* states) : window(window), states(states) {
     backgroundTexture.loadFromFile("../resource/Splash_Screen.png");
     backgroundImage.setTexture(backgroundTexture);
     backgroundImage.setPosition(0, -70);
@@ -16,7 +16,7 @@ entry::entry(sf::RenderWindow* window, std::stack <State*>* states) : window(win
     playButtonRect.height = 84;
 }
 
-void entry::handleEvent() {
+void Entry::handleEvent() {
     while (window->pollEvent(event)) {
         switch (event.type) {
             case sf::Event::Closed :
@@ -37,7 +37,7 @@ void entry::handleEvent() {
     }
 }
 
-void entry::update() {
+void Entry::update() {
     sf::Vector2i mousePosition = sf::Mouse::getPosition(*window);
     if (playButtonRect.contains(mousePosition)) {
         playButtonImage.setColor(sf::Color(255, 255, 255, 255));
@@ -48,7 +48,7 @@ void entry::update() {
     return ;
 }
 
-void entry::render() {
+void Entry::render() {
     window->draw(backgroundImage);
     window->draw(playButtonImage);
 }

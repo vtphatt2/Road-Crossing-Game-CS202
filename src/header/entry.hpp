@@ -6,9 +6,9 @@
 #include <SFML/Graphics.hpp>
 #include "menu.hpp"
 
-class entry : public State {
+class Entry : public State {
     public :
-        entry(sf::RenderWindow* window, std::stack <State*>* states);
+        Entry(sf::RenderWindow* window, std::stack <State*>* states);
         void handleEvent();
         void update();
         void render();

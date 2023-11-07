@@ -1,27 +1,28 @@
-#include <iostream>
-#include "SFML/Graphics.hpp"
+#ifndef GAME_H
+#define GAME_H
 
-enum class GameState {
-    Entry,
-    Menu,
-};
+#include <iostream>
+#include <stack>
+#include <SFML/Graphics.hpp>
+#include "state.hpp"
+#include "entry.hpp"
 
 class Game {
     public :
         Game();
+        ~Game();
         void run();
 
-        void runEntry();
-        void runMenu();
-
     private :
-        int level;
-        int score;
-        int highScore;
-
         const int widthWindow;
         const int heightWindow;
-        sf::RenderWindow window;
+        sf::Event event;
+        sf::RenderWindow* window;
+        std::stack <State*> states;
 
-        GameState currentState;
+        void handleEvent();
+        void update();
+        void render();
 };
+
+#endif

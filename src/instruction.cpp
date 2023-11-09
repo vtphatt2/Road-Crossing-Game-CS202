@@ -46,6 +46,23 @@ void Instruction::handleEvent() {
                 window->close();
                 break;
 
+            case sf::Event::KeyPressed :
+                switch (event.key.code) {
+                    case sf::Keyboard::Enter :
+                        for (int i = 0 ; i < 5 ; ++i) {
+                            finishPrint[i] = true;
+                            text[i].setString(message[i]);
+                        }
+                        break;
+
+                    case sf::Keyboard::Left :
+                        states->pop();
+                        break;
+
+                    default :
+                        break ;
+                }
+
             default :
                 break;
         }

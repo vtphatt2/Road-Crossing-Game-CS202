@@ -28,19 +28,30 @@ void Menu::initRectChoice() {
 
 void Menu::handleEvent() {
     while (window->pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
-            window->close();
-        }
+        switch (event.type) {
+            case sf::Event::Closed :
+                window->close();
+                break;
 
-        if (event.type == sf::Event::MouseMoved) {
-            mousePosition = sf::Mouse::getPosition(*window);
-            for (int i = 0 ; i < 5 ; ++i) {
-                if (rectChoices[i].getGlobalBounds().contains(sf::Vector2f(mousePosition))) {
-                    rectChoice = rectChoices[i];
-                    choice = i;
-                    break;
+            case sf::Event::MouseMoved :
+                mousePosition = sf::Mouse::getPosition(*window);
+                for (int i = 0 ; i < 5 ; ++i) {
+                    if (rectChoices[i].getGlobalBounds().contains(sf::Vector2f(mousePosition))) {
+                        rectChoice = rectChoices[i];
+                        choice = i;
+                        break;
+                    }
                 }
-            }
+                break ;
+
+            case sf::Event::KeyPressed :
+                if (event.key.code == sf::Keyboard::Left) {
+                    states->pop();
+                }
+                break;
+            
+            default :
+                break;
         }
 
         if (event.type == sf::Event::MouseButtonPressed) {

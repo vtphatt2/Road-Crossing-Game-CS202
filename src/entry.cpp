@@ -2,6 +2,10 @@
 #include <iostream>
 
 Entry::Entry(sf::RenderWindow* window, std::stack <State*>* states) : window(window), states(states) {
+    initShape();
+}
+
+void Entry::initShape() {
     backgroundTexture.loadFromFile("../resource/Splash_Screen.png");
     backgroundImage.setTexture(backgroundTexture);
     backgroundImage.setPosition(0, -70);
@@ -25,7 +29,7 @@ void Entry::handleEvent() {
                 
             case sf::Event::MouseButtonPressed :
                 if (event.mouseButton.button == sf::Mouse::Left) {
-                    sf::Vector2i mousePosition = sf::Mouse::getPosition(*window);
+                    mousePosition = sf::Mouse::getPosition(*window);
                     if (playButtonRect.contains(mousePosition)) {
                         states->push(new Menu(window, states));
                     }

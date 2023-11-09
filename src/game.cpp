@@ -4,6 +4,10 @@ Game::Game() : widthWindow(1430),  heightWindow(990) {
     window = new sf::RenderWindow(sf::VideoMode(widthWindow, heightWindow), "ROAD CROSSING");
     window->setFramerateLimit(60);
     states.push(new Entry(window, &states));
+
+    // // debugg
+    // states.push(new Instruction(window, &states));
+
 }
 
 Game::~Game() {
@@ -12,6 +16,7 @@ Game::~Game() {
         delete states.top();
         states.pop();
     }
+    std::cout << "Deallocated ok !\n";
 }
 
 void Game::run() {

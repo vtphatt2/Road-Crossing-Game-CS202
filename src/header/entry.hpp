@@ -1,5 +1,5 @@
-#ifndef ENTRY_H
-#define ENTRY_H
+#ifndef ENTRY_HPP
+#define ENTRY_HPP
 
 #include "state.hpp"
 #include <stack>
@@ -9,6 +9,7 @@
 class Entry : public State {
     public :
         Entry(sf::RenderWindow* window, std::stack <State*>* states);
+        void initShape();
         void handleEvent();
         void update();
         void render();
@@ -16,8 +17,11 @@ class Entry : public State {
     private :
         sf::RenderWindow* window;
         std::stack <State*>* states;
-        sf::Event event;
 
+        sf::Event event;
+        sf::Vector2i mousePosition;
+
+        // material
         sf::Texture backgroundTexture;
         sf::Sprite backgroundImage;
         sf::Texture playButtonTexture;

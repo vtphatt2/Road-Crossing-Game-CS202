@@ -1,16 +1,20 @@
 #include "header/menu.hpp"
 
-Menu::Menu(sf::RenderWindow* window, std::stack <State*>* states) : window(window), states(states) {
+Menu::Menu(sf::RenderWindow* window, std::stack <State*>* states) : window(window), states(states), choice(-1) {
+    initShape();
+    initRectChoice();
+}
+
+void Menu::initShape() {
     backgroundTexture.loadFromFile("../resource/Menu.png");
     backgroundImage.setTexture(backgroundTexture);
     backgroundImage.setPosition(0, -125);
-    this->initRectChoice();
 }
 
 void Menu::initRectChoice() {
     for (int i = 0 ; i < 5 ; ++i) {
-        rectChoices[i].setOutlineThickness(2);
-        rectChoices[i].setOutlineColor(sf::Color::Red);
+        rectChoices[i].setOutlineThickness(3);
+        rectChoices[i].setOutlineColor(sf::Color(89, 0, 0));
         rectChoices[i].setFillColor(sf::Color::Transparent);  
         rectChoices[i].setSize(sf::Vector2f(465, 85));      
     }
@@ -29,17 +33,27 @@ void Menu::handleEvent() {
         }
 
         if (event.type == sf::Event::MouseMoved) {
-            sf::Vector2i mousePosition = sf::Mouse::getPosition(*window);
+            mousePosition = sf::Mouse::getPosition(*window);
             for (int i = 0 ; i < 5 ; ++i) {
-                if (rectChoices[i].getGlobalBounds().contains(sf::Vector2f(mousePosition))) 
+                if (rectChoices[i].getGlobalBounds().contains(sf::Vector2f(mousePosition))) {
                     rectChoice = rectChoices[i];
+                    choice = i;
+                    break;
+                }
+            }
+        }
+
+        if (event.type == sf::Event::MouseButtonPressed) {
+            if (event.mouseButton.button == sf::Mouse::Left) {
+                if (choice == 4) {
+                    states->push(new Instruction(window, states));
+                }
             }
         }
     }
 }
 
-void Menu::update() {
-}
+void Menu::update() {}
 
 void Menu::render() {
     window->draw(backgroundImage);

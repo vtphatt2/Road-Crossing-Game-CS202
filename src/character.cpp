@@ -7,7 +7,7 @@ Character::Character(sf::RenderWindow* window, std::stack <State*>* states) : wi
 void Character::initShape() {
     backgroundTexture.loadFromFile("../resource/BackgroundCharacter.png");
     backgroundImage.setTexture(backgroundTexture);
-    backgroundImage.setPosition(0, 0);
+    backgroundImage.setPosition(0, -125);
 
     playGameButtonTexture.loadFromFile("../resource/Play_Game_Button.png");
     playGameButtonImage.setTexture(playGameButtonTexture);
@@ -20,19 +20,19 @@ void Character::initShape() {
 
     rightArrowButtonTexture.loadFromFile("../resource/Right_Arrow.png");
     rightArrowButtonImage.setTexture(rightArrowButtonTexture);
-    rightArrowButtonImage.setPosition(941, 565);
+    rightArrowButtonImage.setPosition(941, 430);
     rightArrowButtonImage.setColor(sf::Color(255, 255, 255, 220));
     rightArrowButtonRect.left = 941;  
-    rightArrowButtonRect.top = 565;   
+    rightArrowButtonRect.top = 430;   
     rightArrowButtonRect.width = 58;
     rightArrowButtonRect.height = 58.68;
 
     leftArrowButtonTexture.loadFromFile("../resource/Left_Arrow.png");
     leftArrowButtonImage.setTexture(leftArrowButtonTexture);
-    leftArrowButtonImage.setPosition(438, 565);
+    leftArrowButtonImage.setPosition(438, 430);
     leftArrowButtonImage.setColor(sf::Color(255, 255, 255, 220));
     leftArrowButtonRect.left = 438;  
-    leftArrowButtonRect.top = 565;   
+    leftArrowButtonRect.top = 430;   
     leftArrowButtonRect.width = 58;
     leftArrowButtonRect.height = 58.68;
 
@@ -45,7 +45,7 @@ void Character::initShape() {
     // Set the initial character
     currentCharacterIndex = 0;
     CharacterImage = characterImages[currentCharacterIndex];
-    CharacterImage.setPosition(622, 412);
+    CharacterImage.setPosition(622, 300);
 
 }
 
@@ -83,7 +83,7 @@ void Character::changeCharacterLeft() {
 }
 
 void Character::update() {
-    characterImages[currentCharacterIndex].setPosition(622, 412); // Adjust the coordinates accordingly
+    characterImages[currentCharacterIndex].setPosition(622, 300); // Adjust the coordinates accordingly
     CharacterImage = characterImages[currentCharacterIndex];
 }
 

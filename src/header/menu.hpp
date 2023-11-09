@@ -5,6 +5,7 @@
 #include <stack>
 #include "state.hpp"
 #include "instruction.hpp"
+#include "character.hpp"
 
 class Menu: public State {
     public :

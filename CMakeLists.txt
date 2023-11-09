@@ -10,7 +10,7 @@ if (APPLE)
     set(SFML_DIR "/opt/homebrew/Cellar/sfml/2.6.0")
 elseif (WIN32)
     # Đặt đường dẫn đến thư mục cài đặt của SFML trên Windows
-    set(SFML_DIR "ĐƯỜNG_DẪN_ĐẾN_THƯ_MỤC_SFML")
+    set(SFML_DIR "Directory to SFML folder")
 endif()
 
 find_package(SFML 2.6 COMPONENTS graphics window system REQUIRED)

@@ -45,8 +45,15 @@ void Menu::handleEvent() {
 
         if (event.type == sf::Event::MouseButtonPressed) {
             if (event.mouseButton.button == sf::Mouse::Left) {
-                if (choice == 4) {
-                    states->push(new Instruction(window, states));
+                switch (choice) {
+                    case 0 :
+                        states->push(new Character(window, states));
+                        break;
+                    case 4 :
+                        states->push(new Instruction(window, states));
+                        break;
+                    default :
+                        break;
                 }
             }
         }

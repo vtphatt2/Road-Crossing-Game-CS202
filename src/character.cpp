@@ -11,10 +11,10 @@ void Character::initShape() {
 
     playGameButtonTexture.loadFromFile("../resource/Play_Game_Button.png");
     playGameButtonImage.setTexture(playGameButtonTexture);
-    playGameButtonImage.setPosition(1278, 856);
+    playGameButtonImage.setPosition(1278, 650);
     playGameButtonImage.setColor(sf::Color(255, 255, 255, 220));
     playGameButtonRect.left = 1278;  
-    playGameButtonRect.top = 856;   
+    playGameButtonRect.top = 650;   
     playGameButtonRect.width = 113;
     playGameButtonRect.height = 113;
 
@@ -25,7 +25,7 @@ void Character::initShape() {
     rightArrowButtonRect.left = 941;  
     rightArrowButtonRect.top = 430;   
     rightArrowButtonRect.width = 58;
-    rightArrowButtonRect.height = 58.68;
+    rightArrowButtonRect.height = 58;
 
     leftArrowButtonTexture.loadFromFile("../resource/Left_Arrow.png");
     leftArrowButtonImage.setTexture(leftArrowButtonTexture);
@@ -34,7 +34,7 @@ void Character::initShape() {
     leftArrowButtonRect.left = 438;  
     leftArrowButtonRect.top = 430;   
     leftArrowButtonRect.width = 58;
-    leftArrowButtonRect.height = 58.68;
+    leftArrowButtonRect.height = 58;
 
     // Load textures for all characters
     for (int i = 0; i < NUM_CHARACTERS; ++i) {

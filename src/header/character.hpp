@@ -6,6 +6,7 @@ const int NUM_CHARACTERS = 5;
 #include <SFML/System.hpp>
 #include <stack>
 #include "state.hpp"
+#include "../header/mode.hpp"
 
 class Character: public State {
     public :

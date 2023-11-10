@@ -6,6 +6,7 @@
 #include "state.hpp"
 #include "instruction.hpp"
 #include "character.hpp"
+#include "mode.hpp"
 
 class Menu: public State {
     public :

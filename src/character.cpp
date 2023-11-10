@@ -65,8 +65,7 @@ void Character::handleEvent() {
                 changeCharacterLeft();
             }
             else if (playGameButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
-                // Push the new state onto the state stack
-                //states->push(new NewGame(window, states));
+                states->push(new Mode(window, states));
             }
         }
     }

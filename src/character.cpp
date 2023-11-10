@@ -55,6 +55,13 @@ void Character::handleEvent() {
             window->close();
         }
 
+        if (event.type == sf::Event::KeyPressed) {
+            // press left arrow key to turn back the previous window
+            if (event.key.code == sf::Keyboard::Left) {
+                states->pop();
+            }
+        }
+
         if (event.type == sf::Event::MouseButtonPressed) {
             // Check if the right arrow button is clicked
             if (rightArrowButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {

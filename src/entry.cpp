@@ -1,5 +1,4 @@
 #include "header/entry.hpp"
-#include <iostream>
 
 Entry::Entry(sf::RenderWindow* window, std::stack <State*>* states) : window(window), states(states) {
     initShape();

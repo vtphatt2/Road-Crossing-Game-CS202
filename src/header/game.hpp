@@ -14,8 +14,6 @@ class Game {
         void run();
 
     private :
-        const int widthWindow;
-        const int heightWindow;
         sf::Event event;
         sf::RenderWindow* window;
         std::stack <State*> states;

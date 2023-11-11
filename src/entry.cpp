@@ -5,18 +5,14 @@ Entry::Entry(sf::RenderWindow* window, std::stack <State*>* states) : window(win
 }
 
 void Entry::initShape() {
-    backgroundTexture.loadFromFile("../resource/Splash_Screen.png");
+    backgroundTexture.loadFromFile("../resource/Entry_Background.png");
     backgroundImage.setTexture(backgroundTexture);
     backgroundImage.setPosition(0, -70);
 
     playButtonTexture.loadFromFile("../resource/Play_Button.png");
     playButtonImage.setTexture(playButtonTexture);
-    playButtonImage.setPosition(673, 636);
+    playButtonImage.setPosition(680, 570);
     playButtonImage.setColor(sf::Color(255, 255, 255, 220));
-    playButtonRect.left = 673;  
-    playButtonRect.top = 636;   
-    playButtonRect.width = 84;
-    playButtonRect.height = 84;
 }
 
 void Entry::handleEvent() {
@@ -29,7 +25,7 @@ void Entry::handleEvent() {
             case sf::Event::MouseButtonPressed :
                 if (event.mouseButton.button == sf::Mouse::Left) {
                     mousePosition = sf::Mouse::getPosition(*window);
-                    if (playButtonRect.contains(mousePosition)) {
+                    if (playButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
                         states->push(new Menu(window, states));
                     }
                 }
@@ -41,14 +37,13 @@ void Entry::handleEvent() {
 }
 
 void Entry::update() {
-    sf::Vector2i mousePosition = sf::Mouse::getPosition(*window);
-    if (playButtonRect.contains(mousePosition)) {
+    mousePosition = sf::Mouse::getPosition(*window);
+    if (playButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
         playButtonImage.setColor(sf::Color(255, 255, 255, 255));
     } 
     else {
         playButtonImage.setColor(sf::Color(255, 255, 255, 200));
     }
-    return ;
 }
 
 void Entry::render() {

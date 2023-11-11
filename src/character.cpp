@@ -91,6 +91,22 @@ void Character::changeCharacterLeft() {
 void Character::update() {
     characterImages[currentCharacterIndex].setPosition(622, 300); // Adjust the coordinates accordingly
     CharacterImage = characterImages[currentCharacterIndex];
+
+    mousePosition = sf::Mouse::getPosition(*window);
+    if (rightArrowButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) 
+        rightArrowButtonImage.setColor(sf::Color(255, 255, 255, 255));
+    else 
+        rightArrowButtonImage.setColor(sf::Color(255, 255, 255, 150));
+
+    if (leftArrowButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) 
+        leftArrowButtonImage.setColor(sf::Color(255, 255, 255, 255));
+    else 
+        leftArrowButtonImage.setColor(sf::Color(255, 255, 255, 150));
+
+    if (playGameButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) 
+        playGameButtonImage.setColor(sf::Color(255, 255, 255, 255));
+    else 
+        playGameButtonImage.setColor(sf::Color(255, 255, 255, 200));
 }
 
 void Character::render() {

@@ -8,7 +8,7 @@ Entry::Entry(sf::RenderWindow* window, std::stack <State*>* states) : window(win
 void Entry::initShape() {
     backgroundTexture.loadFromFile("../resource/Splash_Screen.png");
     backgroundImage.setTexture(backgroundTexture);
-    backgroundImage.setPosition(0, -70);
+    backgroundImage.setPosition(0, 0);
 
     playButtonTexture.loadFromFile("../resource/Play_Button.png");
     playButtonImage.setTexture(playButtonTexture);

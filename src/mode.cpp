@@ -8,7 +8,7 @@ Mode::Mode(sf::RenderWindow* window, std::stack <State*>* states) : window(windo
 void Mode::initShape() {
     backgroundTexture.loadFromFile("../resource/Background.png");
     backgroundImage.setTexture(backgroundTexture);
-    backgroundImage.setPosition(0, -125);
+    backgroundImage.setPosition(0, 0);
 
     ClassicButtonTexture.loadFromFile("../resource/Classic_Board.png");
     ClassicButtonImage.setTexture(ClassicButtonTexture);
@@ -76,7 +76,7 @@ Classic::Classic(sf::RenderWindow* window, std::stack <State*>* states) : window
 void Classic::initShape() {
     backgroundTexture.loadFromFile("../resource/Background.png");
     backgroundImage.setTexture(backgroundTexture);
-    backgroundImage.setPosition(0, -125);
+    backgroundImage.setPosition(0, 0);
 
     SettingButtonTexture.loadFromFile("../resource/Setting.png");
     SettingButtonImage.setTexture(SettingButtonTexture);
@@ -121,7 +121,7 @@ Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states) : window
 void Endless::initShape() {
     backgroundTexture.loadFromFile("../resource/Background.png");
     backgroundImage.setTexture(backgroundTexture);
-    backgroundImage.setPosition(0, -125);
+    backgroundImage.setPosition(0, 0);
 
     SettingButtonTexture.loadFromFile("../resource/Setting.png");
     SettingButtonImage.setTexture(SettingButtonTexture);
@@ -161,7 +161,7 @@ Setting::Setting(sf::RenderWindow* window, std::stack <State*>* states) : window
 void Setting::initShape() {
     backgroundTexture.loadFromFile("../resource/Setting_Board.png");
     backgroundImage.setTexture(backgroundTexture);
-    backgroundImage.setPosition(0, -125);
+    backgroundImage.setPosition(0, 0);
 }
 
 void Setting::handleEvent() {

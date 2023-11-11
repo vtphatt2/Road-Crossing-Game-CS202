@@ -7,16 +7,16 @@ Character::Character(sf::RenderWindow* window, std::stack <State*>* states) : wi
 void Character::initShape() {
     backgroundTexture.loadFromFile("../resource/BackgroundCharacter.png");
     backgroundImage.setTexture(backgroundTexture);
-    backgroundImage.setPosition(0, -125);
+    backgroundImage.setPosition(0, 0);
 
     playGameButtonTexture.loadFromFile("../resource/Play_Game_Button.png");
     playGameButtonImage.setTexture(playGameButtonTexture);
-    playGameButtonImage.setPosition(1278, 650);
+    playGameButtonImage.setPosition(1290, 850);
     playGameButtonImage.setColor(sf::Color(255, 255, 255, 220));
-    playGameButtonRect.left = 1278;  
-    playGameButtonRect.top = 650;   
-    playGameButtonRect.width = 113;
-    playGameButtonRect.height = 113;
+    playGameButtonRect.left = playGameButtonImage.getPosition().x; 
+    playGameButtonRect.top = playGameButtonImage.getPosition().y;
+    playGameButtonRect.width = playGameButtonImage.getGlobalBounds().width;
+    playGameButtonRect.height = playGameButtonImage.getGlobalBounds().height;
 
     rightArrowButtonTexture.loadFromFile("../resource/Right_Arrow.png");
     rightArrowButtonImage.setTexture(rightArrowButtonTexture);
@@ -84,6 +84,24 @@ void Character::changeCharacterLeft() {
 void Character::update() {
     characterImages[currentCharacterIndex].setPosition(622, 300); // Adjust the coordinates accordingly
     CharacterImage = characterImages[currentCharacterIndex];
+
+    if (rightArrowButtonRect.contains(sf::Mouse::getPosition(*window))) {
+        rightArrowButtonImage.setColor(sf::Color(255, 255, 255, 255));
+    } else {
+        rightArrowButtonImage.setColor(sf::Color(255, 255, 255, 220));
+    }
+
+    if (leftArrowButtonRect.contains(sf::Mouse::getPosition(*window))) {
+        leftArrowButtonImage.setColor(sf::Color(255, 255, 255, 255));
+    } else {
+        leftArrowButtonImage.setColor(sf::Color(255, 255, 255, 220));
+    }
+
+    if (playGameButtonRect.contains(sf::Mouse::getPosition(*window))) {
+        playGameButtonImage.setColor(sf::Color(255, 255, 255, 255));
+    } else {
+        playGameButtonImage.setColor(sf::Color(255, 255, 255, 220));
+    }
 }
 
 void Character::render() {

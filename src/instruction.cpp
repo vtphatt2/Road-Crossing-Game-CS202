@@ -18,7 +18,7 @@ void Instruction::initShape() {
     font.loadFromFile("../resource/Inter-Bold.ttf");
     backgroundTexture.loadFromFile("../resource/Instruction.png");
     backgroundImage.setTexture(backgroundTexture);
-    backgroundImage.setPosition(0, -125);
+    backgroundImage.setPosition(0, 0);
 
     for (int i = 0 ; i < 5 ; ++i) {
         text[i].setFont(font);

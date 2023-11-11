@@ -47,6 +47,9 @@ class Character: public State {
         sf::Texture characterTextures[NUM_CHARACTERS];  // Array to store character textures
         sf::Sprite characterImages[NUM_CHARACTERS];     // Array to store character sprites
         
+        sf::Texture backButtonTexture;
+        sf::Sprite backButtonImage;
+        sf::IntRect backButtonRect;
 };
 
 #endif

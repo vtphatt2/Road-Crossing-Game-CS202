@@ -33,6 +33,10 @@ class Instruction: public State {
         float elapsedTime;
         std::size_t charIndex;
         std::string displayedText;
+
+        sf::Texture backButtonTexture;
+        sf::Sprite backButtonImage;
+        sf::IntRect backButtonRect;
 };
 
 #endif

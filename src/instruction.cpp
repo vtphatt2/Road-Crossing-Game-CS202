@@ -36,6 +36,15 @@ void Instruction::initShape() {
     text[2].setPosition(110, 360);
     text[3].setPosition(130, 440);
     text[4].setPosition(130, 520);
+
+    backButtonTexture.loadFromFile("../resource/Back_Button.png");
+    backButtonImage.setTexture(backButtonTexture);
+    backButtonImage.setPosition(window->getSize().x - 1410, window->getSize().y - 970);
+    backButtonImage.setColor(sf::Color(255, 255, 255, 220));
+    backButtonRect.left = backButtonImage.getPosition().x;
+    backButtonRect.top = backButtonImage.getPosition().y;
+    backButtonRect.width = backButtonImage.getGlobalBounds().width;
+    backButtonRect.height = backButtonImage.getGlobalBounds().height;
 }
 
 void Instruction::handleEvent() {
@@ -54,17 +63,22 @@ void Instruction::handleEvent() {
                             text[i].setString(message[i]);
                         }
                         break;
-
-                    case sf::Keyboard::Left :
-                        states->pop();
-                        break;
-
                     default :
                         break ;
                 }
 
             default :
                 break;
+        }
+        if(backButtonRect.contains(sf::Mouse::getPosition(*window))) {
+            backButtonImage.setColor(sf::Color(255, 255, 255, 255));
+            if (event.type == sf::Event::MouseButtonPressed) {
+                if (event.mouseButton.button == sf::Mouse::Left) {
+                    states->pop();
+                }
+            }
+        } else {
+            backButtonImage.setColor(sf::Color(255, 255, 255, 220));
         }
     }
 }
@@ -89,6 +103,11 @@ void Instruction::update() {
             displayedText = "";
         }
     }
+    if(backButtonRect.contains(sf::Mouse::getPosition(*window))) {
+        backButtonImage.setColor(sf::Color(255, 255, 255, 255));
+    } else {
+        backButtonImage.setColor(sf::Color(255, 255, 255, 220));
+    }
 }
 
 void Instruction::render() {
@@ -96,4 +115,5 @@ void Instruction::render() {
     for (int i = 0 ; i < 5 ; ++i) {
         window->draw(text[i]);
     }
+    window->draw(backButtonImage);
 }

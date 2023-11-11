@@ -70,6 +70,11 @@ void Character::handleEvent() {
         if (event.type == sf::Event::Closed) {
             window->close();
         }
+        if (event.type == sf::Event::KeyPressed) {
+            if (event.key.code == sf::Keyboard::Escape) {
+                window->close();
+            }
+        }
 
         if (event.type == sf::Event::KeyPressed) {
             // press left arrow key to turn back the previous window
@@ -134,4 +139,5 @@ void Character::render() {
     window->draw(rightArrowButtonImage);
     window->draw(leftArrowButtonImage);
     window->draw(characterImages[currentCharacterIndex]);
+    window->draw(backButtonImage);
 }

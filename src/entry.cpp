@@ -7,7 +7,7 @@ Entry::Entry(sf::RenderWindow* window, std::stack <State*>* states) : window(win
 void Entry::initShape() {
     backgroundTexture.loadFromFile("../resource/Entry_Background.png");
     backgroundImage.setTexture(backgroundTexture);
-    backgroundImage.setPosition(0, -70);
+    backgroundImage.setPosition(0, 0);
 
     playButtonTexture.loadFromFile("../resource/Play_Button.png");
     playButtonImage.setTexture(playButtonTexture);
@@ -29,7 +29,12 @@ void Entry::handleEvent() {
                         states->push(new Menu(window, states));
                     }
                 }
-                
+                break ;
+            case sf::Event::KeyPressed :
+                if (event.key.code == sf::Keyboard::Escape) {
+                    window->close();
+                }
+                break ;
             default :
                 break ;
         }

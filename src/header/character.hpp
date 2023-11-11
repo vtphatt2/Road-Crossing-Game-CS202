@@ -53,6 +53,9 @@ class Character: public State {
         sf::Texture characterTextures[NUM_CHARACTERS];  
         sf::Sprite characterImages[NUM_CHARACTERS];   
         
+        sf::Texture backButtonTexture;
+        sf::Sprite backButtonImage;
+        sf::IntRect backButtonRect;
 };
 
 #endif

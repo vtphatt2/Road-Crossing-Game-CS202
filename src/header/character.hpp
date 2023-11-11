@@ -12,11 +12,13 @@ class Character: public State {
     public :
         Character(sf::RenderWindow* window, std::stack <State*>* states);
         void initShape();
+        void initCharacter();
         void handleEvent();
         void update();
         void render();
         void changeCharacterRight();
         void changeCharacterLeft();
+        int getCurrentCharacterIndex() const;
 
     private :
         sf::RenderWindow* window;
@@ -40,12 +42,16 @@ class Character: public State {
         sf::Sprite leftArrowButtonImage;
         sf::IntRect leftArrowButtonRect;
 
+        sf::Texture backButtonTexture;
+        sf::Sprite backButtonImage;
+        sf::IntRect backButtonRect;
+
         sf::Texture CharacterTextture;
         sf::Sprite CharacterImage;
 
-        int currentCharacterIndex;  // Track the current character index
-        sf::Texture characterTextures[NUM_CHARACTERS];  // Array to store character textures
-        sf::Sprite characterImages[NUM_CHARACTERS];     // Array to store character sprites
+        int currentCharacterIndex;  
+        sf::Texture characterTextures[NUM_CHARACTERS];  
+        sf::Sprite characterImages[NUM_CHARACTERS];   
         
         sf::Texture backButtonTexture;
         sf::Sprite backButtonImage;

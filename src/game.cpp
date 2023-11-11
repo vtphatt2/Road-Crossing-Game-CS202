@@ -1,12 +1,12 @@
 #include "header/game.hpp"
 
-Game::Game() : widthWindow(1430),  heightWindow(990) {
+Game::Game() : widthWindow(1430), heightWindow(770) {
     window = new sf::RenderWindow(sf::VideoMode(widthWindow, heightWindow), "ROAD CROSSING");
     window->setFramerateLimit(60);
     states.push(new Entry(window, &states));
 
     // // debugg
-    // states.push(new Instruction(window, &states));
+    // states.push(new Character(window, &states));
 
 }
 

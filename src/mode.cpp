@@ -52,9 +52,18 @@ void Mode::handleEvent() {
         if (event.type == sf::Event::Closed) {
             window->close();
         }
+      
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
             window->close();
         }
+
+        if (event.type == sf::Event::KeyPressed) {
+            // press left arrow key to turn back the previous window
+            if (event.key.code == sf::Keyboard::Left) {
+                states->pop();
+            }
+        }
+
         if (event.type == sf::Event::MouseButtonPressed) {
             // Check if the classic button is clicked
             if (ClassicButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {

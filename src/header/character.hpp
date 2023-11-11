@@ -26,7 +26,6 @@ class Character: public State {
         sf::Event event;
         sf::Vector2i mousePosition;
 
-
         sf::Texture backgroundTexture;
         sf::Sprite backgroundImage;
 
@@ -52,10 +51,6 @@ class Character: public State {
         int currentCharacterIndex;  
         sf::Texture characterTextures[NUM_CHARACTERS];  
         sf::Sprite characterImages[NUM_CHARACTERS];   
-        
-        sf::Texture backButtonTexture;
-        sf::Sprite backButtonImage;
-        sf::IntRect backButtonRect;
 };
 
 #endif

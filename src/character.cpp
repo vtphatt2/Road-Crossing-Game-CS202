@@ -2,40 +2,52 @@
 
 Character::Character(sf::RenderWindow* window, std::stack <State*>* states) : window(window), states(states) {
     initShape();
+    initCharacter();
 }
 
 void Character::initShape() {
     backgroundTexture.loadFromFile("../resource/BackgroundCharacter.png");
     backgroundImage.setTexture(backgroundTexture);
-    backgroundImage.setPosition(0, -125);
+    backgroundImage.setPosition(0, 0);
 
     playGameButtonTexture.loadFromFile("../resource/Play_Game_Button.png");
     playGameButtonImage.setTexture(playGameButtonTexture);
-    playGameButtonImage.setPosition(1278, 650);
+    playGameButtonImage.setPosition(1278, 856);
     playGameButtonImage.setColor(sf::Color(255, 255, 255, 220));
     playGameButtonRect.left = 1278;  
-    playGameButtonRect.top = 650;   
+    playGameButtonRect.top = 856;   
     playGameButtonRect.width = 113;
     playGameButtonRect.height = 113;
 
     rightArrowButtonTexture.loadFromFile("../resource/Right_Arrow.png");
     rightArrowButtonImage.setTexture(rightArrowButtonTexture);
-    rightArrowButtonImage.setPosition(941, 430);
+    rightArrowButtonImage.setPosition(941, 565);
     rightArrowButtonImage.setColor(sf::Color(255, 255, 255, 220));
     rightArrowButtonRect.left = 941;  
-    rightArrowButtonRect.top = 430;   
+    rightArrowButtonRect.top = 565;   
     rightArrowButtonRect.width = 58;
     rightArrowButtonRect.height = 58;
 
     leftArrowButtonTexture.loadFromFile("../resource/Left_Arrow.png");
     leftArrowButtonImage.setTexture(leftArrowButtonTexture);
-    leftArrowButtonImage.setPosition(438, 430);
+    leftArrowButtonImage.setPosition(438, 565);
     leftArrowButtonImage.setColor(sf::Color(255, 255, 255, 220));
     leftArrowButtonRect.left = 438;  
-    leftArrowButtonRect.top = 430;   
+    leftArrowButtonRect.top = 565;   
     leftArrowButtonRect.width = 58;
     leftArrowButtonRect.height = 58;
 
+    backButtonTexture.loadFromFile("../resource/Back.png");
+    backButtonImage.setTexture(backButtonTexture);
+    backButtonImage.setPosition(27, 27);
+    backButtonImage.setColor(sf::Color(255, 255, 255, 220));
+    backButtonRect.left = 27;  
+    backButtonRect.top = 27;   
+    backButtonRect.width = 115;
+    backButtonRect.height = 116;
+}
+
+void Character::initCharacter(){
     // Load textures for all characters
     for (int i = 0; i < NUM_CHARACTERS; ++i) {
         characterTextures[i].loadFromFile("../resource/Character" + std::to_string(i + 1) + ".png");
@@ -45,8 +57,12 @@ void Character::initShape() {
     // Set the initial character
     currentCharacterIndex = 0;
     CharacterImage = characterImages[currentCharacterIndex];
-    CharacterImage.setPosition(622, 300);
+    CharacterImage.setPosition(622, 412);
 
+}
+
+int Character::getCurrentCharacterIndex() const {
+    return currentCharacterIndex;
 }
 
 void Character::handleEvent() {
@@ -74,6 +90,9 @@ void Character::handleEvent() {
             else if (playGameButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
                 states->push(new Mode(window, states));
             }
+            else if (backButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
+                states->pop();
+            }
         }
     }
 }
@@ -89,7 +108,7 @@ void Character::changeCharacterLeft() {
 }
 
 void Character::update() {
-    characterImages[currentCharacterIndex].setPosition(622, 300); // Adjust the coordinates accordingly
+    characterImages[currentCharacterIndex].setPosition(622, 412); // Adjust the coordinates accordingly
     CharacterImage = characterImages[currentCharacterIndex];
 
     mousePosition = sf::Mouse::getPosition(*window);

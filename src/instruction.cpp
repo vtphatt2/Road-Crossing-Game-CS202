@@ -39,7 +39,7 @@ void Instruction::initShape() {
 
     backButtonTexture.loadFromFile("../resource/Back_Button.png");
     backButtonImage.setTexture(backButtonTexture);
-    backButtonImage.setPosition(window->getSize().x - 1410, window->getSize().y - 970);
+    backButtonImage.setPosition(20, 20);
     backButtonImage.setColor(sf::Color(255, 255, 255, 220));
     backButtonRect.left = backButtonImage.getPosition().x;
     backButtonRect.top = backButtonImage.getPosition().y;
@@ -63,6 +63,8 @@ void Instruction::handleEvent() {
                             text[i].setString(message[i]);
                         }
                         break;
+                    case sf::Keyboard::Escape :
+                        window->close();
                     default :
                         break ;
                 }

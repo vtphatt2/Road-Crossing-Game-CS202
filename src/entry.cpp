@@ -34,7 +34,12 @@ void Entry::handleEvent() {
                         states->push(new Menu(window, states));
                     }
                 }
-                
+                break ;
+            case sf::Event::KeyPressed :
+                if (event.key.code == sf::Keyboard::Escape) {
+                    window->close();
+                }
+                break ;
             default :
                 break ;
         }

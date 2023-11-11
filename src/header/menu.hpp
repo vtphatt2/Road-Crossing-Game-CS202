@@ -55,6 +55,10 @@ class Menu: public State {
         sf::Texture instructionButtonTexture;
         sf::Sprite instructionButtonImage;
         sf::IntRect instructionButtonRect;
+
+        sf::Texture backButtonTexture;
+        sf::Sprite backButtonImage;
+        sf::IntRect backButtonRect;
 };
 
 #endif

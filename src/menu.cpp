@@ -65,6 +65,15 @@ void Menu::initShape() {
     instructionButtonRect.width = instructionButtonTexture.getSize().x;
     instructionButtonRect.height = instructionButtonTexture.getSize().y;
     y += 100;
+
+    backButtonTexture.loadFromFile("../resource/Back_Button.png");
+    backButtonImage.setTexture(backButtonTexture);
+    backButtonImage.setPosition(20, 20);
+    backButtonImage.setColor(sf::Color(255, 255, 255, 220));
+    backButtonRect.left = backButtonImage.getPosition().x;
+    backButtonRect.top = backButtonImage.getPosition().y;
+    backButtonRect.width = backButtonImage.getGlobalBounds().width;
+    backButtonRect.height = backButtonImage.getGlobalBounds().height;
 }
 
 void Menu::handleEvent() {
@@ -82,8 +91,10 @@ void Menu::handleEvent() {
                 if (event.key.code == sf::Keyboard::Left) {
                     states->pop();
                 }
+                if (event.key.code == sf::Keyboard::Escape) {
+                    window->close();
+                }
                 break;
-            
             default :
                 break;
         }
@@ -103,6 +114,9 @@ void Menu::handleEvent() {
             //}
             else if (instructionButtonRect.contains(mousePosition.x, mousePosition.y)) {
                 states->push(new Instruction(window, states));
+            }
+            else if (backButtonRect.contains(mousePosition.x, mousePosition.y)) {
+                states->pop();
             }
         }
     }
@@ -138,6 +152,11 @@ void Menu::update() {
     } else {
         instructionButtonImage.setColor(sf::Color(255, 255, 255, 220));
     }
+    if (backButtonRect.contains(mousePosition.x, mousePosition.y)) {
+        backButtonImage.setColor(sf::Color(255, 255, 255, 255));
+    } else {
+        backButtonImage.setColor(sf::Color(255, 255, 255, 220));
+    }
 }
 
 void Menu::render() {
@@ -149,4 +168,5 @@ void Menu::render() {
     window->draw(highScoreButtonImage);
     window->draw(settingsButtonImage);
     window->draw(instructionButtonImage);
+    window->draw(backButtonImage);
 }

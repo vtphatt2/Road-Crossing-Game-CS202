@@ -7,6 +7,7 @@
 #include "instruction.hpp"
 #include "character.hpp"
 #include "mode.hpp"
+#include "highScore.hpp"
 
 class Menu: public State {
     public :

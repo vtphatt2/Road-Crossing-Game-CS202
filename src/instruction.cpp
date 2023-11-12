@@ -45,6 +45,22 @@ void Instruction::initShape() {
     backButtonRect.top = backButtonImage.getPosition().y;
     backButtonRect.width = backButtonImage.getGlobalBounds().width;
     backButtonRect.height = backButtonImage.getGlobalBounds().height;
+
+    buttonATexture.loadFromFile("../resource/instruction/A_Button.png");
+    buttonSTexture.loadFromFile("../resource/instruction/S_Button.png");
+    buttonDTexture.loadFromFile("../resource/instruction/D_Button.png");
+    buttonWTexture.loadFromFile("../resource/instruction/W_Button.png");
+    buttonPTexture.loadFromFile("../resource/instruction/P_Button.png");
+    buttonAImage.setTexture(buttonATexture);
+    buttonSImage.setTexture(buttonSTexture);
+    buttonDImage.setTexture(buttonDTexture);
+    buttonWImage.setTexture(buttonWTexture);
+    buttonPImage.setTexture(buttonPTexture);
+    buttonAImage.setPosition(854, 505);
+    buttonSImage.setPosition(1018, 508);
+    buttonDImage.setPosition(1189, 505);
+    buttonWImage.setPosition(1021, 340);
+    buttonPImage.setPosition(1255, 340);
 }
 
 void Instruction::handleEvent() {
@@ -105,11 +121,11 @@ void Instruction::update() {
             displayedText = "";
         }
     }
-    if(backButtonRect.contains(sf::Mouse::getPosition(*window))) {
+
+    if (backButtonRect.contains(sf::Mouse::getPosition(*window))) 
         backButtonImage.setColor(sf::Color(255, 255, 255, 255));
-    } else {
+    else
         backButtonImage.setColor(sf::Color(255, 255, 255, 220));
-    }
 }
 
 void Instruction::render() {
@@ -117,5 +133,11 @@ void Instruction::render() {
     for (int i = 0 ; i < 5 ; ++i) {
         window->draw(text[i]);
     }
+    if (finishPrint[0]) window->draw(buttonAImage);
+    if (finishPrint[1]) window->draw(buttonSImage);
+    if (finishPrint[2]) window->draw(buttonDImage);
+    if (finishPrint[3]) window->draw(buttonWImage);
+    if (finishPrint[4]) window->draw(buttonPImage);
+
     window->draw(backButtonImage);
 }

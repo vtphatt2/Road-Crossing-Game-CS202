@@ -6,17 +6,15 @@
 #include "state.hpp"
 #include "character.hpp"
 
-class Player:public State, public Character{
+class Player:public Character{
     public: 
         Player(sf::RenderWindow* window, std::stack <State*>* states);
         virtual ~Player(); 
         void initPlayer(int characterIndex);
-
-        sf::RectangleShape getshape(); 
         void reset(); 
         void move(); 
         void updateWindowBoundsCollision(); 
-        // void changeCharacter(const std::string& newCharacterTexture);
+        void changeCharacter(const std::string& newCharacterTexture);
         void update();
         void render(); 
         void handleEvent();

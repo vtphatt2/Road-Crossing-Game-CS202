@@ -29,7 +29,7 @@ class Instruction: public State {
         std::string message[5];
         bool finishPrint[5];
         sf::Clock clock;
-        const float delay ;
+        const float delay;
         float elapsedTime;
         std::size_t charIndex;
         std::string displayedText;

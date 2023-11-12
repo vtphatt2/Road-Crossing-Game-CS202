@@ -16,15 +16,14 @@ void Menu::initShape() {
     int x = 500;
     int y = 280 + 80;
 
-
     menuBarTexture.loadFromFile("../resource/menu/Menu_Bar.png");
     menuBarImage.setTexture(menuBarTexture);
     menuBarImage.setPosition(362, 100);
 
     newGameButtonTexture.loadFromFile("../resource/menu/New_Game_Bar.png");
     newGameButtonImage.setTexture(newGameButtonTexture);
-    newGameButtonImage.setPosition(x, y);
-    newGameButtonRect.left = x;
+    newGameButtonImage.setPosition(539, y);
+    newGameButtonRect.left = 539;
     newGameButtonRect.top = y;
     newGameButtonRect.width = newGameButtonTexture.getSize().x;
     newGameButtonRect.height = newGameButtonTexture.getSize().y;
@@ -32,8 +31,8 @@ void Menu::initShape() {
 
     loadGameButtonTexture.loadFromFile("../resource/menu/Load_Game_Bar.png");
     loadGameButtonImage.setTexture(loadGameButtonTexture);
-    loadGameButtonImage.setPosition(x, y);
-    loadGameButtonRect.left = x;
+    loadGameButtonImage.setPosition(534, y);
+    loadGameButtonRect.left = 534;
     loadGameButtonRect.top = y;
     loadGameButtonRect.width = loadGameButtonTexture.getSize().x;
     loadGameButtonRect.height = loadGameButtonTexture.getSize().y;
@@ -41,8 +40,8 @@ void Menu::initShape() {
 
     highScoreButtonTexture.loadFromFile("../resource/menu/High_Score_Bar.png");
     highScoreButtonImage.setTexture(highScoreButtonTexture);
-    highScoreButtonImage.setPosition(x, y);
-    highScoreButtonRect.left = x;
+    highScoreButtonImage.setPosition(526, y);
+    highScoreButtonRect.left = 526;
     highScoreButtonRect.top = y;
     highScoreButtonRect.width = highScoreButtonTexture.getSize().x;
     highScoreButtonRect.height = highScoreButtonTexture.getSize().y;
@@ -50,8 +49,8 @@ void Menu::initShape() {
 
     settingsButtonTexture.loadFromFile("../resource/menu/Settings_Bar.png");
     settingsButtonImage.setTexture(settingsButtonTexture);
-    settingsButtonImage.setPosition(x, y);
-    settingsButtonRect.left = x;
+    settingsButtonImage.setPosition(562, y);
+    settingsButtonRect.left = 562;
     settingsButtonRect.top = y;
     settingsButtonRect.width = settingsButtonTexture.getSize().x;
     settingsButtonRect.height = settingsButtonTexture.getSize().y;
@@ -59,8 +58,8 @@ void Menu::initShape() {
 
     instructionButtonTexture.loadFromFile("../resource/menu/Instruction_Bar.png");
     instructionButtonImage.setTexture(instructionButtonTexture);
-    instructionButtonImage.setPosition(x, y);
-    instructionButtonRect.left = x;
+    instructionButtonImage.setPosition(502, y);
+    instructionButtonRect.left = 502;
     instructionButtonRect.top = y;
     instructionButtonRect.width = instructionButtonTexture.getSize().x;
     instructionButtonRect.height = instructionButtonTexture.getSize().y;
@@ -126,36 +125,36 @@ void Menu::update() {
     if (newGameButtonRect.contains(mousePosition.x, mousePosition.y)) {
         newGameButtonImage.setColor(sf::Color(255, 255, 255, 255));
     } else {
-        newGameButtonImage.setColor(sf::Color(255, 255, 255, 220));
+        newGameButtonImage.setColor(sf::Color(255, 255, 255, 200));
     }
 
     if (loadGameButtonRect.contains(mousePosition.x, mousePosition.y)) {
         loadGameButtonImage.setColor(sf::Color(255, 255, 255, 255));
     } else {
-        loadGameButtonImage.setColor(sf::Color(255, 255, 255, 220));
+        loadGameButtonImage.setColor(sf::Color(255, 255, 255, 200));
     }
 
     if (highScoreButtonRect.contains(mousePosition.x, mousePosition.y)) {
         highScoreButtonImage.setColor(sf::Color(255, 255, 255, 255));
     } else {
-        highScoreButtonImage.setColor(sf::Color(255, 255, 255, 220));
+        highScoreButtonImage.setColor(sf::Color(255, 255, 255, 200));
     }
 
     if (settingsButtonRect.contains(mousePosition.x, mousePosition.y)) {
         settingsButtonImage.setColor(sf::Color(255, 255, 255, 255));
     } else {
-        settingsButtonImage.setColor(sf::Color(255, 255, 255, 220));
+        settingsButtonImage.setColor(sf::Color(255, 255, 255, 200));
     }
 
     if (instructionButtonRect.contains(mousePosition.x, mousePosition.y)) {
         instructionButtonImage.setColor(sf::Color(255, 255, 255, 255));
     } else {
-        instructionButtonImage.setColor(sf::Color(255, 255, 255, 220));
+        instructionButtonImage.setColor(sf::Color(255, 255, 255, 200));
     }
     if (backButtonRect.contains(mousePosition.x, mousePosition.y)) {
         backButtonImage.setColor(sf::Color(255, 255, 255, 255));
     } else {
-        backButtonImage.setColor(sf::Color(255, 255, 255, 220));
+        backButtonImage.setColor(sf::Color(255, 255, 255, 200));
     }
 }
 

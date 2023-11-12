@@ -11,7 +11,7 @@ void Entry::initShape() {
 
     playButtonTexture.loadFromFile("../resource/Play_Button.png");
     playButtonImage.setTexture(playButtonTexture);
-    playButtonImage.setPosition(680, 570);
+    playButtonImage.setPosition(674, 620);
     playButtonImage.setColor(sf::Color(255, 255, 255, 220));
 }
 

@@ -1,6 +1,6 @@
 #include "header/instruction.hpp"
 
-Instruction::Instruction(sf::RenderWindow* window, std::stack <State*>* states) : window(window), states(states), delay(0.1f) {
+Instruction::Instruction(sf::RenderWindow* window, std::stack <State*>* states) : window(window), states(states), delay(0.05f) {
     initShape();
 
     elapsedTime = 0.0f;
@@ -31,11 +31,11 @@ void Instruction::initShape() {
         finishPrint[i] = false;
     }
 
-    text[0].setPosition(130, 200);
-    text[1].setPosition(130, 280);
-    text[2].setPosition(110, 360);
-    text[3].setPosition(130, 440);
-    text[4].setPosition(130, 520);
+    text[0].setPosition(130, 370);
+    text[1].setPosition(130, 450);
+    text[2].setPosition(110, 530);
+    text[3].setPosition(130, 610);
+    text[4].setPosition(130, 690);
 
     backButtonTexture.loadFromFile("../resource/Back_Button.png");
     backButtonImage.setTexture(backButtonTexture);

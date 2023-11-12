@@ -16,7 +16,7 @@ class Player:public State, public Character{
         void reset(); 
         void move(); 
         void updateWindowBoundsCollision(); 
-        void changeCharacter(const std::string& newCharacterTexture);
+        // void changeCharacter(const std::string& newCharacterTexture);
         void update();
         void render(); 
         void handleEvent();

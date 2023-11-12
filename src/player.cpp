@@ -82,7 +82,7 @@ void Player::handleEvent() {
                 if (newCharacterIndex >= NUM_CHARACTERS) {
                     newCharacterIndex = 0;  // Wrap around to the first character
                 }
-                changeCharacter("../resource/Character" + std::to_string(newCharacterIndex + 1) + ".png");
+                // changeCharacter("../resource/Character" + std::to_string(newCharacterIndex + 1) + ".png");
             }
         }
     }

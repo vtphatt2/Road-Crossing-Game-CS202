@@ -37,7 +37,7 @@ void Character::initShape() {
     leftArrowButtonRect.width = 58;
     leftArrowButtonRect.height = 58;
 
-    backButtonTexture.loadFromFile("../resource/Back.png");
+    backButtonTexture.loadFromFile("../resource/Back_Button.png");
     backButtonImage.setTexture(backButtonTexture);
     backButtonImage.setPosition(27, 27);
     backButtonImage.setColor(sf::Color(255, 255, 255, 220));
@@ -113,7 +113,7 @@ void Character::changeCharacterLeft() {
 }
 
 void Character::update() {
-    characterImages[currentCharacterIndex].setPosition(622, 412); // Adjust the coordinates accordingly
+    characterImages[currentCharacterIndex].setPosition(622, 412); 
     CharacterImage = characterImages[currentCharacterIndex];
 
     mousePosition = sf::Mouse::getPosition(*window);
@@ -131,6 +131,11 @@ void Character::update() {
         playGameButtonImage.setColor(sf::Color(255, 255, 255, 255));
     else 
         playGameButtonImage.setColor(sf::Color(255, 255, 255, 200));
+    
+    if (backButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) 
+        backButtonImage.setColor(sf::Color(255, 255, 255, 255));
+    else 
+        backButtonImage.setColor(sf::Color(255, 255, 255, 200));
 }
 
 void Character::render() {

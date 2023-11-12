@@ -108,9 +108,9 @@ void Menu::handleEvent() {
             else if (highScoreButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
                states->push(new highScore(window, states));
             }
-            //else if (settingsButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
-            //    states->push(new Settings(window, states));
-            //}
+            else if (settingsButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+               states->push(new SettingMenu(window, states));
+            }
             else if (instructionButtonRect.contains(mousePosition.x, mousePosition.y)) {
                 states->push(new Instruction(window, states));
             }

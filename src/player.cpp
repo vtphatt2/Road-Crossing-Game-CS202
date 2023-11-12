@@ -15,9 +15,13 @@ int Player::getChosenCharacterIndex() const {
 void Player::initPlayer() {
     Character::initCharacter();
     int i = getChosenCharacterIndex();
-    characterText.loadFromFile("../resource/Character" + std::to_string(i + 1) + ".png");
-    character.setTexture(characterText);        
+    changeCharacter("../resource/Character" + std::to_string(i + 1) + ".png");       
     character.setPosition(sf::Vector2f(638.0f, 807.0f));
+}
+
+void Player::changeCharacter(const std::string& newCharacterTexture) {
+    characterText.loadFromFile(newCharacterTexture);
+    character.setTexture(characterText);
 }
 
 sf::Sprite Player::getCharacter() {
@@ -77,12 +81,11 @@ void Player::handleEvent() {
 
         if (event.type == sf::Event::KeyPressed) {
             if (event.key.code == sf::Keyboard::C) {
-                // Change character logic
                 int newCharacterIndex = getChosenCharacterIndex() + 1;
                 if (newCharacterIndex >= NUM_CHARACTERS) {
-                    newCharacterIndex = 0;  // Wrap around to the first character
+                    newCharacterIndex = 0;  
                 }
-                // changeCharacter("../resource/Character" + std::to_string(newCharacterIndex + 1) + ".png");
+                changeCharacter("../resource/Character" + std::to_string(newCharacterIndex + 1) + ".png");
             }
         }
     }

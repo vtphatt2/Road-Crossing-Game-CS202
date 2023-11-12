@@ -8,6 +8,7 @@
 #include "character.hpp"
 #include "mode.hpp"
 #include "highScore.hpp"
+#include "setting_menu.hpp"
 
 class Menu: public State {
     public :

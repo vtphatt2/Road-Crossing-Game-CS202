@@ -1,8 +1,14 @@
 #include "header/setting_menu.hpp"
+#include <SFML/Audio.hpp>
 
-SettingMenu::SettingMenu(sf::RenderWindow* window, std::stack <State*>* states)
-    : window(window), states(states), isSoundOn(true) {
+bool SoundSettings::isSoundOn = true;
+
+SettingMenu::SettingMenu(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music)
+    : window(window), states(states), music(music){
     initShape();
+
+    isSoundOn = SoundSettings::getIsSoundOn();
+    updateButtonTextures();
 }
 
 void SettingMenu::initShape() {
@@ -43,6 +49,13 @@ void SettingMenu::handleEvent() {
             if (soundButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
                 isSoundOn = !isSoundOn;
                 updateButtonTextures();
+                SoundSettings::setIsSoundOn(isSoundOn);
+                if (isSoundOn){
+                    music.play();
+                }
+                else{
+                    music.stop();
+                }
             } else if (backButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
                 states->pop();
             }

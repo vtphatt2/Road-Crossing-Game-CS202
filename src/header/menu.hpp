@@ -12,7 +12,7 @@
 
 class Menu: public State {
     public :
-        Menu(sf::RenderWindow* window, std::stack <State*>* states);
+        Menu(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music);
         void initShape();
         void handleEvent();
         void update();
@@ -23,6 +23,7 @@ class Menu: public State {
         std::stack <State*>* states;
 
         sf::Event event;
+        sf::Music& music;
 
         sf::Vector2i mousePosition;
 

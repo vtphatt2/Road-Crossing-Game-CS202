@@ -4,6 +4,7 @@
 #include <iostream>
 #include <stack>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "state.hpp"
 #include "entry.hpp"
 

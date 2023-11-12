@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <stack>
+#include <cstring>
 #include "state.hpp"
 
 class Instruction: public State {
@@ -37,6 +38,17 @@ class Instruction: public State {
         sf::Texture backButtonTexture;
         sf::Sprite backButtonImage;
         sf::IntRect backButtonRect;
+
+        sf::Texture buttonATexture;
+        sf::Texture buttonSTexture;
+        sf::Texture buttonDTexture;
+        sf::Texture buttonWTexture;
+        sf::Texture buttonPTexture;
+        sf::Sprite buttonAImage;
+        sf::Sprite buttonSImage;
+        sf::Sprite buttonDImage;
+        sf::Sprite buttonWImage;
+        sf::Sprite buttonPImage;
 };
 
 #endif

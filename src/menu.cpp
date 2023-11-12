@@ -105,9 +105,9 @@ void Menu::handleEvent() {
             //else if (loadGameButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
             //    states->push(new LoadGame(window, states));
             //}
-            //else if (highScoreButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
-            //    states->push(new HighScore(window, states));
-            //}
+            else if (highScoreButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+               states->push(new highScore(window, states));
+            }
             else if (settingsButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
                states->push(new SettingMenu(window, states));
             }

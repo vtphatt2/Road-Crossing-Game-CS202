@@ -1,5 +1,4 @@
 #include "header/stuff.hpp"
-<<<<<<< Updated upstream
 #include<iostream>
 //UFO 
 UFO::UFO() {
@@ -8,19 +7,6 @@ UFO::UFO() {
 }
 UFO::UFO(UFOColor color) {
 	switch (color) {
-=======
-
-// UFO
-UFO::UFO()
-{
-	texture.loadFromFile(blueUFOPath);
-	sprite.setTexture(texture);
-}
-UFO::UFO(UFOColor color)
-{
-	switch (color)
-	{
->>>>>>> Stashed changes
 	case UFOColor::blue:
 		texture.loadFromFile(blueUFOPath);
 		break;
@@ -36,7 +22,6 @@ UFO::UFO(UFOColor color)
 	}
 	sprite.setTexture(texture);
 }
-<<<<<<< Updated upstream
 sf::Vector2f UFO::getPosition() {
 	return sprite.getPosition();
 }
@@ -64,52 +49,11 @@ void UFO::run() {
 			sprite.move(speed, -speed);
 		}
 		else {
-=======
-sf::Vector2f UFO::getPosition()
-{
-	return sprite.getPosition();
-}
-void UFO::setPosition(const sf::Vector2f &position)
-{
-	sprite.setPosition(position);
-}
-void UFO::setPosition(float x, float y)
-{
-	sprite.setPosition(sf::Vector2f(x, y));
-}
-sf::FloatRect UFO::getGlobalBounds()
-{
-	return sprite.getGlobalBounds();
-}
-float UFO::getSpeed()
-{
-	return speed;
-}
-void UFO::setSpeed(float speed)
-{
-	this->speed = speed;
-}
-void UFO::run()
-{
-	if (isRunning)
-	{
-		if (numOfMoves < limit)
-		{
-			sprite.move(speed, 0.01);
-		}
-		else if (numOfMoves >= limit && numOfMoves < 2 * limit)
-		{
-			sprite.move(speed, -0.01);
-		}
-		else
-		{
->>>>>>> Stashed changes
 			numOfMoves = 0;
 		}
 		numOfMoves++;
 	}
 }
-<<<<<<< Updated upstream
 void UFO::stop() {
 	isRunning = 0;
 }
@@ -122,34 +66,11 @@ void UFO::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 //Coin
 Coin::Coin() {
-=======
-void UFO::stop()
-{
-	isRunning = 0;
-}
-void UFO::resume()
-{
-	isRunning = 1;
-}
-void UFO::draw(sf::RenderTarget &target, sf::RenderStates states) const
-{
-	target.draw(sprite);
-}
-
-// Coin
-Coin::Coin()
-{
->>>>>>> Stashed changes
 	texture.loadFromFile(leftCoinPath);
 	sprite.setTexture(texture);
 	sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
 }
-<<<<<<< Updated upstream
 Coin::Coin(CoinType type) {
-=======
-Coin::Coin(CoinType type)
-{
->>>>>>> Stashed changes
 	switch (type)
 	{
 	case CoinType::left:
@@ -162,7 +83,6 @@ Coin::Coin(CoinType type)
 	sprite.setTexture(texture);
 	sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
 }
-<<<<<<< Updated upstream
 sf::Vector2f Coin::getPosition() {
 	return sprite.getPosition();
 }
@@ -185,42 +105,11 @@ void Coin::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 //Ant
 Ant::Ant() {
-=======
-sf::Vector2f Coin::getPosition()
-{
-	return sprite.getPosition();
-}
-void Coin::setPosition(const sf::Vector2f &position)
-{
-	sprite.setPosition(position.x + sprite.getGlobalBounds().width / 2, position.y + sprite.getGlobalBounds().height / 2);
-}
-void Coin::setPosition(float x, float y)
-{
-	sprite.setPosition(sf::Vector2f(x + sprite.getGlobalBounds().width / 2, y + sprite.getGlobalBounds().height / 2));
-}
-sf::FloatRect Coin::getGlobalBounds()
-{
-	return sprite.getGlobalBounds();
-}
-void Coin::run()
-{
-	sprite.rotate(0.01);
-}
-void Coin::draw(sf::RenderTarget &target, sf::RenderStates states) const
-{
-	target.draw(sprite);
-}
-
-// Ant
-Ant::Ant()
-{
->>>>>>> Stashed changes
 	texture[0].loadFromFile(movingAnt1Path);
 	texture[1].loadFromFile(movingAnt2Path);
 	texture[2].loadFromFile(inRestAntPath);
 	sprite.setTexture(texture[0]);
 }
-<<<<<<< Updated upstream
 sf::Vector2f Ant::getPosition() {
 	return sprite.getPosition();
 }
@@ -248,52 +137,11 @@ void Ant::run() {
 			sprite.setTexture(texture[1]);
 		}
 		else {
-=======
-sf::Vector2f Ant::getPosition()
-{
-	return sprite.getPosition();
-}
-void Ant::setPosition(const sf::Vector2f &position)
-{
-	sprite.setPosition(position);
-}
-void Ant::setPosition(float x, float y)
-{
-	sprite.setPosition(sf::Vector2f(x, y));
-}
-sf::FloatRect Ant::getGlobalBounds()
-{
-	return sprite.getGlobalBounds();
-}
-float Ant::getSpeed()
-{
-	return speed;
-}
-void Ant::setSpeed(float speed)
-{
-	this->speed = speed;
-}
-void Ant::run()
-{
-	if (isRunning)
-	{
-		if (numOfMoves < limit)
-		{
-			sprite.setTexture(texture[0]);
-		}
-		else if (numOfMoves >= limit && numOfMoves < 2 * limit)
-		{
-			sprite.setTexture(texture[1]);
-		}
-		else
-		{
->>>>>>> Stashed changes
 			numOfMoves = 0;
 		}
 		sprite.move(-speed, 0);
 		numOfMoves++;
 	}
-<<<<<<< Updated upstream
 	else {
 		sprite.setTexture(texture[2]);
 	}
@@ -311,34 +159,10 @@ void Ant::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 //Bird
 Bird::Bird() {
-=======
-	else
-	{
-		sprite.setTexture(texture[2]);
-	}
-}
-void Ant::stop()
-{
-	isRunning = 0;
-}
-void Ant::resume()
-{
-	isRunning = 1;
-}
-void Ant::draw(sf::RenderTarget &target, sf::RenderStates states) const
-{
-	target.draw(sprite);
-}
-
-// Bird
-Bird::Bird()
-{
->>>>>>> Stashed changes
 	texture[0].loadFromFile(bird1Path);
 	texture[1].loadFromFile(bird2Path);
 	sprite.setTexture(texture[0]);
 }
-<<<<<<< Updated upstream
 sf::Vector2f Bird::getPosition() {
 	return sprite.getPosition();
 }
@@ -384,74 +208,11 @@ void Bird::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 //Bat
 Bat::Bat() {
-=======
-sf::Vector2f Bird::getPosition()
-{
-	return sprite.getPosition();
-}
-void Bird::setPosition(const sf::Vector2f &position)
-{
-	sprite.setPosition(position);
-}
-void Bird::setPosition(float x, float y)
-{
-	sprite.setPosition(sf::Vector2f(x, y));
-}
-sf::FloatRect Bird::getGlobalBounds()
-{
-	return sprite.getGlobalBounds();
-}
-float Bird::getSpeed()
-{
-	return speed;
-}
-void Bird::setSpeed(float speed)
-{
-	this->speed = speed;
-}
-void Bird::run()
-{
-	if (numOfMoves < limit)
-	{
-		sprite.setTexture(texture[0]);
-	}
-	else if (numOfMoves >= limit && numOfMoves < 2 * limit)
-	{
-		sprite.setTexture(texture[1]);
-	}
-	else
-	{
-		numOfMoves = 0;
-	}
-	numOfMoves++;
-	if (isRunning)
-	{
-		sprite.move(-speed, 0);
-	}
-}
-void Bird::stop()
-{
-	isRunning = 0;
-}
-void Bird::resume()
-{
-	isRunning = 1;
-}
-void Bird::draw(sf::RenderTarget &target, sf::RenderStates states) const
-{
-	target.draw(sprite);
-}
-
-// Bat
-Bat::Bat()
-{
->>>>>>> Stashed changes
 	texture[0].loadFromFile(movingBat1Path);
 	texture[1].loadFromFile(movingBat2Path);
 	texture[2].loadFromFile(inRestBatPath);
 	sprite.setTexture(texture[0]);
 }
-<<<<<<< Updated upstream
 sf::Vector2f Bat::getPosition() {
 	return sprite.getPosition();
 }
@@ -483,57 +244,11 @@ void Bat::run() {
 			sprite.setTexture(texture[2]);
 		}
 		else {
-=======
-sf::Vector2f Bat::getPosition()
-{
-	return sprite.getPosition();
-}
-void Bat::setPosition(const sf::Vector2f &position)
-{
-	sprite.setPosition(position);
-}
-void Bat::setPosition(float x, float y)
-{
-	sprite.setPosition(sf::Vector2f(x, y));
-}
-sf::FloatRect Bat::getGlobalBounds()
-{
-	return sprite.getGlobalBounds();
-}
-float Bat::getSpeed()
-{
-	return speed;
-}
-void Bat::setSpeed(float speed)
-{
-	this->speed = speed;
-}
-void Bat::run()
-{
-
-	if (isRunning)
-	{
-		if (numOfMoves < limit)
-		{
-			sprite.setTexture(texture[0]);
-		}
-		else if (numOfMoves >= limit && numOfMoves < 2 * limit)
-		{
-			sprite.setTexture(texture[1]);
-		}
-		else if (numOfMoves >= 2 * limit && numOfMoves < 3 * limit)
-		{
-			sprite.setTexture(texture[2]);
-		}
-		else
-		{
->>>>>>> Stashed changes
 			numOfMoves = 0;
 		}
 		sprite.move(-speed, 0);
 		numOfMoves++;
 	}
-<<<<<<< Updated upstream
 	else {
 		sprite.setTexture(texture[2]);
 	}
@@ -552,34 +267,10 @@ void Bat::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 //Worm
 Worm::Worm() {
-=======
-	else
-	{
-		sprite.setTexture(texture[2]);
-	}
-}
-void Bat::stop()
-{
-	isRunning = 0;
-}
-void Bat::resume()
-{
-	isRunning = 1;
-}
-void Bat::draw(sf::RenderTarget &target, sf::RenderStates states) const
-{
-	target.draw(sprite);
-}
-
-// Worm
-Worm::Worm()
-{
->>>>>>> Stashed changes
 	texture[0].loadFromFile(movingWormPath);
 	texture[1].loadFromFile(inRestWormPath);
 	sprite.setTexture(texture[0]);
 }
-<<<<<<< Updated upstream
 sf::Vector2f Worm::getPosition() {
 	return sprite.getPosition();
 }
@@ -609,54 +300,11 @@ void Worm::run() {
 			sprite.scale(1 / 0.9999, 1);
 		}
 		else {
-=======
-sf::Vector2f Worm::getPosition()
-{
-	return sprite.getPosition();
-}
-void Worm::setPosition(const sf::Vector2f &position)
-{
-	sprite.setPosition(position);
-}
-void Worm::setPosition(float x, float y)
-{
-	sprite.setPosition(sf::Vector2f(x, y));
-}
-sf::FloatRect Worm::getGlobalBounds()
-{
-	return sprite.getGlobalBounds();
-}
-float Worm::getSpeed()
-{
-	return speed;
-}
-void Worm::setSpeed(float speed)
-{
-	this->speed = speed;
-}
-void Worm::run()
-{
-
-	if (isRunning)
-	{
-		sprite.setTexture(texture[0]);
-		if (numOfMoves < limit)
-		{
-			sprite.scale(0.9999, 1);
-		}
-		else if (numOfMoves >= limit && numOfMoves < 2 * limit)
-		{
-			sprite.scale(1 / 0.9999, 1);
-		}
-		else
-		{
->>>>>>> Stashed changes
 			numOfMoves = 0;
 		}
 		numOfMoves++;
 		sprite.move(-speed, 0);
 	}
-<<<<<<< Updated upstream
 	else {
 		sprite.setTexture(texture[1]);
 	}
@@ -673,35 +321,11 @@ void Worm::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 //Monster
 Monster::Monster() {
-=======
-	else
-	{
-		sprite.setTexture(texture[1]);
-	}
-}
-void Worm::stop()
-{
-	isRunning = 0;
-}
-void Worm::resume()
-{
-	isRunning = 1;
-}
-void Worm::draw(sf::RenderTarget &target, sf::RenderStates states) const
-{
-	target.draw(sprite);
-}
-
-// Monster
-Monster::Monster()
-{
->>>>>>> Stashed changes
 	texture[0].loadFromFile(movingMonster1Path);
 	texture[1].loadFromFile(movingMonster2Path);
 	texture[2].loadFromFile(inRestMonsterPath);
 	sprite.setTexture(texture[0]);
 }
-<<<<<<< Updated upstream
 sf::Vector2f Monster::getPosition() {
 	return sprite.getPosition();
 }
@@ -751,79 +375,12 @@ void Monster::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 //Slime
 Slime::Slime() {
-=======
-sf::Vector2f Monster::getPosition()
-{
-	return sprite.getPosition();
-}
-void Monster::setPosition(const sf::Vector2f &position)
-{
-	sprite.setPosition(position);
-}
-void Monster::setPosition(float x, float y)
-{
-	sprite.setPosition(sf::Vector2f(x, y));
-}
-sf::FloatRect Monster::getGlobalBounds()
-{
-	return sprite.getGlobalBounds();
-}
-float Monster::getSpeed()
-{
-	return speed;
-}
-void Monster::setSpeed(float speed)
-{
-	this->speed = speed;
-}
-void Monster::run()
-{
-	if (isRunning)
-	{
-		if (numOfMoves < limit)
-		{
-			sprite.setTexture(texture[0]);
-		}
-		else if (numOfMoves >= limit && numOfMoves < 2 * limit)
-		{
-			sprite.setTexture(texture[1]);
-		}
-		else
-		{
-			numOfMoves = 0;
-		}
-		sprite.move(speed, 0);
-		numOfMoves++;
-	}
-	else
-	{
-		sprite.setTexture(texture[2]);
-	}
-}
-void Monster::stop()
-{
-	isRunning = 0;
-}
-void Monster::resume()
-{
-	isRunning = 1;
-}
-void Monster::draw(sf::RenderTarget &target, sf::RenderStates states) const
-{
-	target.draw(sprite);
-}
-
-// Slime
-Slime::Slime()
-{
->>>>>>> Stashed changes
 	texture[0].loadFromFile(slime1Path);
 	texture[1].loadFromFile(slime2Path);
 	texture[2].loadFromFile(slime3Path);
 	sprite.setTexture(texture[0]);
 	hidden = false;
 }
-<<<<<<< Updated upstream
 sf::Vector2f Slime::getPosition() {
 	return sprite.getPosition();
 }
@@ -863,62 +420,6 @@ void Slime::run() {
 			hidden = true;
 		}
 		else {
-=======
-sf::Vector2f Slime::getPosition()
-{
-	return sprite.getPosition();
-}
-void Slime::setPosition(const sf::Vector2f &position)
-{
-	sprite.setPosition(position);
-}
-void Slime::setPosition(float x, float y)
-{
-	sprite.setPosition(sf::Vector2f(x, y));
-}
-sf::FloatRect Slime::getGlobalBounds()
-{
-	return sprite.getGlobalBounds();
-}
-float Slime::getSpeed()
-{
-	return speed;
-}
-void Slime::setSpeed(float speed)
-{
-	this->speed = speed;
-}
-void Slime::run()
-{
-	if (isRunning)
-	{
-		if (numOfMoves < limit)
-		{
-			sprite.setTexture(texture[0]);
-		}
-		else if (numOfMoves >= limit && numOfMoves < 2 * limit)
-		{
-			sprite.setTexture(texture[1]);
-		}
-		else if (numOfMoves >= 2 * limit && numOfMoves < 3 * limit)
-		{
-			sprite.setTexture(texture[2]);
-		}
-		else if (numOfMoves >= 3 * limit && numOfMoves < 4 * limit)
-		{
-			sprite.setTexture(texture[1]);
-		}
-		else if (numOfMoves >= 4 * limit && numOfMoves < 5 * limit)
-		{
-			sprite.setTexture(texture[0]);
-		}
-		else if (numOfMoves >= 5 * limit && numOfMoves < 6 * limit)
-		{
-			hidden = true;
-		}
-		else
-		{
->>>>>>> Stashed changes
 			numOfMoves = 0;
 			hidden = false;
 		}
@@ -926,7 +427,6 @@ void Slime::run()
 		numOfMoves++;
 	}
 }
-<<<<<<< Updated upstream
 void Slime::stop() {
 	isRunning = 0;
 }
@@ -942,32 +442,10 @@ void Slime::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 //Snail
 Snail::Snail() {
-=======
-void Slime::stop()
-{
-	isRunning = 0;
-}
-void Slime::resume()
-{
-	isRunning = 1;
-}
-void Slime::draw(sf::RenderTarget &target, sf::RenderStates states) const
-{
-	if (!hidden)
-	{
-		target.draw(sprite);
-	}
-}
-
-// Snail
-Snail::Snail()
-{
->>>>>>> Stashed changes
 	texture[0].loadFromFile(movingSnailPath);
 	texture[1].loadFromFile(inRestSnailPath);
 	sprite.setTexture(texture[0]);
 }
-<<<<<<< Updated upstream
 sf::Vector2f Snail::getPosition() {
 	return sprite.getPosition();
 }
@@ -997,54 +475,11 @@ void Snail::run() {
 			sprite.scale(1 / 0.9999, 1);
 		}
 		else {
-=======
-sf::Vector2f Snail::getPosition()
-{
-	return sprite.getPosition();
-}
-void Snail::setPosition(const sf::Vector2f &position)
-{
-	sprite.setPosition(position);
-}
-void Snail::setPosition(float x, float y)
-{
-	sprite.setPosition(sf::Vector2f(x, y));
-}
-sf::FloatRect Snail::getGlobalBounds()
-{
-	return sprite.getGlobalBounds();
-}
-float Snail::getSpeed()
-{
-	return speed;
-}
-void Snail::setSpeed(float speed)
-{
-	this->speed = speed;
-}
-void Snail::run()
-{
-
-	if (isRunning)
-	{
-		sprite.setTexture(texture[0], true);
-		if (numOfMoves < limit)
-		{
-			sprite.scale(0.9999, 1);
-		}
-		else if (numOfMoves >= limit && numOfMoves < 2 * limit)
-		{
-			sprite.scale(1 / 0.9999, 1);
-		}
-		else
-		{
->>>>>>> Stashed changes
 			numOfMoves = 0;
 		}
 		numOfMoves++;
 		sprite.move(-speed, 0);
 	}
-<<<<<<< Updated upstream
 	else {
 		sprite.setTexture(texture[1], true);
 	}
@@ -1061,35 +496,11 @@ void Snail::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 //Ghost
 Ghost::Ghost() {
-=======
-	else
-	{
-		sprite.setTexture(texture[1], true);
-	}
-}
-void Snail::stop()
-{
-	isRunning = 0;
-}
-void Snail::resume()
-{
-	isRunning = 1;
-}
-void Snail::draw(sf::RenderTarget &target, sf::RenderStates states) const
-{
-	target.draw(sprite);
-}
-
-// Ghost
-Ghost::Ghost()
-{
->>>>>>> Stashed changes
 	texture[0].loadFromFile(movingGhost1Path);
 	texture[1].loadFromFile(movingGhost2Path);
 	texture[2].loadFromFile(inRestGhostPath);
 	sprite.setTexture(texture[0]);
 }
-<<<<<<< Updated upstream
 sf::Vector2f Ghost::getPosition() {
 	return sprite.getPosition();
 }
@@ -1119,54 +530,11 @@ void Ghost::run() {
 			sprite.move(-speed, -speed);
 		}
 		else {
-=======
-sf::Vector2f Ghost::getPosition()
-{
-	return sprite.getPosition();
-}
-void Ghost::setPosition(const sf::Vector2f &position)
-{
-	sprite.setPosition(position);
-}
-void Ghost::setPosition(float x, float y)
-{
-	sprite.setPosition(sf::Vector2f(x, y));
-}
-sf::FloatRect Ghost::getGlobalBounds()
-{
-	return sprite.getGlobalBounds();
-}
-float Ghost::getSpeed()
-{
-	return speed;
-}
-void Ghost::setSpeed(float speed)
-{
-	this->speed = speed;
-}
-void Ghost::run()
-{
-	if (isRunning)
-	{
-		if (numOfMoves < limit)
-		{
-			sprite.setTexture(texture[0]);
-			sprite.move(-speed, 0.01);
-		}
-		else if (numOfMoves >= limit && numOfMoves < 2 * limit)
-		{
-			sprite.setTexture(texture[1]);
-			sprite.move(-speed, -0.01);
-		}
-		else
-		{
->>>>>>> Stashed changes
 			numOfMoves = 0;
 		}
 		sprite.move(-speed, 0);
 		numOfMoves++;
 	}
-<<<<<<< Updated upstream
 	else {
 		sprite.setTexture(texture[2]);
 	}
@@ -1479,22 +847,5 @@ void Fish::jump() {
 	isJumping = 1;
 }
 void Fish::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-=======
-	else
-	{
-		sprite.setTexture(texture[2]);
-	}
-}
-void Ghost::stop()
-{
-	isRunning = 0;
-}
-void Ghost::resume()
-{
-	isRunning = 1;
-}
-void Ghost::draw(sf::RenderTarget &target, sf::RenderStates states) const
-{
->>>>>>> Stashed changes
 	target.draw(sprite);
 }

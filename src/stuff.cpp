@@ -1,4 +1,4 @@
-#include "Obstacles.hpp"
+#include "header/stuff.hpp"
 #include<iostream>
 //UFO 
 UFO::UFO() {
@@ -42,7 +42,7 @@ void UFO::setSpeed(float speed) {
 }
 void UFO::run() {
 	if (isRunning) {
-		if (numOfMoves < limit){
+		if (numOfMoves < limit) {
 			sprite.move(speed, speed);
 		}
 		else if (numOfMoves >= limit && numOfMoves < 2 * limit) {
@@ -97,7 +97,7 @@ sf::FloatRect Coin::getGlobalBounds() {
 }
 void Coin::run() {
 	sprite.rotate(0.01);
-	
+
 }
 void Coin::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(sprite);
@@ -130,7 +130,7 @@ void Ant::setSpeed(float speed) {
 }
 void Ant::run() {
 	if (isRunning) {
-		if (numOfMoves < limit){
+		if (numOfMoves < limit) {
 			sprite.setTexture(texture[0]);
 		}
 		else if (numOfMoves >= limit && numOfMoves < 2 * limit) {
@@ -145,7 +145,7 @@ void Ant::run() {
 	else {
 		sprite.setTexture(texture[2]);
 	}
-	
+
 }
 void Ant::stop() {
 	isRunning = 0;
@@ -232,7 +232,7 @@ void Bat::setSpeed(float speed) {
 	this->speed = speed;
 }
 void Bat::run() {
-	
+
 	if (isRunning) {
 		if (numOfMoves < limit) {
 			sprite.setTexture(texture[0]);
@@ -290,14 +290,14 @@ void Worm::setSpeed(float speed) {
 	this->speed = speed;
 }
 void Worm::run() {
-	
+
 	if (isRunning) {
 		sprite.setTexture(texture[0]);
 		if (numOfMoves < limit) {
 			sprite.scale(0.9999, 1);
 		}
 		else if (numOfMoves >= limit && numOfMoves < 2 * limit) {
-			sprite.scale(1/0.9999, 1);
+			sprite.scale(1 / 0.9999, 1);
 		}
 		else {
 			numOfMoves = 0;
@@ -405,7 +405,7 @@ void Slime::run() {
 			sprite.setTexture(texture[0]);
 		}
 		else if (numOfMoves >= limit && numOfMoves < 2 * limit) {
-			sprite.setTexture(texture[1]);	
+			sprite.setTexture(texture[1]);
 		}
 		else if (numOfMoves >= 2 * limit && numOfMoves < 3 * limit) {
 			sprite.setTexture(texture[2]);
@@ -437,7 +437,7 @@ void Slime::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	if (!hidden) {
 		target.draw(sprite);
 	}
-		
+
 }
 
 //Snail
@@ -579,7 +579,7 @@ void Frog::run() {
 	if (isRunning) {
 		if (numOfMoves < 2 * limit) {
 			sprite.setTexture(texture[0]);
-			
+
 		}
 		else if (numOfMoves >= 2 * limit && numOfMoves < 3 * limit) {
 			sprite.setTexture(texture[1]);
@@ -639,7 +639,7 @@ void Mouse::setSpeed(float speed) {
 void Mouse::run() {
 
 	if (isRunning) {
-		
+
 		if (numOfMoves < limit) {
 			sprite.setTexture(texture[0]);
 		}

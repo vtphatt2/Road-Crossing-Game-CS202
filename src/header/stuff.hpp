@@ -1,63 +1,63 @@
 ﻿#pragma once
 #include"SFML/Graphics.hpp"
 //Edit here!
-#define blueUFOPath ""
-#define brownUFOPath ""
-#define pinkUFOPath ""
-#define greenUFOPath ""
+#define blueUFOPath "../resource/blueUFO.png"
+#define brownUFOPath "../resource/brownUFO.png"
+#define pinkUFOPath "../resource/pinkUFO.png"
+#define greenUFOPath "../resource/greenUFO.png"
 
-#define leftCoinPath ""
-#define rightCoinPath ""
+#define leftCoinPath "../resource/leftCoin.png"
+#define rightCoinPath "../resource/rightCoin.png"
 
-#define movingAnt1Path ""
-#define movingAnt2Path ""
-#define inRestAntPath ""
+#define movingAnt1Path "../resource/movingAnt1.png"
+#define movingAnt2Path "../resource/movingAnt2.png"
+#define inRestAntPath "../resource/inRestAnt.png"
 
-#define bird1Path ""
-#define bird2Path ""
+#define bird1Path "../resource/bird1.png"
+#define bird2Path "../resource/bird2.png"
 
-#define movingBat1Path "" 
-#define movingBat2Path ""
-#define inRestBatPath ""
+#define movingBat1Path "../resource/movingBat1.png" 
+#define movingBat2Path "../resource/movingBat2.png"
+#define inRestBatPath "../resource/inRestBat.png"
 
-#define movingWormPath ""
-#define inRestWormPath ""
+#define movingWormPath "../resource/movingWorm.png"
+#define inRestWormPath "../resource/inRestWorm.png"
 
-#define movingMonster1Path ""
-#define movingMonster2Path ""
-#define inRestMonsterPath ""
+#define movingMonster1Path "../resource/movingMonster1.png"
+#define movingMonster2Path "../resource/movingMonster2.png"
+#define inRestMonsterPath "../resource/inRestMonster.png"
 
-#define slime1Path ""
-#define slime2Path ""
-#define slime3Path ""
+#define slime1Path "../resource/slime1.png"
+#define slime2Path "../resource/slime2.png"
+#define slime3Path "../resource/slime3.png"
 
-#define movingSnailPath ""
-#define inRestSnailPath ""
+#define movingSnailPath "../resource/movingSnail.png"
+#define inRestSnailPath "../resource/inRestSnail.png"
 
-#define movingGhost1Path "" 
-#define movingGhost2Path "" 
-#define inRestGhostPath "" 
+#define movingGhost1Path "../resource/movingGhost1.png" 
+#define movingGhost2Path "../resource/movingGhost2.png" 
+#define inRestGhostPath "../resource/inRestGhost.png" 
 
-#define frog1Path ""
-#define frog2Path ""
-#define frog3Path ""
+#define frog1Path "../resource/frog1.png"
+#define frog2Path "../resource/frog2.png"
+#define frog3Path "../resource/frog3.png"
 
-#define movingMouse1Path ""
-#define movingMouse2Path ""
-#define inRestMousePath ""
+#define movingMouse1Path "../resource/movingMouse1.png"
+#define movingMouse2Path "../resource/movingMouse2.png"
+#define inRestMousePath "../resource/inRestMouse.png"
 
-#define movingMoon1Path ""
-#define movingMoon2Path ""
-#define inRestMoonPath ""
+#define movingMoon1Path "../resource/movingMoon1.png"
+#define movingMoon2Path "../resource/movingMoon2.png"
+#define inRestMoonPath "../resource/inRestMoon.png"
 
-#define movingSeaWheet1Path ""
-#define movingSeaWheet2Path ""
-#define inRestSeaWheetPath ""
+#define movingSeaWheet1Path "../resource/movingSeaWheet1.png"
+#define movingSeaWheet2Path "../resource/movingSeaWheet2.png"
+#define inRestSeaWheetPath "../resource/inRestSeaWheet.png"
 
-#define blueFishPath ""
-#define pinkFishPath ""
+#define blueFishPath "../resource/blueFish.png"
+#define pinkFishPath "../resource/pinkFish.png"
 
-#define defaultSpeed 0.01
+#define defaultSpeed 0.01 * 60;
 
 
 
@@ -65,7 +65,7 @@
 enum class UFOColor {
 	blue, brown, pink, green
 };
-class UFO: public sf::Drawable
+class UFO : public sf::Drawable
 {
 public:
 	UFO();
@@ -93,7 +93,7 @@ private:
 enum class CoinType {
 	left, right
 };
-class Coin: public sf::Drawable
+class Coin : public sf::Drawable
 {
 public:
 	Coin();
@@ -110,7 +110,7 @@ private:
 };
 
 //Ant
-class Ant: public sf::Drawable
+class Ant : public sf::Drawable
 {
 public:
 	Ant();
@@ -134,7 +134,7 @@ private:
 };
 
 //Bird
-class Bird: public sf::Drawable
+class Bird : public sf::Drawable
 {
 public:
 	Bird();
@@ -158,7 +158,7 @@ private:
 };
 
 //Bat
-class Bat: public sf::Drawable
+class Bat : public sf::Drawable
 {
 public:
 	Bat();
@@ -182,7 +182,7 @@ private:
 };
 
 //Worm
-class Worm: public sf::Drawable
+class Worm : public sf::Drawable
 {
 public:
 	Worm();
@@ -206,7 +206,7 @@ private:
 };
 
 //Monster
-class Monster: public sf::Drawable
+class Monster : public sf::Drawable
 {
 public:
 	Monster();
@@ -231,7 +231,7 @@ private:
 };
 
 //Slime
-class Slime: public sf::Drawable
+class Slime : public sf::Drawable
 {
 public:
 	Slime();

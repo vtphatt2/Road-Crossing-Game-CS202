@@ -37,7 +37,7 @@ void Character::initShape() {
     leftArrowButtonRect.width = 58;
     leftArrowButtonRect.height = 58;
 
-    backButtonTexture.loadFromFile("../resource/Back.png");
+    backButtonTexture.loadFromFile("../resource/Back_Button.png");
     backButtonImage.setTexture(backButtonTexture);
     backButtonImage.setPosition(27, 27);
     backButtonImage.setColor(sf::Color(255, 255, 255, 220));

@@ -51,6 +51,11 @@ class Character: public State {
         int currentCharacterIndex;  
         sf::Texture characterTextures[NUM_CHARACTERS];  
         sf::Sprite characterImages[NUM_CHARACTERS];   
+<<<<<<< HEAD
+=======
+        
+     
+>>>>>>> ingame
 };
 
 #endif

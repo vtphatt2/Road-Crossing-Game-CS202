@@ -133,7 +133,6 @@ void Classic::initShape() {
     SettingButtonRect.top = 890;
     SettingButtonRect.width = SettingButtonImage.getGlobalBounds().width;
     SettingButtonRect.height = SettingButtonImage.getGlobalBounds().height;
-
 }
 
 void Classic::handleEvent() {
@@ -158,7 +157,6 @@ void Classic::update() {
     } else {
         SettingButtonImage.setColor(sf::Color(255, 255, 255, 220));
     }
-
 }
 
 void Classic::render() {

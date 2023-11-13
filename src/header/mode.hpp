@@ -56,6 +56,7 @@ class Classic : public State
         int choice;
         sf::Texture backgroundTexture;
         sf::Sprite backgroundImage;
+
         sf::Texture SettingButtonTexture;
         sf::Sprite SettingButtonImage;
         sf::IntRect SettingButtonRect;

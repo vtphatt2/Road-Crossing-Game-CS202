@@ -13,7 +13,7 @@ int Player::getChosenCharacterIndex() const {
 }
 
 void Player::initPlayer() {
-    Character::initCharacter();
+    //Character::initCharacter();
     int i = getChosenCharacterIndex();
     changeCharacter("../resource/Character" + std::to_string(i + 1) + ".png");       
     character.setPosition(sf::Vector2f(638.0f, 807.0f));
@@ -48,11 +48,11 @@ void Player::move(){
 }
 
 void Player::update(){
-	if (clock.getElapsedTime() > time){
-		update();
-		updateWindowBoundsCollision();
-		clock.restart();
-	}
+	// if (clock.getElapsedTime() > time){
+	// 	update();
+	// 	updateWindowBoundsCollision();
+	// 	clock.restart();
+	// }
 }
 
 void Player::render(){
@@ -77,16 +77,6 @@ void Player::handleEvent() {
     while (window->pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
             window->close();
-        }
-
-        if (event.type == sf::Event::KeyPressed) {
-            if (event.key.code == sf::Keyboard::C) {
-                int newCharacterIndex = getChosenCharacterIndex() + 1;
-                if (newCharacterIndex >= NUM_CHARACTERS) {
-                    newCharacterIndex = 0;  
-                }
-                changeCharacter("../resource/Character" + std::to_string(newCharacterIndex + 1) + ".png");
-            }
         }
     }
 }

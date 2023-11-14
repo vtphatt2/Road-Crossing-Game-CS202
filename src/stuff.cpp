@@ -849,3 +849,47 @@ void Fish::jump() {
 void Fish::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(sprite);
 }
+
+TraficLight::TraficLight() {
+	texture[0].loadFromFile(greenLightPath);
+	texture[1].loadFromFile(yellowLightPath);
+	texture[2].loadFromFile(redLightPath);
+	sprite.setTexture(texture[0]);
+}
+sf::Vector2f TraficLight::getPosition() {
+	return sprite.getPosition();
+}
+void TraficLight::setPosition(const sf::Vector2f& position) {
+	sprite.setPosition(position);
+}
+void TraficLight::setPosition(float x, float y) {
+	sprite.setPosition(sf::Vector2f(x, y));
+}
+sf::FloatRect TraficLight::getGlobalBounds() {
+	return sprite.getGlobalBounds();
+}
+float TraficLight::getSpeed() {
+	return speed;
+}
+void TraficLight::setSpeed(float speed) {
+	this->speed = speed;
+}
+void TraficLight::run() {
+	if (numOfMoves < limit) {
+		sprite.setTexture(texture[0]);
+	}
+	else if (numOfMoves >= limit && numOfMoves < 1.1 * limit) {
+		sprite.setTexture(texture[1]);
+	}
+	else if (numOfMoves >= 1.1 * limit && numOfMoves < 1.4 * limit) {
+		sprite.setTexture(texture[2]);
+	}
+	else {
+		numOfMoves = 0;
+	}
+	numOfMoves++;
+
+}
+void TraficLight::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+	target.draw(sprite);
+}

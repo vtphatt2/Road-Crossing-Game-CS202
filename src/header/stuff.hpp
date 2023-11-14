@@ -57,6 +57,11 @@
 #define blueFishPath "../resource/blueFish.png"
 #define pinkFishPath "../resource/pinkFish.png"
 
+#define redLightPath "../resource/redLight.png"
+#define yellowLightPath "../resource/yellowLight.png"
+#define greenLightPath "../resource/greenLight.png"
+
+
 #define defaultSpeed 0.01 * 60;
 
 
@@ -431,3 +436,22 @@ private:
 	bool isJumping = 0;
 };
 
+//TraficLight
+class TraficLight: sf::Drawable{
+public:
+	TraficLight();
+	sf::Vector2f getPosition();
+	void setPosition(const sf::Vector2f& position);
+	void setPosition(float x, float y);
+	sf::FloatRect getGlobalBounds();
+	float getSpeed();
+	void setSpeed(float speed);
+	void run();
+private:
+	sf::Texture texture[3];
+	sf::Sprite sprite;
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	float speed = defaultSpeed;
+	int numOfMoves = 0;
+	int limit = 500 / speed;
+};

@@ -16,7 +16,7 @@ class Setting : public State, public sf::Drawable
         void handleEvent();
         void update();
         void render();
-        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+        void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     private:
         sf::RenderWindow* window;
         std::stack <State*>* states;

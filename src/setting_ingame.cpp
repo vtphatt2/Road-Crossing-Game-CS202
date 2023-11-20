@@ -107,11 +107,11 @@ void Setting::render() {
 
 void Setting::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    target.draw(backgroundImage, states);
-    target.draw(FAQButtonImage, states);
-    target.draw(leaderboardButtonImage, states);
-    target.draw(settingButtonImage, states);
-    target.draw(pauseButtonImage, states);
+    target.draw(backgroundImage);
+    target.draw(FAQButtonImage);
+    target.draw(leaderboardButtonImage);
+    target.draw(settingButtonImage);
+    target.draw(pauseButtonImage);
 
 }
 

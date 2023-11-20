@@ -1,5 +1,4 @@
 #include "header/setting_ingame.hpp"
-
 Setting::Setting(sf::RenderWindow* window, std::stack <State*>* states) : window(window), states(states) {
     initShape();
 }
@@ -42,16 +41,7 @@ void Setting::initShape() {
     pauseButtonRect.height = pauseButtonImage.getGlobalBounds().height;
 }
 
-void Setting::handleEvent() {
-    while (window->pollEvent(event)) {
-        if (event.type == sf::Event::Closed) 
-        {
-            window->close();
-        }
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) 
-        {
-            window->close();
-        }
+void Setting::handleEvent(sf::Event event) {
         if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) 
         {
             if(FAQButtonRect.contains(mousePosition)) 
@@ -71,10 +61,10 @@ void Setting::handleEvent() {
                 states->push(new Pause(window, states));
             }
         }
-    }
 }
 
 void Setting::update() {
+    mousePosition = sf::Mouse::getPosition(*window);
     if(FAQButtonRect.contains(mousePosition)) {
         FAQButtonImage.setColor(sf::Color(255, 255, 255, 255));
     } else {
@@ -97,13 +87,6 @@ void Setting::update() {
     }
 }
 
-void Setting::render() {
-    window->draw(backgroundImage);
-    window->draw(FAQButtonImage);
-    window->draw(leaderboardButtonImage);
-    window->draw(settingButtonImage);
-    window->draw(pauseButtonImage);
-}
 
 void Setting::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
@@ -151,6 +134,7 @@ void LeaderboardIngame::handleEvent() {
 }
 
 void LeaderboardIngame::update() {
+    mousePosition = sf::Mouse::getPosition(*window);
     if(backButtonRect.contains(mousePosition)) {
         backButtonImage.setColor(sf::Color(255, 255, 255, 255));
     } else {
@@ -186,6 +170,7 @@ void SettingIngame::handleEvent() {
 }
 
 void SettingIngame::update() {
+    mousePosition = sf::Mouse::getPosition(*window);
 }
 
 void SettingIngame::render() {
@@ -216,6 +201,7 @@ void FAQ::handleEvent() {
 }
 
 void FAQ::update() {
+    mousePosition = sf::Mouse::getPosition(*window);
 }
 
 void FAQ::render() {

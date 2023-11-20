@@ -33,10 +33,6 @@ class Mode : public State
         sf::Sprite EndlessButtonImage;
         sf::IntRect EndlessButtonRect;
 
-        sf::Texture SettingButtonTexture;
-        sf::Sprite SettingButtonImage;
-        sf::IntRect SettingButtonRect;
-
         sf::Texture backButtonTexture;
         sf::Sprite backButtonImage;
         sf::IntRect backButtonRect;

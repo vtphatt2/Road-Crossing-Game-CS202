@@ -8,19 +8,17 @@
 #include "state.hpp"
 #include "instruction.hpp"
 
-class Setting : public State, public sf::Drawable
+class Setting : public sf::Drawable
 {
     public:
         Setting(sf::RenderWindow* window, std::stack <State*>* states);
         void initShape();
-        void handleEvent();
+        void handleEvent(sf::Event event);
         void update();
-        void render();
         void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     private:
         sf::RenderWindow* window;
         std::stack <State*>* states;
-        sf::Event event;
         sf::Vector2i mousePosition;
 
         

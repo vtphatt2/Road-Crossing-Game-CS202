@@ -7,7 +7,6 @@
 #include <iostream>
 #include <SFML/Audio.hpp>
 #include "setting_ingame.hpp"
-
 class Classic : public State
 {
     public:

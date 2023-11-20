@@ -28,15 +28,6 @@ void Mode::initShape() {
     EndlessButtonRect.width = EndlessButtonImage.getGlobalBounds().width;
     EndlessButtonRect.height = EndlessButtonImage.getGlobalBounds().height;
 
-    SettingButtonTexture.loadFromFile("../resource/Setting.png");
-    SettingButtonImage.setTexture(SettingButtonTexture);
-    SettingButtonImage.setPosition(1300, 890);
-    SettingButtonImage.setColor(sf::Color(255, 255, 255, 220));
-    SettingButtonRect.left = 1300;
-    SettingButtonRect.top = 890;
-    SettingButtonRect.width = SettingButtonImage.getGlobalBounds().width;
-    SettingButtonRect.height = SettingButtonImage.getGlobalBounds().height;
-
     backButtonTexture.loadFromFile("../resource/Back_Button.png");
     backButtonImage.setTexture(backButtonTexture);
     backButtonImage.setPosition(window->getSize().x - 1410, window->getSize().y - 970);
@@ -74,9 +65,6 @@ void Mode::handleEvent() {
             if (EndlessButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
                 states->push(new Endless(window, states));
             }
-            if (SettingButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
-                states->push(new Setting(window, states));
-            }
             if (backButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
                 states->pop();
             }
@@ -96,11 +84,6 @@ void Mode::update() {
     } else {
         EndlessButtonImage.setColor(sf::Color(255, 255, 255, 220));
     }
-    if (SettingButtonRect.contains(sf::Mouse::getPosition(*window))) {
-        SettingButtonImage.setColor(sf::Color(255, 255, 255, 255));
-    } else {
-        SettingButtonImage.setColor(sf::Color(255, 255, 255, 220));
-    }
     if (backButtonRect.contains(sf::Mouse::getPosition(*window))) {
         backButtonImage.setColor(sf::Color(255, 255, 255, 255));
     } else {
@@ -112,6 +95,5 @@ void Mode::render() {
     window->draw(backgroundImage);
     window->draw(ClassicButtonImage);
     window->draw(EndlessButtonImage);
-    window->draw(SettingButtonImage);
     window->draw(backButtonImage);
 }

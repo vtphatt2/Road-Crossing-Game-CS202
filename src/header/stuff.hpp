@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include"SFML/Graphics.hpp"
+#include "SFML/Graphics.hpp"
 //Edit here!
 #define blueUFOPath "../resource/blueUFO.png"
 #define brownUFOPath "../resource/brownUFO.png"

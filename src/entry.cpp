@@ -1,11 +1,8 @@
 #include "header/entry.hpp"
+#include "header/game.hpp"
 
-Entry::Entry(sf::RenderWindow* window, std::stack <State*>* states) : window(window), states(states){
+Entry::Entry(sf::RenderWindow* window, std::stack <State*>* states, sf::Music* music) : window(window), states(states), music(music){
     initShape();
-    music.openFromFile("../resource/audio/audio1.mp3");
-    music.setVolume(50);
-    music.setLoop(true);
-    music.play();
 }
 
 void Entry::initShape() {

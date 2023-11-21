@@ -1,6 +1,6 @@
 #include "header/menu.hpp"
 
-Menu::Menu(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music) : window(window), states(states), music(music), choice(-1) {
+Menu::Menu(sf::RenderWindow* window, std::stack <State*>* states, sf::Music* music) : window(window), states(states), music(music), choice(-1) {
     initShape();
 }
 

@@ -13,6 +13,10 @@ class Game {
         Game();
         ~Game();
         void run();
+        void playMusic();
+        void stopMusic();
+        void pauseMusic();
+        void toggleMusic();
 
     private :
         const int widthWindow;
@@ -20,6 +24,7 @@ class Game {
         sf::Event event;
         sf::RenderWindow* window;
         std::stack <State*> states;
+        sf::Music* music;
 
         void handleEvent();
         void update();

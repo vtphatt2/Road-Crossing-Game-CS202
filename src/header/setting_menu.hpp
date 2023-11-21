@@ -6,10 +6,11 @@
 #include <SFML/Audio.hpp>
 #include <stack>
 #include "state.hpp"
+#include "game.hpp"
 
 class SettingMenu: public State {
     public :
-        SettingMenu(sf::RenderWindow* window, std::stack<State*>* states, sf::Music& music);
+        SettingMenu(sf::RenderWindow* window, std::stack<State*>* states, sf::Music* music);
         void initShape();
         void handleEvent();
         void update();
@@ -19,11 +20,11 @@ class SettingMenu: public State {
     private :
         sf::RenderWindow* window;
         std::stack <State*>* states;
+        sf::Music* music;
         sf::Event event;
         sf::Vector2i mousePosition;
 
         bool isSoundOn = true;
-        sf::Music& music;
 
         sf::Texture backgroundTexture;
         sf::Sprite backgroundImage;
@@ -41,18 +42,3 @@ class SettingMenu: public State {
 };
 
 #endif
-
-class SoundSettings {
-private:
-    static bool isSoundOn;
-    SoundSettings() {}
-
-public:
-    static bool getIsSoundOn() {
-        return isSoundOn;
-    }
-
-    static void setIsSoundOn(bool value) {
-        isSoundOn = value;
-    }
-};

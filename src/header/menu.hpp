@@ -2,6 +2,7 @@
 #define MENU_HPP
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <stack>
 #include "state.hpp"
 #include "instruction.hpp"
@@ -9,21 +10,22 @@
 #include "mode.hpp"
 #include "highScore.hpp"
 #include "setting_menu.hpp"
+#include "game.hpp"
 
 class Menu: public State {
     public :
-        Menu(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music);
-        void initShape();
+        Menu(sf::RenderWindow* window, std::stack <State*>* states, sf::Music* music);
         void handleEvent();
         void update();
         void render();
+        void initShape();
 
     private :
         sf::RenderWindow* window;
         std::stack <State*>* states;
+        sf::Music* music;
 
         sf::Event event;
-        sf::Music& music;
 
         sf::Vector2i mousePosition;
 

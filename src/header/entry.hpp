@@ -1,14 +1,17 @@
+#pragma once
 #ifndef ENTRY_HPP
 #define ENTRY_HPP
 
 #include "state.hpp"
 #include <stack>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "menu.hpp"
+#include "game.hpp"
 
 class Entry : public State {
     public :
-        Entry(sf::RenderWindow* window, std::stack <State*>* states);
+        Entry(sf::RenderWindow* window, std::stack <State*>* states, sf::Music* music);
         void initShape();
         void handleEvent();
         void update();
@@ -17,10 +20,10 @@ class Entry : public State {
     private :
         sf::RenderWindow* window;
         std::stack <State*>* states;
+        sf::Music* music;
 
         sf::Event event;
         sf::Vector2i mousePosition;
-        sf::Music music;
 
         // material
         sf::Texture backgroundTexture;

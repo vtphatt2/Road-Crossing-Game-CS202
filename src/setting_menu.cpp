@@ -1,13 +1,9 @@
 #include "header/setting_menu.hpp"
 #include <SFML/Audio.hpp>
 
-bool SoundSettings::isSoundOn = true;
-
-SettingMenu::SettingMenu(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music)
+SettingMenu::SettingMenu(sf::RenderWindow* window, std::stack <State*>* states, sf::Music* music)
     : window(window), states(states), music(music){
     initShape();
-
-    isSoundOn = SoundSettings::getIsSoundOn();
     updateButtonTextures();
 }
 
@@ -46,17 +42,17 @@ void SettingMenu::handleEvent() {
         }
 
         if (event.type == sf::Event::MouseButtonPressed) {
-            if (soundButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
-                isSoundOn = !isSoundOn;
-                updateButtonTextures();
-                SoundSettings::setIsSoundOn(isSoundOn);
-                if (isSoundOn){
-                    music.play();
+            if (soundButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) { 
+                //0 stopped, 1 paused, 2 playing
+                if (music->getStatus() == 2){
+                    music->pause();
                 }
-                else{
-                    music.stop();
+                else {
+                    music->play();
                 }
-            } else if (backButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
+                updateButtonTextures();            
+            } 
+            if (backButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
                 states->pop();
             }
         }
@@ -64,7 +60,7 @@ void SettingMenu::handleEvent() {
 }
 
 void SettingMenu::updateButtonTextures() {
-    if (isSoundOn) {
+    if (music->getStatus() == 2) {
         soundButtonTexture.loadFromFile("../resource/music_on.png");
     } else {
         soundButtonTexture.loadFromFile("../resource/music_off.png");

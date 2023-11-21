@@ -1,8 +1,8 @@
 #include "header/setting_menu.hpp"
 #include <SFML/Audio.hpp>
 
-SettingMenu::SettingMenu(sf::RenderWindow* window, std::stack <State*>* states, sf::Music* music)
-    : window(window), states(states), music(music){
+SettingMenu::SettingMenu(sf::RenderWindow* window, std::stack <State*>* states, Game* game)
+    : window(window), states(states), game(game){
     initShape();
     updateButtonTextures();
 }
@@ -44,12 +44,7 @@ void SettingMenu::handleEvent() {
         if (event.type == sf::Event::MouseButtonPressed) {
             if (soundButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) { 
                 //0 stopped, 1 paused, 2 playing
-                if (music->getStatus() == 2){
-                    music->pause();
-                }
-                else {
-                    music->play();
-                }
+                game->toggleMusic();
                 updateButtonTextures();            
             } 
             if (backButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
@@ -60,7 +55,7 @@ void SettingMenu::handleEvent() {
 }
 
 void SettingMenu::updateButtonTextures() {
-    if (music->getStatus() == 2) {
+    if (game->getStatusMusic() == 2) {
         soundButtonTexture.loadFromFile("../resource/music_on.png");
     } else {
         soundButtonTexture.loadFromFile("../resource/music_off.png");

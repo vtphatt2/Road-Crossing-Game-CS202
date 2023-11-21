@@ -1,7 +1,7 @@
 #include "header/entry.hpp"
 #include "header/game.hpp"
 
-Entry::Entry(sf::RenderWindow* window, std::stack <State*>* states, sf::Music* music) : window(window), states(states), music(music){
+Entry::Entry(sf::RenderWindow* window, std::stack <State*>* states, Game* game) : window(window), states(states), game(game){
     initShape();
 }
 
@@ -27,7 +27,7 @@ void Entry::handleEvent() {
                 if (event.mouseButton.button == sf::Mouse::Left) {
                     mousePosition = sf::Mouse::getPosition(*window);
                     if (playButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
-                        states->push(new Menu(window, states, music));
+                        states->push(new Menu(window, states, game));
                     }
                 }
                 break ;

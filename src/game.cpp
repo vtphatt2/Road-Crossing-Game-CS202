@@ -3,8 +3,7 @@
 Game::Game() : widthWindow(1430), heightWindow(990) {
     window = new sf::RenderWindow(sf::VideoMode(widthWindow, heightWindow), "ROAD CROSSING");
     window->setFramerateLimit(60);
-    music = new sf::Music();
-    states.push(new Entry(window, &states, music));
+    states.push(new Entry(window, &states, this));
     playMusic();    
     // // debugg
     // states.push(new highScore(window, &states));
@@ -54,17 +53,30 @@ void Game::render() {
 }
 
 void Game::playMusic(){
-    music->openFromFile("../resource/audio/audio1.mp3");
-    music->setVolume(50);
-    music->setLoop(true);
-    music->play();
+    music.openFromFile("../resource/audio/audio1.mp3");
+    music.setVolume(50);
+    music.setLoop(true);
+    music.play();
 }
 
 void Game::stopMusic(){
-    music->stop();
+    music.stop();
 }
 
 void Game::pauseMusic(){
-    music->pause();
+    music.pause();
+}
+
+void Game::toggleMusic(){
+    if (music.getStatus() == 2){
+        music.pause();
+    }
+    else{
+        music.play();
+    }
+}
+
+int Game::getStatusMusic(){
+    return music.getStatus();
 }
 

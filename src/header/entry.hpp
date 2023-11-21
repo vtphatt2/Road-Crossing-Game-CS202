@@ -9,9 +9,10 @@
 #include "menu.hpp"
 #include "game.hpp"
 
+class Game;
 class Entry : public State {
     public :
-        Entry(sf::RenderWindow* window, std::stack <State*>* states, sf::Music* music);
+        Entry(sf::RenderWindow* window, std::stack <State*>* states, Game* game);
         void initShape();
         void handleEvent();
         void update();
@@ -20,7 +21,7 @@ class Entry : public State {
     private :
         sf::RenderWindow* window;
         std::stack <State*>* states;
-        sf::Music* music;
+        Game* game;
 
         sf::Event event;
         sf::Vector2i mousePosition;

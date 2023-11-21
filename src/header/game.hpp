@@ -17,6 +17,7 @@ class Game {
         void stopMusic();
         void pauseMusic();
         void toggleMusic();
+        int getStatusMusic();
 
     private :
         const int widthWindow;
@@ -24,7 +25,7 @@ class Game {
         sf::Event event;
         sf::RenderWindow* window;
         std::stack <State*> states;
-        sf::Music* music;
+        sf::Music music;
 
         void handleEvent();
         void update();

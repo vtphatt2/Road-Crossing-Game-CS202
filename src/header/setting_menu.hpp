@@ -8,9 +8,10 @@
 #include "state.hpp"
 #include "game.hpp"
 
+class Game;
 class SettingMenu: public State {
     public :
-        SettingMenu(sf::RenderWindow* window, std::stack<State*>* states, sf::Music* music);
+        SettingMenu(sf::RenderWindow* window, std::stack<State*>* states, Game* game);
         void initShape();
         void handleEvent();
         void update();
@@ -20,11 +21,9 @@ class SettingMenu: public State {
     private :
         sf::RenderWindow* window;
         std::stack <State*>* states;
-        sf::Music* music;
+        Game* game;
         sf::Event event;
         sf::Vector2i mousePosition;
-
-        bool isSoundOn = true;
 
         sf::Texture backgroundTexture;
         sf::Sprite backgroundImage;

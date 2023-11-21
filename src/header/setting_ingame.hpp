@@ -21,10 +21,6 @@ class Setting : public sf::Drawable
         std::stack <State*>* states;
         sf::Vector2i mousePosition;
 
-        
-        sf::Texture backgroundTexture;
-        sf::Sprite backgroundImage;
-
         sf::Texture FAQButtonTexture;
         sf::Sprite FAQButtonImage;
         sf::IntRect FAQButtonRect;

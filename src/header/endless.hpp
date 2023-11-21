@@ -17,14 +17,16 @@ class Endless : public State
         void render();
         Setting* setting;
 
+        std::vector<sf::Texture> laneTextures;
+        std::vector<sf::Sprite> laneImages;
+        std::vector<sf::Sprite> laneVector;
+
     private:
         sf::RenderWindow* window;
         std::stack <State*>* states;
         sf::Event event;
         sf::Vector2i mousePosition;
         int choice;
-        sf::Texture backgroundTexture;
-        sf::Sprite backgroundImage;
 
 };
 

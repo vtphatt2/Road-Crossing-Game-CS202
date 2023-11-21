@@ -4,9 +4,6 @@ Setting::Setting(sf::RenderWindow* window, std::stack <State*>* states) : window
 }
 
 void Setting::initShape() {
-    backgroundTexture.loadFromFile("../resource/Background.png");
-    backgroundImage.setTexture(backgroundTexture);
-    backgroundImage.setPosition(0, 0);
 
     FAQButtonTexture.loadFromFile("../resource/FAQ.png");
     FAQButtonImage.setTexture(FAQButtonTexture);
@@ -90,7 +87,6 @@ void Setting::update() {
 
 void Setting::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    target.draw(backgroundImage);
     target.draw(FAQButtonImage);
     target.draw(leaderboardButtonImage);
     target.draw(settingButtonImage);

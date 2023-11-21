@@ -17,6 +17,7 @@ class SettingMenu: public State {
         void update();
         void render();
         void updateButtonTextures();
+        void updateVolumeText();
 
     private :
         sf::RenderWindow* window;
@@ -24,6 +25,8 @@ class SettingMenu: public State {
         Game* game;
         sf::Event event;
         sf::Vector2i mousePosition;
+        sf::Font font;
+        sf::Text volumeText;
 
         sf::Texture backgroundTexture;
         sf::Sprite backgroundImage;
@@ -31,9 +34,20 @@ class SettingMenu: public State {
         sf::Texture soundTitleTexture;
         sf::Sprite soundTitleImage;
 
+        sf::Texture volumeTitleTexture;
+        sf::Sprite volumeTitleImage;
+
         sf::Texture soundButtonTexture;
         sf::Sprite soundButtonImage;
         sf::IntRect soundButtonRect;
+
+        sf::Texture upButtonTexture;
+        sf::Sprite upButtonImage;
+        sf::IntRect upButtonRect;
+
+        sf::Texture downButtonTexture;
+        sf::Sprite downButtonImage;
+        sf::IntRect downButtonRect;
         
         sf::Texture backButtonTexture;
         sf::Sprite backButtonImage;

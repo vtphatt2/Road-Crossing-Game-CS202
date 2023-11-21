@@ -6,7 +6,7 @@ Game::Game() : widthWindow(1430), heightWindow(990) {
     states.push(new Entry(window, &states, this));
     playMusic();    
     // // debugg
-    // states.push(new highScore(window, &states));
+    //states.push(new SettingMenu(window, &states, this));
 }
 
 Game::~Game() {
@@ -54,7 +54,8 @@ void Game::render() {
 
 void Game::playMusic(){
     music.openFromFile("../resource/audio/audio1.mp3");
-    music.setVolume(50);
+    musicVolume=50.0f;
+    music.setVolume(musicVolume);
     music.setLoop(true);
     music.play();
 }
@@ -78,5 +79,23 @@ void Game::toggleMusic(){
 
 int Game::getStatusMusic(){
     return music.getStatus();
+}
+
+void Game::setMusicVolume(float volume){
+    music.setVolume(volume);
+}
+
+float Game::getMusicVolume() const {
+    return musicVolume;
+}
+
+float Game::increaseVolume(){
+    musicVolume = std::min(musicVolume + 10, 100.0f);
+    return musicVolume;
+}
+
+float Game::decreaseVolume(){
+    musicVolume = std::max(musicVolume - 10, 0.0f);
+    return musicVolume;
 }
 

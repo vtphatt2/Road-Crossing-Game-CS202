@@ -18,6 +18,10 @@ class Game {
         void pauseMusic();
         void toggleMusic();
         int getStatusMusic();
+        void setMusicVolume(float volume);
+        float getMusicVolume() const;
+        float increaseVolume();
+        float decreaseVolume();
 
     private :
         const int widthWindow;
@@ -26,6 +30,7 @@ class Game {
         sf::RenderWindow* window;
         std::stack <State*> states;
         sf::Music music;
+        float musicVolume;
 
         void handleEvent();
         void update();

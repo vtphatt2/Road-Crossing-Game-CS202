@@ -15,6 +15,7 @@ class Classic : public State
         void handleEvent();
         void update();
         void render();
+        Setting* setting;
     private:
         sf::RenderWindow* window;
         std::stack <State*>* states;
@@ -23,8 +24,6 @@ class Classic : public State
         int choice;
         sf::Texture backgroundTexture;
         sf::Sprite backgroundImage;
-
-        Setting* setting;
 };
 
 #endif

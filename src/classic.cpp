@@ -1,6 +1,7 @@
 #include "header/classic.hpp"
 
 Classic::Classic(sf::RenderWindow* window, std::stack <State*>* states) : window(window), states(states) {
+    setting = new Setting(window, states);
     initShape();
 }
 
@@ -18,13 +19,15 @@ void Classic::handleEvent() {
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
             window->close();
         }
+        setting->handleEvent(event);
     }
 }
 
 void Classic::update() {
-
+    setting->update();
 }
 
 void Classic::render() {
     window->draw(backgroundImage);
+    window->draw(*setting);
 }

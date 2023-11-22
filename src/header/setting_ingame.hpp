@@ -15,8 +15,10 @@ class Setting : public sf::Drawable
         void initShape();
         void handleEvent(sf::Event event);
         void update();
-        void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+        void moveUp(int translateY);
     private:
+        void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
         sf::RenderWindow* window;
         std::stack <State*>* states;
         sf::Vector2i mousePosition;

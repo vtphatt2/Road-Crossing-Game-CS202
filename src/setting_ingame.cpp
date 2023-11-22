@@ -83,7 +83,12 @@ void Setting::update() {
         pauseButtonImage.setColor(sf::Color(255, 255, 255, 220));
     }
 }
-
+void Setting::moveUp(int translateY) {
+    FAQButtonImage.move(0, translateY);
+    leaderboardButtonImage.move(0, translateY);
+    settingButtonImage.move(0, translateY);
+    pauseButtonImage.move(0, translateY);
+}
 
 void Setting::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {

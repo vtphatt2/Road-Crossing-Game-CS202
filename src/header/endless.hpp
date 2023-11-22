@@ -7,19 +7,20 @@
 #include <SFML/Audio.hpp>
 #include "state.hpp"
 #include "setting_ingame.hpp"
+#include "lane.hpp"
 class Endless : public State
 {
     public:
+        sf::View *view;
+        int windowTranslateY;
+        bool isAddNewLane = 0;
         Endless(sf::RenderWindow* window, std::stack <State*>* states);
         void initShape();
         void handleEvent();
         void update();
         void render();
         Setting* setting;
-
-        sf::Texture laneTextures[7];
-        sf::Sprite laneImages[7];
-        std::vector<sf::Sprite> laneVector;
+        std::vector<Lane*> laneVector;
 
     private:
         sf::RenderWindow* window;

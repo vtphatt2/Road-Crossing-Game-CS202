@@ -134,16 +134,9 @@ Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states) : window
 
 void Endless::initShape() {
     
-
-    laneVector[0].setPosition(825, 0);
-    laneVector[1].setPosition(660, 0);
-    laneVector[2].setPosition(495, 0);
-    laneVector[3].setPosition(330, 0);
-    laneVector[4].setPosition(165, 0);
-    laneVector[5].setPosition(0, 0);
-    laneVector[6].setPosition(-165, 0);
-    laneVector[7].setPosition(-330, 0);
-    laneVector[8].setPosition(-495, 0);
+    for (int i = 0; i < laneVector.size(); i++) {
+        laneVector[i].setPosition(0, 825 - 165 * i);
+    }
 }
 
 void Endless::handleEvent() {
@@ -163,7 +156,7 @@ void Endless::update() {
 }
 
 void Endless::render() {
-    for(int i = 0; i < 11; i++)
+    for(int i = 0; i < laneVector.size(); i++)
     {
         window->draw(laneVector[i]);
     }

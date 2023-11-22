@@ -17,8 +17,8 @@ class Endless : public State
         void render();
         Setting* setting;
 
-        std::vector<sf::Texture> laneTextures;
-        std::vector<sf::Sprite> laneImages;
+        sf::Texture laneTextures[7];
+        sf::Sprite laneImages[7];
         std::vector<sf::Sprite> laneVector;
 
     private:

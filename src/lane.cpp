@@ -23,6 +23,12 @@ Lane::Lane(laneType type) : type(type) {
 	case laneType::rail:
 		texture.loadFromFile("../resource/lane/rail_lane.png");
 		break;
+	case laneType::desert_rail:
+		texture.loadFromFile("../resource/lane/desert_rail_lane.png");
+		break;
+	case laneType::ice:
+		texture.loadFromFile("../resource/lane/ice_lane.png");
+		break;
 	}
 	sprite.setTexture(texture);
 }
@@ -38,8 +44,27 @@ void Lane::setPosition(float x, float y) {
 void Lane::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(sprite);
 }
-laneType randomLaneType() {
-	int randomNum = rand() % 7;
+
+laneType randomFirstLaneType() {
+	int randomNum = rand() % 3;
+	laneType type;
+	switch (randomNum)
+	{
+	case 0:
+		type = laneType::desert_path;
+		break;
+	case 1:
+		type = laneType::grass;
+		break;
+	case 2:
+		type = laneType::snow_path;
+		break;
+	}
+	return type;
+}
+
+laneType randomDesertLaneType() {
+	int randomNum = rand() % 3;
 	laneType type;
 	switch (randomNum)
 	{
@@ -50,25 +75,362 @@ laneType randomLaneType() {
 		type = laneType::desert_road;
 		break;
 	case 2:
-		type = laneType::road;
-		break;
-	case 3:
-		type = laneType::grass;
-		break;
-	case 4:
-		type = laneType::river;
-		break;
-	case 5:
-		type = laneType::snow_path;
-		break;
-	case 6:
-		type = laneType::rail;
+		type = laneType::desert_rail;
 		break;
 	}
 	return type;
 }
 	
-	
-	
-	
-	
+laneType randomGardenLaneType() {
+	int randomNum = rand() % 4;
+	laneType type;
+	switch (randomNum)
+	{
+	case 0:
+		type = laneType::grass;
+		break;
+	case 1:
+		type = laneType::river;
+		break;
+	case 2:
+		type = laneType::rail;
+		break;
+	case 3:
+		type = laneType::road;
+		break;
+	}
+	return type;
+}	
+
+laneType randomSnowLaneType() {
+	int randomNum = rand() % 4;
+	laneType type;
+	switch (randomNum)
+	{
+	case 0:
+		type = laneType::snow_path;
+		break;
+	case 1:
+		type = laneType::rail;
+		break;
+	case 2:
+		type = laneType::road;
+		break;
+	case 3:
+		type = laneType::ice;
+		break;
+	}
+	return type;
+}
+
+int convertBiome()
+{
+	int randomNum = rand() % 3;
+	return randomNum;
+}
+
+laneType randomDesert_NoDesertRail()
+{
+	int randomNum = rand() % 2;
+	laneType type;
+	switch (randomNum)
+	{
+	case 0:
+		type = laneType::desert_path;
+		break;
+	case 1:
+		type = laneType::desert_road;
+		break;
+	}
+	return type;
+}
+
+laneType randomDesert_NoDesertRoad()
+{
+	int randomNum = rand() % 2;
+	laneType type;
+	switch (randomNum)
+	{
+	case 0:
+		type = laneType::desert_path;
+		break;
+	case 1:
+		type = laneType::desert_rail;
+		break;
+	}
+	return type;
+}
+
+laneType randomDesert_NoDesertPath()
+{
+	int randomNum = rand() % 2;
+	laneType type;
+	switch (randomNum)
+	{
+	case 0:
+		type = laneType::desert_road;
+		break;
+	case 1:
+		type = laneType::desert_rail;
+		break;
+	}
+	return type;
+}
+
+laneType randomDesert_NoDesertRailNoDesertRoad()
+{
+	return laneType::desert_path;
+}
+
+laneType randomDesert_NoDesertRailNoDesertPath()
+{
+	return laneType::desert_road;
+}
+
+laneType randomGarden_NoGrass()
+{
+	int randomNum = rand() % 3;
+	laneType type;
+	switch (randomNum)
+	{
+	case 0:
+		type = laneType::river;
+		break;
+	case 1:
+		type = laneType::rail;
+		break;
+	case 2:
+		type = laneType::road;
+		break;
+	}
+	return type;
+}
+
+laneType randomGarden_NoRiver()
+{
+	int randomNum = rand() % 3;
+	laneType type;
+	switch (randomNum)
+	{
+	case 0:
+		type = laneType::grass;
+		break;
+	case 1:
+		type = laneType::rail;
+		break;
+	case 2:
+		type = laneType::road;
+		break;
+	}
+	return type;
+}
+
+laneType randomGarden_NoRoad()
+{
+	int randomNum = rand() % 3;
+	laneType type;
+	switch (randomNum)
+	{
+	case 0:
+		type = laneType::grass;
+		break;
+	case 1:
+		type = laneType::river;
+		break;
+	case 2:
+		type = laneType::rail;
+		break;
+	}
+	return type;
+}
+
+laneType randomGarden_NoRail()
+{
+	int randomNum = rand() % 3;
+	laneType type;
+	switch (randomNum)
+	{
+	case 0:
+		type = laneType::grass;
+		break;
+	case 1:
+		type = laneType::river;
+		break;
+	case 2:
+		type = laneType::road;
+		break;
+	}
+	return type;
+}
+
+laneType randomGarden_NoRailNoRiver()
+{
+	int randomNum = rand() % 2;
+	laneType type;
+	switch (randomNum)
+	{
+	case 0:
+		type = laneType::grass;
+		break;
+	case 1:
+		type = laneType::road;
+		break;
+	}
+	return type;
+}
+
+laneType randomGarden_NoRailNoGrass()
+{
+	int randomNum = rand() % 2;
+	laneType type;
+	switch (randomNum)
+	{
+	case 0:
+		type = laneType::river;
+		break;
+	case 1:
+		type = laneType::road;
+		break;
+	}
+	return type;
+}
+
+laneType randomGarden_NoRailNoRoad()
+{
+	int randomNum = rand() % 2;
+	laneType type;
+	switch (randomNum)
+	{
+	case 0:
+		type = laneType::grass;
+		break;
+	case 1:
+		type = laneType::river;
+		break;
+	}
+	return type;
+}
+
+laneType randomSnow_NoSnowPath()
+{
+	int randomNum = rand() % 3;
+	laneType type;
+	switch (randomNum)
+	{
+	case 0:
+		type = laneType::rail;
+		break;
+	case 1:
+		type = laneType::road;
+		break;
+	case 2:
+		type = laneType::ice;
+		break;
+	}
+	return type;
+}
+
+laneType randomSnow_NoIce()
+{
+	int randomNum = rand() % 3;
+	laneType type;
+	switch (randomNum)
+	{
+	case 0:
+		type = laneType::snow_path;
+		break;
+	case 1:
+		type = laneType::rail;
+		break;
+	case 2:
+		type = laneType::road;
+		break;
+	}
+	return type;
+}
+
+laneType randomSnow_NoRoad()
+{
+	int randomNum = rand() % 3;
+	laneType type;
+	switch (randomNum)
+	{
+	case 0:
+		type = laneType::snow_path;
+		break;
+	case 1:
+		type = laneType::rail;
+		break;
+	case 2:
+		type = laneType::ice;
+		break;
+	}
+	return type;
+}
+
+laneType randomSnow_NoRail()
+{
+	int randomNum = rand() % 3;
+	laneType type;
+	switch (randomNum)
+	{
+	case 0:
+		type = laneType::snow_path;
+		break;
+	case 1:
+		type = laneType::road;
+		break;
+	case 2:
+		type = laneType::ice;
+		break;
+	}
+	return type;
+}
+
+laneType randomSnow_NoRailNoSnowPath()
+{
+	int randomNum = rand() % 2;
+	laneType type;
+	switch (randomNum)
+	{
+	case 0:
+		type = laneType::road;
+		break;
+	case 1:
+		type = laneType::ice;
+		break;
+	}
+	return type;
+}
+
+laneType randomSnow_NoRailNoIce()
+{
+	int randomNum = rand() % 2;
+	laneType type;
+	switch (randomNum)
+	{
+	case 0:
+		type = laneType::snow_path;
+		break;
+	case 1:
+		type = laneType::road;
+		break;
+	}
+	return type;
+}
+
+laneType randomSnow_NoRailNoRoad()
+{
+	int randomNum = rand() % 2;
+	laneType type;
+	switch (randomNum)
+	{
+	case 0:
+		type = laneType::snow_path;
+		break;
+	case 1:
+		type = laneType::ice;
+		break;
+	}
+	return type;
+}

@@ -7,18 +7,17 @@ const int NUM_CHARACTERS = 5;
 #include <stack>
 #include "state.hpp"
 #include "../header/mode.hpp"
+#include "player.hpp"
+
+class Player; // Forward declaration of Player class
 
 class Character: public State {
     public :
         Character(sf::RenderWindow* window, std::stack <State*>* states);
         void initShape();
-        void initCharacter();
         void handleEvent();
         void update();
         void render();
-        void changeCharacterRight();
-        void changeCharacterLeft();
-        int getCurrentCharacterIndex() const;
 
     private :
         sf::RenderWindow* window;
@@ -45,13 +44,7 @@ class Character: public State {
         sf::Sprite backButtonImage;
         sf::IntRect backButtonRect;
 
-        sf::Texture CharacterTextture;
-        sf::Sprite CharacterImage;
-
-        int currentCharacterIndex;  
-        sf::Texture characterTextures[NUM_CHARACTERS];  
-        sf::Sprite characterImages[NUM_CHARACTERS];   
-
+        Player* player;
 };
 
 #endif

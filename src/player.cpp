@@ -1,83 +1,96 @@
-#include "header/character.hpp"
 #include "header/player.hpp"
 
-
-Player::Player(sf::RenderWindow* window, std::stack <State*>* states) : Character(window, states) {
+Player::Player(PlayerSkin initialSkin) : playerSkin(initialSkin) {
     initPlayer();
 }
 
 Player::~Player() {};
 
-int Player::getChosenCharacterIndex() const {
-    return Character::getCurrentCharacterIndex();
-}
-
 void Player::initPlayer() {
-    //Character::initCharacter();
-    int i = getChosenCharacterIndex();
-    changeCharacter("../resource/Character" + std::to_string(i + 1) + ".png");       
-    character.setPosition(sf::Vector2f(638.0f, 807.0f));
-}
+    std::string texturePath;
+    switch (playerSkin) {
+        case PlayerSkin::GREEN:
+            texturePath = "../resource/Character1.png";
+            break;
+        case PlayerSkin::BLUE:
+            texturePath = "../resource/Character2.png";
+            break;
+        case PlayerSkin::RED:
+            texturePath = "../resource/Character3.png";
+            break;
+		case PlayerSkin::YELLOW:
+            texturePath = "../resource/Character4.png";
+            break;
+		case PlayerSkin::BROWN:
+            texturePath = "../resource/Character5.png";
+            break;        
+    }
 
-void Player::changeCharacter(const std::string& newCharacterTexture) {
-    characterText.loadFromFile(newCharacterTexture);
-    character.setTexture(characterText);
-}
-
-sf::Sprite Player::getCharacter() {
-    return character;
+	playerTexture.loadFromFile(texturePath);
+    playerSprite.setTexture(playerTexture);
+    playerSprite.setPosition(sf::Vector2f(622.0f, 412.0f));
 }
 
 void Player::reset(){
-	character.setPosition(638, 807);
+	playerSprite.setPosition(638, 807);
+}
+
+sf::Sprite Player::getPlayerSprite(){
+	return playerSprite;
 }
 
 void Player::move(){
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-		character.move(-movementSpeed, 0.f);
+		playerSprite.move(movementSpeed, 0.f);
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-		character.move(movementSpeed, 0.f);
+		playerSprite.move(movementSpeed, 0.f);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-		character.move(0.f, movementSpeed);
+		playerSprite.move(0.f, movementSpeed);
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-		character.move(0.f, -movementSpeed);
+		playerSprite.move(0.f, -movementSpeed);
 	}
 }
 
 void Player::update(){
-	// if (clock.getElapsedTime() > time){
-	// 	update();
-	// 	updateWindowBoundsCollision();
-	// 	clock.restart();
-	// }
-}
-
-void Player::render(){
-	window->draw(character);
-}
-
-void Player::updateWindowBoundsCollision(){
-	if (this->character.getGlobalBounds().left <= 0.f)
-		this->character.setPosition(0.f, this->character.getGlobalBounds().top);
 	
-	if (this->character.getGlobalBounds().left + this->character.getGlobalBounds().width >= window->getSize().x)
-		this->character.setPosition(window->getSize().x - this->character.getGlobalBounds().width, this->character.getGlobalBounds().top);
+}
 
-	if (this->character.getGlobalBounds().top <= 0.f)
-		this->character.setPosition(this->character.getGlobalBounds().left, 0.f);
+void Player::changeSkinRight() {
+    int skinIndex = static_cast<int>(playerSkin);
+    skinIndex = (skinIndex + 1) % static_cast<int>(PlayerSkin::NUM_SKINS);
+    playerSkin = static_cast<PlayerSkin>(skinIndex);
+	updatePlayerTexture(skinIndex);
+}
+
+void Player::changeSkinLeft() {
+    int skinIndex = static_cast<int>(playerSkin);
+    skinIndex = (skinIndex - 1 + static_cast<int>(PlayerSkin::NUM_SKINS)) % static_cast<int>(PlayerSkin::NUM_SKINS);
+    playerSkin = static_cast<PlayerSkin>(skinIndex);
+    updatePlayerTexture(skinIndex);
+}
+
+void Player::updatePlayerTexture(int index){
+	playerTexture.loadFromFile("../resource/Character" + std::to_string(index+1) + ".png");
+	playerSprite.setTexture(playerTexture);
+}
+
+void Player::updateWindowBoundsCollision(const sf::RenderWindow& window){
+	if (this->playerSprite.getGlobalBounds().left <= 0.f)
+		this->playerSprite.setPosition(0.f, this->playerSprite.getGlobalBounds().top);
 	
-	if (this->character.getGlobalBounds().top + this->character.getGlobalBounds().height >= window->getSize().y)
-		this->character.setPosition(this->character.getGlobalBounds().left, window->getSize().y - this->character.getGlobalBounds().height);
+	if (this->playerSprite.getGlobalBounds().left + this->playerSprite.getGlobalBounds().width >= window.getSize().x)
+		this->playerSprite.setPosition(window.getSize().x - this->playerSprite.getGlobalBounds().width, this->playerSprite.getGlobalBounds().top);
+
+	if (this->playerSprite.getGlobalBounds().top <= 0.f)
+		this->playerSprite.setPosition(this->playerSprite.getGlobalBounds().left, 0.f);
+	
+	if (this->playerSprite.getGlobalBounds().top + this->playerSprite.getGlobalBounds().height >= window.getSize().y)
+		this->playerSprite.setPosition(this->playerSprite.getGlobalBounds().left, window.getSize().y - this->playerSprite.getGlobalBounds().height);
 }
 
-void Player::handleEvent() {
-    while (window->pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
-            window->close();
-        }
-    }
+const sf::Vector2f& Player::getPosition() const {
+    return playerSprite.getPosition();
 }
-

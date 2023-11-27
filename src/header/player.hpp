@@ -5,36 +5,42 @@
 #include <stack>
 #include "state.hpp"
 #include "character.hpp"
+#include <unordered_map>
+#include <memory>
 
-class Player:public Character{
+using namespace std;
+
+enum class PlayerSkin {
+    GREEN,
+    BLUE,
+    RED,
+    YELLOW,
+    BROWN,
+    NUM_SKINS,
+};
+
+class Player{
     public: 
-        Player(sf::RenderWindow* window, std::stack <State*>* states);
-        virtual ~Player(); 
-        void initPlayer(int characterIndex);
+        Player(PlayerSkin initialSkin);
+        Player();
+        ~Player(); 
+
+        void initPlayer();
         void reset(); 
         void move(); 
-        void updateWindowBoundsCollision(); 
-        void changeCharacter(const std::string& newCharacterTexture);
         void update();
-        void render(); 
-        void handleEvent();
-
-        int getChosenCharacterIndex() const;
-        sf::Sprite getCharacter();
+        void updateWindowBoundsCollision(const sf::RenderWindow& window); 
+        const sf::Vector2f& getPosition() const;
+        void changeSkinLeft();
+        void changeSkinRight();
+        void updatePlayerTexture(int skinIndex);
+        sf::Sprite getPlayerSprite();
 
     private: 
-        sf::RenderWindow* window;
-        std::stack <State*>* states;
-        sf::Event event;
-        sf::Vector2i mousePosition;
-
-        sf::Texture characterText;
-        sf::Sprite character;
+        sf::Texture playerTexture;
+        sf::Sprite playerSprite;
+        PlayerSkin playerSkin; 
         
-        sf::Time time = sf::seconds(0.05f); 
-        sf::Clock clock;
         const float movementSpeed = 50.f; 
-        void initPlayer();     
-
 };
 #endif

@@ -348,7 +348,11 @@ void Endless::initShape() {
         }
         laneVector.push_back(lane);
         laneVector[i]->setPosition(0, 990 - landHeight * (i + 1));
+        for (int j = 0; j < laneVector[i]->getStuffVector().size(); j++) {
+            stuffVector.push_back(laneVector[i]->getStuffVector()[j]);
+        }
     }
+    
 }
 
 void Endless::handleEvent() {
@@ -363,16 +367,19 @@ void Endless::handleEvent() {
             int translateY = landHeight / 15;
             view->move(sf::Vector2f(0, -translateY));
             windowTranslateY -= translateY;
-            setting->moveUp(-translateY);
+            setting->move(-translateY);
             if (-windowTranslateY % landHeight == 0) {
                 isAddNewLane = 1;
             }
         }
         if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)) {
-            int translateY = landHeight / 15;
-            view->move(sf::Vector2f(0, translateY));
-            windowTranslateY += translateY;
-            setting->moveUp(translateY);
+            if (windowTranslateY < 0) {
+                int translateY = landHeight / 15;
+                view->move(sf::Vector2f(0, translateY));
+                windowTranslateY += translateY;
+                setting->move(translateY);
+            }
+            
         }
         setting->handleEvent(event);
     }
@@ -380,12 +387,20 @@ void Endless::handleEvent() {
 
 void Endless::update() {
     setting->update();
+    for (int i = 0; i < laneVector.size(); i++) {
+        laneVector[i]->update();
+        
+    }
     if (isAddNewLane) {
         int i = laneVector.size();
         laneVector.push_back(new Lane(randomFirstLaneType()));
         laneVector[laneVector.size() - 1]->setPosition(0, 990 - landHeight * (i + 1));
+        for (int j = 0; j < laneVector[laneVector.size() - 1]->getStuffVector().size(); j++) {
+            stuffVector.push_back(laneVector[laneVector.size() - 1]->getStuffVector()[j]);
+        }
         isAddNewLane = 0;
     }
+ 
 }
 
 void Endless::render() {

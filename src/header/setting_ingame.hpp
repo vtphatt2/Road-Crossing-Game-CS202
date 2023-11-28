@@ -15,8 +15,10 @@ class Setting : public sf::Drawable
         void initShape();
         void handleEvent(sf::Event event);
         void update();
-        void moveUp(int translateY);
+        void move(int translateY);
     private:
+        sf::View *view;
+        
         void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
         sf::RenderWindow* window;

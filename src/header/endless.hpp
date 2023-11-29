@@ -38,6 +38,9 @@ class Endless : public State
         int cont_path = 0, cont_road = 0;
         int points = 0;
         bool railed = false, rivered = false, iced = false;
+        Lane* desertLane();
+        Lane* gardenLane();
+        Lane* snowLane();
 
 };
 

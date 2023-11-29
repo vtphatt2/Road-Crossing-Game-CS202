@@ -7,11 +7,14 @@
 #include "character.hpp"
 #include "endless.hpp"
 #include "classic.hpp"
+#include "player.hpp"
+
+class Player;
 
 class Mode : public State
 {
     public:
-        Mode(sf::RenderWindow* window, std::stack <State*>* states);
+        Mode(sf::RenderWindow* window, std::stack <State*>* states, Player* player);
         void initShape();
         void handleEvent();
         void update();
@@ -21,6 +24,7 @@ class Mode : public State
         std::stack <State*>* states;
         sf::Event event;
         sf::Vector2i mousePosition;
+        Player* player;
         int choice;
         sf::Texture backgroundTexture;
         sf::Sprite backgroundImage;

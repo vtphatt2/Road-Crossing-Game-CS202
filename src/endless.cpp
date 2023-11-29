@@ -1,9 +1,9 @@
 #include "header/endless.hpp"
 #include<iostream>
-Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states) : window(window), states(states) {
+Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* player) : window(window), states(states), player(player) {
     setting = new Setting(window, states);
-
     initShape();
+    player->renderInGame();
 }
 
 void Endless::initShape() {
@@ -356,13 +356,16 @@ void Endless::initShape() {
 }
 
 void Endless::handleEvent() {
+    const float movementSpeed = 10.0f; 
+    int framesPerDirection = 2;
     while (window->pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
             window->close();
-        }
+        }        
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
             window->close();
         }
+        
         if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W)) {
             int translateY = landHeight / 15;
             view->move(sf::Vector2f(0, -translateY));
@@ -371,15 +374,26 @@ void Endless::handleEvent() {
             if (-windowTranslateY % landHeight == 0) {
                 isAddNewLane = 1;
             }
+            player->update(1);
+            player->updateWindowBoundsCollision(window);
         }
-        if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)) {
+        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)) {
             if (windowTranslateY < 0) {
                 int translateY = landHeight / 15;
                 view->move(sf::Vector2f(0, translateY));
                 windowTranslateY += translateY;
                 setting->move(translateY);
             }
-            
+            player->update(2);
+            player->updateWindowBoundsCollision(window);
+        }
+        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)){
+            player->update(3);
+            player->updateWindowBoundsCollision(window);
+        }
+        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)){
+            player->update(4);
+            player->updateWindowBoundsCollision(window);
         }
         setting->handleEvent(event);
     }
@@ -408,5 +422,6 @@ void Endless::render() {
     for (int i = 0; i < laneVector.size(); i++) {
         window->draw(*laneVector[i]);
     }
+    window->draw(player->getPlayerSprite());
     window->draw(*setting);
 }

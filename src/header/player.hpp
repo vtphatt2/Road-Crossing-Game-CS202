@@ -5,36 +5,67 @@
 #include <stack>
 #include "state.hpp"
 #include "character.hpp"
+#include <unordered_map>
+#include <memory>
 
-class Player:public Character{
+#define movingBlue "../resource/player/MovingBlue.png"
+#define standingLeftBlue "../resource/player/StandingLeftBlue.png"
+#define standingRightBlue "../resource/player/StandingRightBlue.png"
+#define standingBlue "../resource/player/alienBlue.png"
+
+
+using namespace std;
+
+enum class PlayerSkin {
+    GREEN,
+    BLUE,
+    RED,
+    YELLOW,
+    BROWN,
+    NUM_SKINS,
+};
+
+class Player{
     public: 
-        Player(sf::RenderWindow* window, std::stack <State*>* states);
-        virtual ~Player(); 
-        void initPlayer(int characterIndex);
-        void reset(); 
-        void move(); 
-        void updateWindowBoundsCollision(); 
-        void changeCharacter(const std::string& newCharacterTexture);
-        void update();
-        void render(); 
-        void handleEvent();
+        Player(PlayerSkin initialSkin);
+        Player();
+        ~Player(); 
 
-        int getChosenCharacterIndex() const;
-        sf::Sprite getCharacter();
+        void initPlayer();
+        void resetPos(); 
+        void move(int direction); 
+        void update(int direction);
+        void updateWindowBoundsCollision(const sf::RenderWindow* window); 
+        const sf::Vector2f& getPosition() const;
+        sf::Sprite getPlayerSprite();
+        void renderInGame();
+        void move2();
+        void initMoveVariable();
+        void updateAnimation(int direction);
 
-    private: 
-        sf::RenderWindow* window;
-        std::stack <State*>* states;
-        sf::Event event;
-        sf::Vector2i mousePosition;
-
-        sf::Texture characterText;
-        sf::Sprite character;
+        //changing Skin
+        void changeSkinLeft();
+        void changeSkinRight();
+        void updatePlayerTexture(int skinIndex);
         
-        sf::Time time = sf::seconds(0.05f); 
-        sf::Clock clock;
-        const float movementSpeed = 50.f; 
-        void initPlayer();     
+    private: 
+        sf::Texture playerTexture;
+        sf::Sprite playerSprite;
+        PlayerSkin playerSkin; 
+        sf::IntRect currentFrame;
 
+        float movementSpeed;
+        float width;
+        float height;
+        float preWidth;
+        float preHeight;
+
+        bool isMoving;
+        int standNum;
+        int moveNum;
+        bool turnLeft;
+        bool isUp;
+
+        sf::Clock aniTime;
 };
 #endif

@@ -9,13 +9,16 @@
 #include "setting_ingame.hpp"
 #include "lane.hpp"
 #include"stuff.hpp"
+#include "player.hpp"
+
+class Player;
 class Endless : public State
 {
     public:
         sf::View *view;
         int windowTranslateY;
         bool isAddNewLane = 0;
-        Endless(sf::RenderWindow* window, std::stack <State*>* states);
+        Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* player);
         void initShape();
         void handleEvent();
         void update();
@@ -26,6 +29,7 @@ class Endless : public State
         std::stack <State*>* states;
         sf::Event event;
         sf::Vector2i mousePosition;
+        Player* player;
         int choice;
         std::vector<Stuff*> stuffVector;
         Setting* setting;

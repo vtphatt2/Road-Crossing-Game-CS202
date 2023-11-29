@@ -25,6 +25,10 @@ enum class PlayerSkin {
     NUM_SKINS,
 };
 
+enum class Direction{
+    None, Up, Down, Left, Right
+};
+
 class Player{
     public: 
         Player(PlayerSkin initialSkin);
@@ -33,15 +37,15 @@ class Player{
 
         void initPlayer();
         void resetPos(); 
-        void move(int direction); 
-        void update(int direction);
+        void move(Direction direction); 
+        void update(Direction direction);
         void updateWindowBoundsCollision(const sf::RenderWindow* window); 
         const sf::Vector2f& getPosition() const;
         sf::Sprite getPlayerSprite();
         void renderInGame();
         void move2();
         void initMoveVariable();
-        void updateAnimation(int direction);
+        void updateAnimation(Direction direction);
 
         //changing Skin
         void changeSkinLeft();

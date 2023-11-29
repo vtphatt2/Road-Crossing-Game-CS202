@@ -1,8 +1,11 @@
 #include "header/character.hpp"
+#include "header/player.hpp"
 
-Character::Character(sf::RenderWindow* window, std::stack <State*>* states) : window(window), states(states) {
+class Player;
+
+Character::Character(sf::RenderWindow* window, std::stack <State*>* states) : window(window), states(states), player(new Player(PlayerSkin::GREEN)){
     initShape();
-    initCharacter();
+    player->initPlayer();
 }
 
 void Character::initShape() {
@@ -47,53 +50,21 @@ void Character::initShape() {
     backButtonRect.height = 116;
 }
 
-void Character::initCharacter(){
-    // Load textures for all characters
-    for (int i = 0; i < NUM_CHARACTERS; ++i) {
-        characterTextures[i].loadFromFile("../resource/Character" + std::to_string(i + 1) + ".png");
-        characterImages[i].setTexture(characterTextures[i]);
-    }
-
-    // Set the initial character
-    currentCharacterIndex = 0;
-    CharacterImage = characterImages[currentCharacterIndex];
-    CharacterImage.setPosition(622, 412);
-
-}
-
-int Character::getCurrentCharacterIndex() const {
-    return currentCharacterIndex;
-}
-
 void Character::handleEvent() {
     while (window->pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
             window->close();
         }
-        if (event.type == sf::Event::KeyPressed) {
-            if (event.key.code == sf::Keyboard::Escape) {
-                window->close();
-            }
-        }
-
-        if (event.type == sf::Event::KeyPressed) {
-            // press left arrow key to turn back the previous window
-            if (event.key.code == sf::Keyboard::Left) {
-                states->pop();
-            }
-        }
 
         if (event.type == sf::Event::MouseButtonPressed) {
-            // Check if the right arrow button is clicked
             if (rightArrowButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
-                changeCharacterRight();
+                player->changeSkinRight();
             }
-            // Check if the left arrow button is clicked
             else if (leftArrowButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
-                changeCharacterLeft();
+                player->changeSkinLeft();
             }
             else if (playGameButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
-                states->push(new Mode(window, states));
+                states->push(new Mode(window, states, player));
             }
             else if (backButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
                 states->pop();
@@ -102,20 +73,7 @@ void Character::handleEvent() {
     }
 }
 
-void Character::changeCharacterRight() {
-    currentCharacterIndex = (currentCharacterIndex + 1) % NUM_CHARACTERS;
-    update();
-}
-
-void Character::changeCharacterLeft() {
-    currentCharacterIndex = (currentCharacterIndex - 1 + NUM_CHARACTERS) % NUM_CHARACTERS;
-    update();
-}
-
 void Character::update() {
-    characterImages[currentCharacterIndex].setPosition(622, 412); 
-    CharacterImage = characterImages[currentCharacterIndex];
-
     mousePosition = sf::Mouse::getPosition(*window);
     if (rightArrowButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) 
         rightArrowButtonImage.setColor(sf::Color(255, 255, 255, 255));
@@ -143,6 +101,6 @@ void Character::render() {
     window->draw(playGameButtonImage);
     window->draw(rightArrowButtonImage);
     window->draw(leftArrowButtonImage);
-    window->draw(characterImages[currentCharacterIndex]);
+    window->draw(player->getPlayerSprite());
     window->draw(backButtonImage);
 }

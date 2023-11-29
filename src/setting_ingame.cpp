@@ -5,6 +5,9 @@ Setting::Setting(sf::RenderWindow* window, std::stack <State*>* states) : window
 
 void Setting::initShape() {
 
+    view = new sf::View;
+    view->setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
+    view->setCenter(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2));
     FAQButtonTexture.loadFromFile("../resource/FAQ.png");
     FAQButtonImage.setTexture(FAQButtonTexture);
     FAQButtonImage.setPosition(1029, 895);
@@ -43,18 +46,22 @@ void Setting::handleEvent(sf::Event event) {
         {
             if(FAQButtonRect.contains(mousePosition)) 
             {
+                window->setView(*view);
                 states->push(new Instruction(window, states));
             }
             if(leaderboardButtonRect.contains(mousePosition)) 
             {
+                window->setView(*view);
                 states->push(new LeaderboardIngame(window, states));
             }
             if(settingButtonRect.contains(mousePosition)) 
             {
+                window->setView(*view);
                 states->push(new SettingIngame(window, states));
             }
             if(pauseButtonRect.contains(mousePosition)) 
             {
+                window->setView(*view);
                 states->push(new Pause(window, states));
             }
         }
@@ -83,7 +90,7 @@ void Setting::update() {
         pauseButtonImage.setColor(sf::Color(255, 255, 255, 220));
     }
 }
-void Setting::moveUp(int translateY) {
+void Setting::move(int translateY) {
     FAQButtonImage.move(0, translateY);
     leaderboardButtonImage.move(0, translateY);
     settingButtonImage.move(0, translateY);

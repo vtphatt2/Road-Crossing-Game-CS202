@@ -20,30 +20,6 @@ private:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	
 };
-laneType randomFirstLaneType();
-laneType randomDesertLaneType();
-laneType randomGardenLaneType();
-laneType randomSnowLaneType();
 int convertBiome();
 
-laneType randomDesert_NoDesertRail();
-laneType randomDesert_NoDesertRoad();
-laneType randomDesert_NoDesertPath();
-laneType randomDesert_NoDesertRailNoDesertRoad();
-laneType randomDesert_NoDesertRailNoDesertPath();
-
-laneType randomGarden_NoGrass();
-laneType randomGarden_NoRiver();
-laneType randomGarden_NoRoad();
-laneType randomGarden_NoRail();
-laneType randomGarden_NoRailNoRiver();
-laneType randomGarden_NoRailNoGrass();
-laneType randomGarden_NoRailNoRoad();
-
-laneType randomSnow_NoSnowPath();
-laneType randomSnow_NoIce();
-laneType randomSnow_NoRoad();
-laneType randomSnow_NoRail();
-laneType randomSnow_NoRailNoSnowPath();
-laneType randomSnow_NoRailNoIce();
-laneType randomSnow_NoRailNoRoad();
+laneType randomFirstLaneType();

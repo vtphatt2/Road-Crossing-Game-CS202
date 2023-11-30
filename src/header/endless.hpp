@@ -16,6 +16,8 @@ class Endless : public State
 {
     public:
         sf::View *view;
+        sf::Time Time;
+        sf::Clock Clock;
         int windowTranslateY;
         bool isAddNewLane = 0;
         Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* player);

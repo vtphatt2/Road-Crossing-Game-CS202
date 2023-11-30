@@ -39,7 +39,7 @@ class Player{
         void resetPos(); 
         void move(Direction direction); 
         void update(Direction direction);
-        void updateWindowBoundsCollision(const sf::RenderWindow* window); 
+        void updateWindowBoundsCollision(const sf::RenderWindow* window, int translateY = 0); 
         const sf::Vector2f& getPosition() const;
         sf::Sprite getPlayerSprite();
         void renderInGame();

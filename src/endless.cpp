@@ -8,7 +8,7 @@ Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* 
 
 Lane* Endless::snowLane()
 {
-    Lane* lane;
+    Lane* lane = nullptr;
     if(snow >= 10)
     {
         desert = 0;
@@ -276,7 +276,7 @@ Lane* Endless::snowLane()
 
 Lane* Endless::desertLane()
 {
-    Lane* lane;
+    Lane* lane = nullptr;
     if(desert >= 10)
     {
         desert = 0;
@@ -433,7 +433,7 @@ Lane* Endless::desertLane()
 
 Lane* Endless::gardenLane()
 {
-    Lane* lane;
+    Lane* lane = nullptr;
     if(garden >= 10)
     {
         desert = 0;
@@ -699,7 +699,7 @@ void Endless::initShape() {
     view->setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
     view->setCenter(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2));
     windowTranslateY = 0;
-    
+    Time = sf::Time::Zero;
     srand(time(0));
     for (int i = 0; i < 10; i++) {
         Lane *lane;
@@ -749,33 +749,20 @@ void Endless::handleEvent() {
         }
         
         if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W)) {
-            int translateY = landHeight / 15;
-            view->move(sf::Vector2f(0, -translateY));
-            windowTranslateY -= translateY;
-            setting->move(-translateY);
-            if (-windowTranslateY % landHeight == 0) {
-                isAddNewLane = 1;
-            }
             player->update(static_cast<Direction>(1));
-            player->updateWindowBoundsCollision(window);
+            player->updateWindowBoundsCollision(window, windowTranslateY);
         }
         else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)) {
-            if (windowTranslateY < 0) {
-                int translateY = landHeight / 15;
-                view->move(sf::Vector2f(0, translateY));
-                windowTranslateY += translateY;
-                setting->move(translateY);
-            }
             player->update(static_cast<Direction>(2));
-            player->updateWindowBoundsCollision(window);
+            player->updateWindowBoundsCollision(window, windowTranslateY);
         }
         else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)){
             player->update(static_cast<Direction>(3));
-            player->updateWindowBoundsCollision(window);
+            player->updateWindowBoundsCollision(window, windowTranslateY);
         }
         else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)){
             player->update(static_cast<Direction>(4));
-            player->updateWindowBoundsCollision(window);
+            player->updateWindowBoundsCollision(window, windowTranslateY);
         }
         else {
             player->update(static_cast<Direction>(0));
@@ -792,7 +779,7 @@ void Endless::update()
     if (isAddNewLane) 
     {
         int i = laneVector.size();
-        Lane *lane;
+        Lane *lane = nullptr;
         
         if(desert != 0) lane = desertLane();
         else if(garden != 0) lane = gardenLane();
@@ -806,6 +793,16 @@ void Endless::update()
             stuffVector.push_back(laneVector[laneVector.size() - 1]->getStuffVector()[j]);
         }
         isAddNewLane = 0;
+    }
+    Time = Clock.getElapsedTime();
+    if (Time.asSeconds() >= 0.01) {
+        view->move(0, -1);
+        setting->move(-1);
+        windowTranslateY += -1;
+        if (-windowTranslateY % landHeight == 0) {
+            isAddNewLane = 1;
+        }
+        Clock.restart();
     }
  
 }

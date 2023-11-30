@@ -3,7 +3,7 @@
 #include "stuff.hpp"
 const int landHeight = 165;
 enum class laneType {
-	desert_path, desert_road, road, grass, river, snow_path, rail, desert_rail, ice
+	desert_path, desert_road, road, grass, river, snow_path, rail, desert_rail, ice, desert_first_lane, garden_first_lane, snow_first_lane
 };
 
 class Lane: public sf::Drawable

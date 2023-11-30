@@ -123,6 +123,15 @@ Lane::Lane(laneType type) : type(type) {
 			stuffVector.push_back(new Bat());
 		}
 		break;
+	case laneType::desert_first_lane:
+		texture.loadFromFile("../resource/lane/desert_path_plain.png");
+		break;
+	case laneType::garden_first_lane:
+		texture.loadFromFile("../resource/lane/grass_plain.png");
+		break;
+	case laneType::snow_first_lane:
+		texture.loadFromFile("../resource/lane/snow_path_plain.png");
+		break;
 	}
 	for (int i = 0; i < stuffVector.size(); i++) {
 		stuffVector[i]->setSpeed(((rand() % 2) + 1) * 0.01 * 60);
@@ -234,13 +243,13 @@ laneType randomFirstLaneType() {
 	switch (randomNum)
 	{
 	case 0:
-		type = laneType::desert_path;
+		type = laneType::desert_first_lane;
 		break;
 	case 1:
-		type = laneType::grass;
+		type = laneType::garden_first_lane;
 		break;
 	case 2:
-		type = laneType::snow_path;
+		type = laneType::snow_first_lane;
 		break;
 	}
 	return type;

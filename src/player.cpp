@@ -196,18 +196,42 @@ void Player::updatePlayerTexture(int index){
 }
 
 void Player::updateWindowBoundsCollision(const sf::RenderWindow* window, int translateY){
-	if (this->playerSprite.getGlobalBounds().left <= 0.f)
-		this->playerSprite.setPosition(0.f, this->playerSprite.getGlobalBounds().top + translateY);
-	
-	if (this->playerSprite.getGlobalBounds().left + this->playerSprite.getGlobalBounds().width >= window->getSize().x)
-		this->playerSprite.setPosition(window->getSize().x - this->playerSprite.getGlobalBounds().width, this->playerSprite.getGlobalBounds().top + translateY);
+	//Top edge
+    if (this->playerSprite.getGlobalBounds().top <= translateY) {
+		this->playerSprite.setPosition(
+			this->playerSprite.getPosition().x,
+			translateY
+		);
+	}
 
-	if (this->playerSprite.getGlobalBounds().top <= translateY)
-		this->playerSprite.setPosition(this->playerSprite.getGlobalBounds().left, translateY);
-	
-	if (this->playerSprite.getGlobalBounds().top + this->playerSprite.getGlobalBounds().height >= window->getSize().y + translateY)
-		this->playerSprite.setPosition(this->playerSprite.getGlobalBounds().left, window->getSize().y - this->playerSprite.getGlobalBounds().height + translateY);
+	//Right edge
+    if (this->playerSprite.getGlobalBounds().left + this->playerSprite.getGlobalBounds().width >= window->getSize().x){
+        this->playerSprite.setPosition(
+            window->getSize().x - this->playerSprite.getGlobalBounds().width,
+            this->playerSprite.getPosition().y
+        );
+	}
+
+	//Left edge
+    if (this->playerSprite.getGlobalBounds().left <= 0.f){
+        this->playerSprite.setPosition(
+            0.f,
+            this->playerSprite.getPosition().y
+        );
+	}
+
+	// Bottom edge
+	if (this->playerSprite.getGlobalBounds().top + this->playerSprite.getGlobalBounds().height >= window->getSize().y + translateY) {
+		this->playerSprite.setPosition(
+			this->playerSprite.getPosition().x,
+			window->getSize().y - this->playerSprite.getGlobalBounds().height + translateY
+		);
+	}
 }
+
+
+
+
 
 const sf::Vector2f& Player::getPosition() const {
     return playerSprite.getPosition();

@@ -221,7 +221,7 @@ void Player::updateWindowBoundsCollision(const sf::RenderWindow* window, int tra
 	}
 
 	// Bottom edge
-	if (this->playerSprite.getGlobalBounds().top + this->playerSprite.getGlobalBounds().height >= window->getSize().y + translateY) {
+	if (this->playerSprite.getGlobalBounds().top + this->playerSprite.getGlobalBounds().height >= int(window->getSize().y) + translateY) {
 		this->playerSprite.setPosition(
 			this->playerSprite.getPosition().x,
 			window->getSize().y - this->playerSprite.getGlobalBounds().height + translateY

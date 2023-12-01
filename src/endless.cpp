@@ -802,6 +802,7 @@ void Endless::update()
         if (-windowTranslateY % landHeight == 0) {
             isAddNewLane = 1;
         }
+        player->updateWindowBoundsCollision(window, windowTranslateY);
         Clock.restart();
     }
  

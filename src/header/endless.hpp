@@ -10,6 +10,7 @@
 #include "lane.hpp"
 #include"stuff.hpp"
 #include "player.hpp"
+#include "lose.hpp"
 
 class Player;
 class Endless : public State
@@ -25,6 +26,8 @@ class Endless : public State
         void handleEvent();
         void update();
         void render();
+        bool playerCollision(Stuff* stuff);
+        void applyBlurEffect();
         
     private:
         sf::RenderWindow* window;
@@ -43,6 +46,8 @@ class Endless : public State
         Lane* desertLane();
         Lane* gardenLane();
         Lane* snowLane();
+        sf::SoundBuffer gameOverBuffer;
+        sf::Sound gameOverSound;
 
 };
 

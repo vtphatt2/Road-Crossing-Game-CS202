@@ -100,7 +100,7 @@ void Menu::handleEvent() {
 
         if (event.type == sf::Event::MouseButtonPressed) {
             if (newGameButtonRect.contains(mousePosition.x, mousePosition.y)) {
-                states->push(new Character(window, states));
+                states->push(new Character(window, states, music));
             }
             //else if (loadGameButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
             //    states->push(new LoadGame(window, states));

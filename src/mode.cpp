@@ -1,6 +1,6 @@
 #include "header/mode.hpp"
 
-Mode::Mode(sf::RenderWindow* window, std::stack <State*>* states, Player* player) : window(window), states(states), player(player) {
+Mode::Mode(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) {
     initShape();
 
 }
@@ -63,7 +63,7 @@ void Mode::handleEvent() {
 
             // Check if the endless button is clicked
             if (EndlessButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
-                states->push(new Endless(window, states, player));
+                states->push(new Endless(window, states, player, music));
             }
             if (backButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
                 states->pop();

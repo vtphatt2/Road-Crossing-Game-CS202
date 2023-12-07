@@ -3,7 +3,7 @@
 
 class Player;
 
-Character::Character(sf::RenderWindow* window, std::stack <State*>* states) : window(window), states(states), player(new Player(PlayerSkin::GREEN)){
+Character::Character(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music) : window(window), states(states), player(new Player(PlayerSkin::GREEN)), music(music){
     initShape();
     player->initPlayer();
 }
@@ -64,7 +64,7 @@ void Character::handleEvent() {
                 player->changeSkinLeft();
             }
             else if (playGameButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
-                states->push(new Mode(window, states, player));
+                states->push(new Mode(window, states, player, music));
             }
             else if (backButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
                 states->pop();

@@ -13,6 +13,7 @@
 #include "lose.hpp"
 
 class Player;
+class Lose;
 class Endless : public State
 {
     public:
@@ -21,19 +22,19 @@ class Endless : public State
         sf::Clock Clock;
         int windowTranslateY;
         bool isAddNewLane = 0;
-        Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* player);
+        Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music);
         void initShape();
         void handleEvent();
         void update();
         void render();
-        bool playerCollision(Stuff* stuff);
-        void applyBlurEffect();
+        void playerCollision(std::vector<Stuff*> stuffVector);
         
     private:
         sf::RenderWindow* window;
         std::stack <State*>* states;
         sf::Event event;
         sf::Vector2i mousePosition;
+        sf::Music& music;
         Player* player;
         int choice;
         std::vector<Stuff*> stuffVector;
@@ -48,7 +49,9 @@ class Endless : public State
         Lane* snowLane();
         sf::SoundBuffer gameOverBuffer;
         sf::Sound gameOverSound;
-
+        sf::RenderTexture renderTexture;
+        sf::Shader blurShader;
+        sf::Clock gameOverClock; 
 };
 
 #endif

@@ -7,6 +7,7 @@
 #include <SFML/Audio.hpp>
 #include "state.hpp"
 #include "entry.hpp"
+#include "lose.hpp"
 
 class Game {
     public :

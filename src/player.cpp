@@ -229,10 +229,10 @@ void Player::updateWindowBoundsCollision(const sf::RenderWindow* window, int tra
 	}
 }
 
-
-
-
-
 const sf::Vector2f& Player::getPosition() const {
     return playerSprite.getPosition();
+}
+
+void Player::setMovementSpeed(float speed){
+	movementSpeed = speed;
 }

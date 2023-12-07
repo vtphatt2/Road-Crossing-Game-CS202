@@ -3,10 +3,10 @@
 Game::Game() : widthWindow(1430), heightWindow(990) {
     window = new sf::RenderWindow(sf::VideoMode(widthWindow, heightWindow), "ROAD CROSSING");
     window->setFramerateLimit(60);
-    //states.push(new Entry(window, &states));
+    states.push(new Entry(window, &states));
 
     // // debugg
-    states.push(new Character(window, &states));
+    //states.push(new Lose(window, &states, music));
 }
 
 Game::~Game() {

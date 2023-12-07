@@ -1,6 +1,6 @@
 #include "header/endless.hpp"
 #include<iostream>
-Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* player) : window(window), states(states), player(player) {
+Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) {
     setting = new Setting(window, states);
     initShape();
     if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
@@ -799,16 +799,7 @@ void Endless::update()
         isAddNewLane = 0;
     }
 
-    for (auto& obj : stuffVector) {
-        if (playerCollision(obj)) {
-            cout << "Collision detected" <<endl;
-            gameOverSound.play();
-            //states->push(new Lose(window, states, player));
-            break;          
-        }
-    }
-
-
+    bool gameRunning = true;
     Time = Clock.getElapsedTime();
     if (Time.asSeconds() >= 0.01) {
         view->move(0, -1);
@@ -818,36 +809,47 @@ void Endless::update()
             isAddNewLane = 1;
         }
         player->updateWindowBoundsCollision(window, windowTranslateY);
+        playerCollision(stuffVector); 
         Clock.restart();
     }
- 
+
 }
 
-bool Endless::playerCollision(Stuff* stuff) {
-    bool isCollision = player->getPlayerSprite().getGlobalBounds().intersects(stuff->getGlobalBounds());
-    return isCollision;
-}
+void Endless::playerCollision(std::vector<Stuff*> stuffVector) {
+    bool isCollision = false; 
+    bool loseScreenDisplayed = false;
 
-// void Endless::render() {
-//     window->setView(*view);
-//     for (int i = 0; i < laneVector.size(); i++) {
-//         window->draw(*laneVector[i]);
-//     }
-//     window->draw(player->getPlayerSprite());
-//     window->draw(*setting);
-// }
+    for (auto& stuff : stuffVector) {
+        isCollision = player->getPlayerSprite().getGlobalBounds().intersects(stuff->getGlobalBounds());
+        if (isCollision) {
+            isCollision = true;
+            gameOverSound.play();        
+            player->setMovementSpeed(0);
+            for (auto& stuff : stuffVector) {
+                stuff->setSpeed(0);
+            }
+            sf::Clock delayTimer;
+            while (delayTimer.getElapsedTime().asSeconds() < 5.0f) {
+                // Wait for 3 seconds
+            }
+            states->push(new Lose(window, states, music));
+            break;
+        }
+    } 
+
+}
 
 void Endless::render() {
     window->setView(*view);
-    applyBlurEffect();
-
-    if (!states->empty() && dynamic_cast<Lose*>(states->top()) != nullptr) {
-        states->top()->render();
-    } else {
-        for (int i = 0; i < laneVector.size(); i++) {
-            window->draw(*laneVector[i]);
-        }
-        window->draw(player->getPlayerSprite());
-        window->draw(*setting);
+    for (int i = 0; i < laneVector.size(); i++) {
+        window->draw(*laneVector[i]);
     }
+    window->draw(player->getPlayerSprite());
+    window->draw(*setting);
 }
+
+
+
+
+
+

@@ -43,9 +43,9 @@ class Player{
         const sf::Vector2f& getPosition() const;
         sf::Sprite getPlayerSprite();
         void renderInGame();
-        void move2();
         void initMoveVariable();
         void updateAnimation(Direction direction);
+        void setMovementSpeed(float speed);
 
         //changing Skin
         void changeSkinLeft();

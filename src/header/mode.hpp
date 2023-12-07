@@ -14,7 +14,7 @@ class Player;
 class Mode : public State
 {
     public:
-        Mode(sf::RenderWindow* window, std::stack <State*>* states, Player* player);
+        Mode(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music);
         void initShape();
         void handleEvent();
         void update();
@@ -25,6 +25,7 @@ class Mode : public State
         sf::Event event;
         sf::Vector2i mousePosition;
         Player* player;
+        sf::Music& music;
         int choice;
         sf::Texture backgroundTexture;
         sf::Sprite backgroundImage;

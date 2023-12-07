@@ -47,6 +47,11 @@ class Endless : public State
         Lane* desertLane();
         Lane* gardenLane();
         Lane* snowLane();
+
+        sf::Texture scoreBoardTexture;
+        sf::Sprite scoreBoardImage;
+        sf::IntRect scoreBoardRect;
+
         sf::SoundBuffer gameOverBuffer;
         sf::Sound gameOverSound;
         sf::RenderTexture renderTexture;

@@ -703,8 +703,18 @@ void Endless::initShape() {
     view->setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
     view->setCenter(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2));
     windowTranslateY = 0;
+    
+    scoreBoardTexture.loadFromFile("../resource/Score.png");
+    scoreBoardImage.setTexture(scoreBoardTexture);
+    scoreBoardImage.setPosition(1075, 990 - 12);
+    scoreBoardRect.left = scoreBoardImage.getPosition().x;
+    scoreBoardRect.top = scoreBoardImage.getPosition().y;
+    scoreBoardRect.width = scoreBoardImage.getGlobalBounds().width;
+    scoreBoardRect.height = scoreBoardImage.getGlobalBounds().height;
+
     Time = sf::Time::Zero;
     srand(time(0));
+
     for (int i = 0; i < 10; i++) {
         Lane *lane;
         if(i == 0)
@@ -851,6 +861,7 @@ void Endless::render() {
     for (int i = 0; i < laneVector.size(); i++) {
         window->draw(*laneVector[i]);
     }
+    window->draw(scoreBoardImage);
     window->draw(player->getPlayerSprite());
     window->draw(*setting);
 }

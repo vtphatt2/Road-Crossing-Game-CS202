@@ -46,6 +46,7 @@ class Player{
         void initMoveVariable();
         void updateAnimation(Direction direction);
         void setMovementSpeed(float speed);
+        bool isCollisionWithMargin(const sf::FloatRect stuffGlobalBound, float margin);
 
         //changing Skin
         void changeSkinLeft();

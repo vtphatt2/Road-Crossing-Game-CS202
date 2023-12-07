@@ -236,3 +236,15 @@ const sf::Vector2f& Player::getPosition() const {
 void Player::setMovementSpeed(float speed){
 	movementSpeed = speed;
 }
+
+bool Player::isCollisionWithMargin(const sf::FloatRect stuffGlobalBound, float margin) {
+    sf::FloatRect bounds1 = playerSprite.getGlobalBounds();
+    sf::FloatRect bounds2 = stuffGlobalBound;
+
+    bounds1.left -= margin;
+    bounds1.top -= margin;
+    bounds1.width += 2 * margin;
+    bounds1.height += 2 * margin;
+
+    return bounds1.intersects(bounds2);
+}

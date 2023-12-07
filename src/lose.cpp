@@ -1,22 +1,30 @@
 #include "header/lose.hpp"
 #include<iostream>
-Lose::Lose(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music) : window(window), states(states), music(music) {
+Lose::Lose(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, sf::Texture background) : window(window), states(states), music(music), background(background) {
     window->setView(window->getDefaultView());
     initShape();
 }
 
 void Lose::initShape() {
+    backgroundImage.setTexture(background);
+    backgroundImage.setPosition(0, 0); 
+    backgroundImage.setColor(sf::Color(255, 255, 255, 90));
+
     boardTexture.loadFromFile("../resource/lose/Board.png");
     boardImage.setTexture(boardTexture);
     boardImage.setPosition(367, 216);  
 
     loseTexture.loadFromFile("../resource/lose/lose.png");
     loseImage.setTexture(loseTexture);
-    loseImage.setPosition(318, 44);   
+    loseImage.setPosition(318, 44); 
+
+    scoreTitleTexture.loadFromFile("../resource/lose/scoreTitle.png");
+    scoreTitleImage.setTexture(scoreTitleTexture);
+    scoreTitleImage.setPosition(609, 315);
     
     restartButtonTexture.loadFromFile("../resource/lose/restart.png");
     restartButtonImage.setTexture(restartButtonTexture);
-    restartButtonImage.setPosition(554, 677);
+    restartButtonImage.setPosition(579, 677);
     restartButtonImage.setColor(sf::Color(255, 255, 255, 220));
     restartButtonRect.left = restartButtonImage.getPosition().x;  
     restartButtonRect.top = restartButtonImage.getPosition().y;  
@@ -25,7 +33,7 @@ void Lose::initShape() {
 
     menuButtonTexture.loadFromFile("../resource/lose/menu.png");
     menuButtonImage.setTexture(menuButtonTexture);
-    menuButtonImage.setPosition(707, 677);
+    menuButtonImage.setPosition(719, 677);
     menuButtonImage.setColor(sf::Color(255, 255, 255, 220));
     menuButtonRect.left = menuButtonImage.getPosition().x;    
     menuButtonRect.top = menuButtonImage.getPosition().y;  
@@ -64,8 +72,10 @@ void Lose::update() {
 }
 
 void Lose::render() {
+    window->draw(backgroundImage);
     window->draw(boardImage);
     window->draw(loseImage);
     window->draw(restartButtonImage);
     window->draw(menuButtonImage);
+    window->draw(scoreTitleImage);
 }

@@ -815,12 +815,14 @@ void Endless::update()
 
 }
 
+
 void Endless::playerCollision(std::vector<Stuff*> stuffVector) {
     bool isCollision = false; 
     bool loseScreenDisplayed = false;
 
     for (auto& stuff : stuffVector) {
-        isCollision = player->getPlayerSprite().getGlobalBounds().intersects(stuff->getGlobalBounds());
+        float negativeMargin = -5.0f;
+        isCollision = player->isCollisionWithMargin(stuff->getGlobalBounds(), negativeMargin);
         if (isCollision) {
             isCollision = true;
             gameOverSound.play();        
@@ -828,11 +830,16 @@ void Endless::playerCollision(std::vector<Stuff*> stuffVector) {
             for (auto& stuff : stuffVector) {
                 stuff->setSpeed(0);
             }
+
+            sf::Texture backgroundTexture;
+            backgroundTexture.create(window->getSize().x, window->getSize().y);
+            backgroundTexture.update(*window);
+
             sf::Clock delayTimer;
-            while (delayTimer.getElapsedTime().asSeconds() < 5.0f) {
-                // Wait for 3 seconds
+            while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
+                // Wait for 2 seconds
             }
-            states->push(new Lose(window, states, music));
+            states->push(new Lose(window, states, music, backgroundTexture));
             break;
         }
     } 

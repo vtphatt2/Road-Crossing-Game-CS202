@@ -7,11 +7,14 @@
 #include <iostream>
 #include <SFML/Audio.hpp>
 #include "setting_ingame.hpp"
+#include "player.hpp"
+
+class Player;
 
 class Levels : public State
 {
     public:
-        Levels(sf::RenderWindow* window, std::stack <State*>* states);
+        Levels(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music);
         void initShape();
         void handleEvent();
         void update();
@@ -22,7 +25,12 @@ class Levels : public State
         std::stack <State*>* states;
         sf::Event event;
         sf::Vector2i mousePosition;
+        sf::Music& music;
+        Player* player;
         
+        sf::SoundBuffer gameOverBuffer;
+        sf::Sound gameOverSound; 
+
         sf::Texture backgroundTexture;
         sf::Sprite backgroundImage;
 

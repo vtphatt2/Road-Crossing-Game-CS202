@@ -822,45 +822,59 @@ void Endless::update()
         }
         player->updateWindowBoundsCollision(window, windowTranslateY);
         playerCollision(stuffVector); 
+        notBridge();
         Clock.restart();
     }
     increaseSpeedTime = increaseSpeedClock.getElapsedTime();
     if (increaseSpeedTime.asSeconds() >= 15) {
         speedCoe *= 1.3;
         increaseSpeedClock.restart();
-    }
+    }    
+}
 
+void Endless::notBridge(){
+    laneType playerLaneType = laneType::river; 
+    for (const auto& lane : laneVector) {
+        if (player->getPlayerSprite().getPosition().y+92.f >= lane->getPosition().y && player->getPlayerSprite().getPosition().y +92.f < lane->getPosition().y + 165.f) {
+            playerLaneType = lane->type;
+            if (lane->type == laneType::river) {
+                Bridge* bridges = lane->getBridge();
+                sf::Vector2f bridge0 = bridges[0].getPosition();
+                sf::Vector2f bridge1 = bridges[1].getPosition();
+                sf::Vector2f playerB = player->getPlayerSprite().getPosition();
+                if ((playerB.x >= bridge0.x && playerB.x <= bridge0.x + bridges[0].getGlobalBounds().width) || 
+                (playerB.x >= bridge1.x && playerB.x <= bridge1.x + bridges[1].getGlobalBounds().width)){}
+                else gameOver();
+            }
+        }
+    }
 }
 
 
 void Endless::playerCollision(std::vector<Stuff*> stuffVector) {
-    bool isCollision = false; 
-    bool loseScreenDisplayed = false;
-
     for (auto& stuff : stuffVector) {
         float negativeMargin = -5.0f;
-        isCollision = player->isCollisionWithMargin(stuff->getGlobalBounds(), negativeMargin);
-        if (isCollision) {
-            isCollision = true;
-            gameOverSound.play();        
-            player->setMovementSpeed(0);
-            for (auto& stuff : stuffVector) {
-                stuff->setSpeed(0);
-            }
-
-            sf::Texture backgroundTexture;
-            backgroundTexture.create(window->getSize().x, window->getSize().y);
-            backgroundTexture.update(*window);
-
-            sf::Clock delayTimer;
-            while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
-                // Wait for 2 seconds
-            }
-            states->push(new Lose(window, states, music, backgroundTexture));
-            break;
-        }
+        bool isCollision = player->isCollisionWithMargin(stuff->getGlobalBounds(), negativeMargin);
+        if (isCollision) gameOver();
     } 
+}
 
+void Endless::gameOver(){
+    gameOverSound.play();        
+    player->setMovementSpeed(0);
+    for (auto& stuff : stuffVector) {
+        stuff->setSpeed(0);
+    }
+
+    sf::Texture backgroundTexture;
+    backgroundTexture.create(window->getSize().x, window->getSize().y);
+    backgroundTexture.update(*window);
+
+    sf::Clock delayTimer;
+    while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
+        // Wait for 2 seconds
+    }
+    states->push(new Lose(window, states, music, backgroundTexture));
 }
 
 void Endless::render() {
@@ -876,9 +890,3 @@ void Endless::render() {
     }
     window->draw(*setting);
 }
-
-
-
-
-
-

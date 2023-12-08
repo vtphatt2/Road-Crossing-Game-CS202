@@ -11,9 +11,12 @@
 #include"stuff.hpp"
 #include "player.hpp"
 #include "lose.hpp"
+#include "lane.hpp"
 
 class Player;
 class Lose;
+enum class laneType;
+class Bridge;
 class Endless : public State
 {
     public:
@@ -28,6 +31,8 @@ class Endless : public State
         void update();
         void render();
         void playerCollision(std::vector<Stuff*> stuffVector);
+        void gameOver();
+        void notBridge();
         
     private:
         sf::RenderWindow* window;
@@ -53,10 +58,7 @@ class Endless : public State
         sf::IntRect scoreBoardRect;
 
         sf::SoundBuffer gameOverBuffer;
-        sf::Sound gameOverSound;
-        sf::RenderTexture renderTexture;
-        sf::Shader blurShader;
-        sf::Clock gameOverClock; 
+        sf::Sound gameOverSound; 
 
         sf::Time increaseSpeedTime;
         sf::Clock increaseSpeedClock;

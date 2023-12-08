@@ -58,7 +58,7 @@ void Mode::handleEvent() {
         if (event.type == sf::Event::MouseButtonPressed) {
             // Check if the classic button is clicked
             if (ClassicButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
-                states->push(new Levels(window, states));
+                states->push(new Levels(window, states, player, music));
             }
 
             // Check if the endless button is clicked

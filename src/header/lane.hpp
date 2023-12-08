@@ -16,6 +16,7 @@ public:
 	void update();
 	laneType type;
 	std::vector<Stuff*> getStuffVector();
+	Bridge* getBridge();
 private:
 	sf::Texture texture;
 	sf::Sprite sprite;

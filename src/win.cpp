@@ -22,10 +22,6 @@ void Win::initShape() {
     starImage.setTexture(starTexture);
     starImage.setPosition(554, 423); 
 
-    levelTitleTexture.loadFromFile("../resource/lose/scoreTitle.png");
-    levelTitleImage.setTexture(levelTitleTexture);
-    levelTitleImage.setPosition(609, 315);
-    
     nextButtonTexture.loadFromFile("../resource/lose/next.png");
     nextButtonImage.setTexture(nextButtonTexture);
     nextButtonImage.setPosition(579, 677);
@@ -43,6 +39,21 @@ void Win::initShape() {
     menuButtonRect.top = menuButtonImage.getPosition().y;  
     menuButtonRect.width = menuButtonImage.getGlobalBounds().width;
     menuButtonRect.height = menuButtonImage.getGlobalBounds().height;
+
+    if (!font.loadFromFile("../resource/Inter-Bold.ttf")) {
+        cout << "Error" <<endl;
+    }
+
+    // Create text object
+    level.setFont(font);
+    level.setString("Level xx");
+    level.setCharacterSize(70);
+    level.setFillColor(sf::Color(214, 176, 141)); // #D6B08D in RGB
+    level.setStyle(sf::Text::Bold);
+    float outlineThickness = 3.0f;
+    level.setOutlineColor(sf::Color(174, 118, 64));
+    level.setOutlineThickness(outlineThickness);    
+    level.setPosition(570, 315);
 }
 
 void Win::handleEvent() {
@@ -56,7 +67,7 @@ void Win::handleEvent() {
                 states->push(new Menu(window, states, music));
             }
             if (nextButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
-                //states->push(new Character(Window, states, music));
+                //states->push(new Levels(window, states, music));
             }
         }
     }
@@ -82,5 +93,5 @@ void Win::render() {
     window->draw(starImage);
     window->draw(nextButtonImage);
     window->draw(menuButtonImage);
-    window->draw(levelTitleImage);
+    window->draw(level);
 }

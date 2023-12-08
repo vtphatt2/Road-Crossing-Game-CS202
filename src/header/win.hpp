@@ -39,8 +39,8 @@ class Win: public State{
         sf::Texture starTexture;
         sf::Sprite starImage;
 
-        sf::Texture levelTitleTexture;
-        sf::Sprite levelTitleImage;
+        sf::Text level;
+        sf::Font font;
 
         sf::Texture nextButtonTexture;
         sf::Sprite nextButtonImage;

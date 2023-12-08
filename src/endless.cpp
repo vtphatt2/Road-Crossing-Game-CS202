@@ -843,7 +843,11 @@ void Endless::notBridge(){
                 sf::Vector2f playerB = player->getPlayerSprite().getPosition();
                 if ((playerB.x >= bridge0.x && playerB.x <= bridge0.x + bridges[0].getGlobalBounds().width) || 
                 (playerB.x >= bridge1.x && playerB.x <= bridge1.x + bridges[1].getGlobalBounds().width)){}
-                else gameOver();
+                else {
+                    player->updatePlayerDrown();
+                    window->draw(player->getPlayerSprite());
+                    gameOver();
+                }
             }
         }
     }

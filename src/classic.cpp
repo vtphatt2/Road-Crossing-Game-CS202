@@ -1,8 +1,13 @@
 #include "header/classic.hpp"
 
-Levels::Levels(sf::RenderWindow* window, std::stack <State*>* states) : window(window), states(states) 
+Levels::Levels(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) 
 {
     initShape();
+    if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
+        cout << "Cannot load soundfile" << endl;
+    }
+    gameOverSound.setBuffer(gameOverBuffer);
+    player->renderInGame();
 }
 
 void Levels::initShape()

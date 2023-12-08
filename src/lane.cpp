@@ -250,3 +250,7 @@ laneType randomFirstLaneType() {
 	}
 	return type;
 }
+
+Bridge* Lane::getBridge(){
+	return bridge;
+}

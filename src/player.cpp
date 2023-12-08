@@ -248,3 +248,26 @@ bool Player::isCollisionWithMargin(const sf::FloatRect stuffGlobalBound, float m
 
     return bounds1.intersects(bounds2);
 }
+
+void Player::updatePlayerDrown(){
+	std::string texturePath;
+	switch (playerSkin) {
+        case PlayerSkin::GREEN:
+            texturePath = "../resource/player/alienGreen_duck.png";
+            break;
+        case PlayerSkin::BLUE:
+            texturePath = "../resource/player/alienBlue_duck.png";
+            break;
+        case PlayerSkin::RED:
+            texturePath = "../resource/player/alienPink_duck.png";
+            break;
+		case PlayerSkin::YELLOW:
+            texturePath = "../resource/player/alienYellow_duck.png";
+            break;
+		case PlayerSkin::BROWN:
+            texturePath = "../resource/player/alienBeige_duck.png";
+            break;        
+    }
+	playerTexture.loadFromFile(texturePath);
+    playerSprite.setTexture(playerTexture);
+}

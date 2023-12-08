@@ -12,9 +12,11 @@
 #include "player.hpp"
 #include "lose.hpp"
 #include "lane.hpp"
+#include "win.hpp"
 
 class Player;
 class Lose;
+class Win;
 enum class laneType;
 class Bridge;
 class Endless : public State

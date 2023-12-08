@@ -821,7 +821,6 @@ void Endless::update()
         }
         player->updateWindowBoundsCollision(window, windowTranslateY);
         playerCollision(stuffVector); 
-        notBridge();
         Clock.restart();
     }
     increaseSpeedTime = increaseSpeedClock.getElapsedTime();
@@ -829,6 +828,8 @@ void Endless::update()
         speedCoe *= 1.3;
         increaseSpeedClock.restart();
     }    
+
+    notBridge();
 }
 
 void Endless::notBridge(){
@@ -877,7 +878,7 @@ void Endless::gameOver(){
     while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
         // Wait for 2 seconds
     }
-    states->push(new Lose(window, states, music, backgroundTexture));
+    states->push(new Win(window, states, music, backgroundTexture));
 }
 
 void Endless::render() {

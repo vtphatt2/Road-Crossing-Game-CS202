@@ -713,6 +713,7 @@ void Endless::initShape() {
     scoreBoardRect.height = scoreBoardImage.getGlobalBounds().height;
 
     Time = sf::Time::Zero;
+    increaseSpeedTime = sf::Time::Zero;
     srand(time(0));
 
     for (int i = 0; i < 10; i++) {
@@ -821,6 +822,13 @@ void Endless::update()
         player->updateWindowBoundsCollision(window, windowTranslateY);
         playerCollision(stuffVector); 
         Clock.restart();
+    }
+    increaseSpeedTime = increaseSpeedClock.getElapsedTime();
+    if (increaseSpeedTime.asSeconds() >= 15) {
+        for (auto stuff : stuffVector) {
+            stuff->setSpeed(stuff->getSpeed() * 1.3);
+        }
+        increaseSpeedClock.restart();
     }
 
 }

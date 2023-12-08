@@ -57,6 +57,9 @@ class Endless : public State
         sf::RenderTexture renderTexture;
         sf::Shader blurShader;
         sf::Clock gameOverClock; 
+
+        sf::Time increaseSpeedTime;
+        sf::Clock increaseSpeedClock;
 };
 
 #endif

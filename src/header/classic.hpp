@@ -8,6 +8,11 @@
 #include <SFML/Audio.hpp>
 #include "setting_ingame.hpp"
 #include "player.hpp"
+#include "lane.hpp"
+#include"stuff.hpp"
+#include "player.hpp"
+#include "lose.hpp"
+#include "lane.hpp"
 
 class Player;
 
@@ -19,7 +24,6 @@ class Levels : public State
         void handleEvent();
         void update();
         void render();
-        void updateButtonTextures();
     private:
         sf::RenderWindow* window;
         std::stack <State*>* states;
@@ -91,6 +95,40 @@ class Levels : public State
         sf::Texture level12ButtonTexture;
         sf::Sprite level12ButtonImage;
         sf::IntRect level12ButtonRect;
+};
+
+class Level_1 : public State 
+{
+    public:
+        sf::View *view;
+        sf::Time Time;
+        sf::Clock Clock;
+        int windowTranslateY;
+        Level_1(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music);
+        void initShape();
+        void handleEvent();
+        void update();
+        void render();
+        void playerCollision(std::vector<Stuff*> stuffVector);
+        void gameOver();
+    
+    private:
+        sf::RenderWindow* window;
+        std::stack <State*>* states;
+        sf::Event event;
+        sf::Vector2i mousePosition;
+        sf::Music& music;
+        Player* player;
+        std::vector<Stuff*> stuffVector;
+        Setting* setting;
+        std::vector<Lane*> laneVector;
+
+        sf::SoundBuffer gameOverBuffer;
+        sf::Sound gameOverSound;
+
+        sf::Time increaseSpeedTime;
+        sf::Time increaseSpeedClock;
+        float speedCoe = 1.0;
 };
 
 #endif

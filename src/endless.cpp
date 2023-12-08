@@ -783,7 +783,6 @@ void Endless::handleEvent() {
             player->update(static_cast<Direction>(0));
         }
         setting->handleEvent(event);
-        
     }
 }
 

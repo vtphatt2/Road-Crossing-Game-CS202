@@ -28,6 +28,5 @@ private:
 	bool isJumped1[3];
 	bool isJumped2[3];
 };
-int convertBiome();
 
 laneType randomFirstLaneType();

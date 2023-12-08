@@ -2,10 +2,10 @@
 Lane::Lane(laneType type) : type(type) {
 	((!(rand() % 3) && type != laneType::river) ? light = new TraficLight() : light = nullptr);
 	((!(rand() % 5) && type != laneType::river) ? coin = new Coin[3] : coin = nullptr);
-	if (!(rand() % 4)) {
+	if (!(rand() % 6)) {
 		stuffVector.push_back(new UFO());
 	}
-	if (!(rand() % 4)) {
+	if (!(rand() % 6)) {
 		stuffVector.push_back(new Ghost());
 	}
 	
@@ -132,9 +132,6 @@ Lane::Lane(laneType type) : type(type) {
 	case laneType::snow_first_lane:
 		texture.loadFromFile("../resource/lane/snow_path_plain.png");
 		break;
-	}
-	for (int i = 0; i < stuffVector.size(); i++) {
-		stuffVector[i]->setSpeed(((rand() % 2) + 1) * 0.01 * 60);
 	}
 	sprite.setTexture(texture);
 }

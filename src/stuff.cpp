@@ -590,7 +590,6 @@ Frog::Frog() {
 	texture[0].loadFromFile(frog1Path);
 	texture[1].loadFromFile(frog2Path);
 	texture[2].loadFromFile(frog3Path);
-	sprite.setRotation(0);
 	sprite.setTexture(texture[0]);
 }
 sf::Vector2f Frog::getPosition() {
@@ -598,9 +597,11 @@ sf::Vector2f Frog::getPosition() {
 }
 void Frog::setPosition(const sf::Vector2f& position) {
 	sprite.setPosition(position);
+	sprite.setRotation(0);
 }
 void Frog::setPosition(float x, float y) {
 	sprite.setPosition(sf::Vector2f(x, y));
+	sprite.setRotation(0);
 }
 sf::FloatRect Frog::getGlobalBounds() {
 	return sprite.getGlobalBounds();
@@ -895,7 +896,6 @@ void Fish::stop() {
 }
 void Fish::resume() {
 	isRunning = 1;
-	numOfMoves = 0;
 }
 void Fish::jump() {
 	isJumping = 1;

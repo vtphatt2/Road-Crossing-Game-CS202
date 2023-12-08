@@ -805,6 +805,7 @@ void Endless::update()
 
         for (int j = 0; j < laneVector[laneVector.size() - 1]->getStuffVector().size(); j++) 
         {
+            laneVector[laneVector.size() - 1]->getStuffVector()[j]->setSpeed(speedCoe * laneVector[laneVector.size() - 1]->getStuffVector()[j]->getSpeed());
             stuffVector.push_back(laneVector[laneVector.size() - 1]->getStuffVector()[j]);
         }
         isAddNewLane = 0;
@@ -825,9 +826,7 @@ void Endless::update()
     }
     increaseSpeedTime = increaseSpeedClock.getElapsedTime();
     if (increaseSpeedTime.asSeconds() >= 15) {
-        for (auto stuff : stuffVector) {
-            stuff->setSpeed(stuff->getSpeed() * 1.3);
-        }
+        speedCoe *= 1.3;
         increaseSpeedClock.restart();
     }
 
@@ -871,6 +870,10 @@ void Endless::render() {
     }
     window->draw(scoreBoardImage);
     window->draw(player->getPlayerSprite());
+    for (int i = 0; i < stuffVector.size(); i++)
+    {
+        window->draw(*stuffVector[i]);
+    }
     window->draw(*setting);
 }
 

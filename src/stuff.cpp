@@ -56,6 +56,7 @@ float UFO::getSpeed() {
 }
 void UFO::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void UFO::run() {
 	if (isRunning) {
@@ -153,6 +154,7 @@ float Ant::getSpeed() {
 }
 void Ant::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void Ant::run() {
 	if (isRunning) {
@@ -206,6 +208,7 @@ float Bird::getSpeed() {
 }
 void Bird::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void Bird::run() {
 	if (numOfMoves < limit) {
@@ -256,6 +259,7 @@ float Bat::getSpeed() {
 }
 void Bat::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void Bat::run() {
 
@@ -314,6 +318,7 @@ float Worm::getSpeed() {
 }
 void Worm::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void Worm::run() {
 
@@ -369,6 +374,7 @@ float Monster::getSpeed() {
 }
 void Monster::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void Monster::run() {
 	if (isRunning) {
@@ -424,6 +430,7 @@ float Slime::getSpeed() {
 }
 void Slime::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void Slime::run() {
 	if (isRunning) {
@@ -489,6 +496,7 @@ float Snail::getSpeed() {
 }
 void Snail::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void Snail::run() {
 
@@ -544,6 +552,7 @@ float Ghost::getSpeed() {
 }
 void Ghost::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void Ghost::run() {
 	if (isRunning) {
@@ -581,6 +590,7 @@ Frog::Frog() {
 	texture[0].loadFromFile(frog1Path);
 	texture[1].loadFromFile(frog2Path);
 	texture[2].loadFromFile(frog3Path);
+	sprite.setRotation(0);
 	sprite.setTexture(texture[0]);
 }
 sf::Vector2f Frog::getPosition() {
@@ -600,6 +610,7 @@ float Frog::getSpeed() {
 }
 void Frog::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void Frog::run() {
 	if (isRunning) {
@@ -629,6 +640,7 @@ void Frog::run() {
 }
 void Frog::stop() {
 	isRunning = 0;
+	sprite.setRotation(0);
 }
 void Frog::resume() {
 	isRunning = 1;
@@ -661,6 +673,7 @@ float Mouse::getSpeed() {
 }
 void Mouse::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void Mouse::run() {
 
@@ -716,6 +729,7 @@ float Moon::getSpeed() {
 }
 void Moon::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void Moon::run() {
 
@@ -771,6 +785,7 @@ float SeaWheet::getSpeed() {
 }
 void SeaWheet::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void SeaWheet::run() {
 
@@ -845,6 +860,7 @@ float Fish::getSpeed() {
 }
 void Fish::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void Fish::run() {
 	
@@ -869,6 +885,7 @@ void Fish::run() {
 		else {
 			isJumping = 0;
 			numOfMoves = 0;
+			sprite.setRotation(0);
 		}
 		numOfMoves++;
 	}
@@ -920,7 +937,7 @@ TraficLight::TraficLight() {
 	sprite.setTexture(texture[2]);
 	time = sf::Time::Zero;
 	randomNum = rand() % 4 + 13;
-	currentColor == lightColor::Green;
+	currentColor = lightColor::Green;
 }
 sf::Vector2f TraficLight::getPosition() {
 	return sprite.getPosition();

@@ -227,10 +227,6 @@ void Lane::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 			target.draw(coin[i]);
 		}
 	}
-	for (int i = 0; i < stuffVector.size(); i++)
-	{
-		target.draw(*stuffVector[i]);
-	}
 	if (light) {
 		target.draw(*light);
 	}

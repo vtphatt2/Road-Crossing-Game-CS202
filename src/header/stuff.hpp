@@ -372,7 +372,7 @@ private:
 	float speed = defaultSpeed;
 	int numOfMoves = 0;
 	bool isRunning = true;
-	int limit = 10 / speed;
+	int limit = 20 / speed;
 };
 
 //Moon
@@ -396,7 +396,7 @@ private:
 	float speed = defaultSpeed;
 	int numOfMoves = 0;
 	bool isRunning = true;
-	int limit = 5 / speed;
+	int limit = 20 / speed;
 	bool toRight = 1;
 };
 

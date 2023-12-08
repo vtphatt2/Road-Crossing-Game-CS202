@@ -161,8 +161,8 @@ void Lane::setPosition(float x, float y) {
 		}
 	}
 	if (type == laneType::river) {
-		bridge[0].setPosition(150, y);
-		bridge[1].setPosition(1000, y);
+		bridge[0].setPosition(((rand() % 50) + 1) * 10, y);
+		bridge[1].setPosition(((rand() % 50) + 1) * 10 + 700, y);
 	}
 	sprite.setPosition(sf::Vector2f(x, y));
 }

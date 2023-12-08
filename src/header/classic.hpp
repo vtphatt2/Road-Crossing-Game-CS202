@@ -131,4 +131,182 @@ class Level_1 : public State
         float speedCoe = 1.0;
 };
 
+class Level_2 : public State
+{
+    public:
+        sf::View *view;
+        sf::Time Time;
+        sf::Clock Clock;
+        int windowTranslateY;
+        bool isAddNewLane = 0;
+        Level_2(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music);
+        void initShape();
+        void handleEvent();
+        void update();
+        void render();
+        void playerCollision(std::vector<Stuff*> stuffVector);
+        void gameOver();
+        void notBridge();
+        
+    private:
+        sf::RenderWindow* window;
+        std::stack <State*>* states;
+        sf::Event event;
+        sf::Vector2i mousePosition;
+        sf::Music& music;
+        Player* player;
+        int choice;
+        std::vector<Stuff*> stuffVector;
+        Setting* setting;
+        std::vector<Lane*> laneVector;
+
+        sf::SoundBuffer gameOverBuffer;
+        sf::Sound gameOverSound; 
+
+        sf::Time increaseSpeedTime;
+        sf::Clock increaseSpeedClock;
+        float speedCoe = 1.0;
+};
+
+class Level_3 : public State
+{
+    public:
+        sf::View *view;
+        sf::Time Time;
+        sf::Clock Clock;
+        int windowTranslateY;
+        Level_3(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music);
+        void initShape();
+        void handleEvent();
+        void update();
+        void render();
+        void playerCollision(std::vector<Stuff*> stuffVector);
+        void gameOver();
+        
+    private:
+        sf::RenderWindow* window;
+        std::stack <State*>* states;
+        sf::Event event;
+        sf::Vector2i mousePosition;
+        sf::Music& music;
+        Player* player;
+        int choice;
+        std::vector<Stuff*> stuffVector;
+        Setting* setting;
+        std::vector<Lane*> laneVector;
+
+        sf::SoundBuffer gameOverBuffer;
+        sf::Sound gameOverSound; 
+
+        sf::Time increaseSpeedTime;
+        sf::Clock increaseSpeedClock;
+        float speedCoe = 1.0;
+};
+
+class Level_4 : public State
+{
+    public:
+        sf::View *view;
+        sf::Time Time;
+        sf::Clock Clock;
+        int windowTranslateY;
+        Level_4(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music);
+        void initShape();
+        void handleEvent();
+        void update();
+        void render();
+        void playerCollision(std::vector<Stuff*> stuffVector);
+        void gameOver();
+        void notBridge();
+        
+    private:
+        sf::RenderWindow* window;
+        std::stack <State*>* states;
+        sf::Event event;
+        sf::Vector2i mousePosition;
+        sf::Music& music;
+        Player* player;
+        int choice;
+        std::vector<Stuff*> stuffVector;
+        Setting* setting;
+        std::vector<Lane*> laneVector;
+
+        sf::SoundBuffer gameOverBuffer;
+        sf::Sound gameOverSound; 
+
+        sf::Time increaseSpeedTime;
+        sf::Clock increaseSpeedClock;
+        float speedCoe = 1.0;
+};
+
+class Level_5 : public State
+{
+    public:
+        sf::View *view;
+        sf::Time Time;
+        sf::Clock Clock;
+        int windowTranslateY;
+        Level_5(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music);
+        void initShape();
+        void handleEvent();
+        void update();
+        void render();
+        void playerCollision(std::vector<Stuff*> stuffVector);
+        void gameOver();
+        
+    private:
+        sf::RenderWindow* window;
+        std::stack <State*>* states;
+        sf::Event event;
+        sf::Vector2i mousePosition;
+        sf::Music& music;
+        Player* player;
+        int choice;
+        std::vector<Stuff*> stuffVector;
+        Setting* setting;
+        std::vector<Lane*> laneVector;
+
+        sf::SoundBuffer gameOverBuffer;
+        sf::Sound gameOverSound; 
+
+        sf::Time increaseSpeedTime;
+        sf::Clock increaseSpeedClock;
+        float speedCoe = 1.0;
+};
+
+class Level_6 : public State
+{
+    public:
+        sf::View *view;
+        sf::Time Time;
+        sf::Clock Clock;
+        int windowTranslateY;
+        Level_6(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music);
+        void initShape();
+        void handleEvent();
+        void update();
+        void render();
+        void playerCollision(std::vector<Stuff*> stuffVector);
+        void gameOver();
+        
+    private:
+        sf::RenderWindow* window;
+        std::stack <State*>* states;
+        sf::Event event;
+        sf::Vector2i mousePosition;
+        sf::Music& music;
+        Player* player;
+        int choice;
+        std::vector<Stuff*> stuffVector;
+        Setting* setting;
+        std::vector<Lane*> laneVector;
+
+        sf::SoundBuffer gameOverBuffer;
+        sf::Sound gameOverSound; 
+
+        sf::Time increaseSpeedTime;
+        sf::Clock increaseSpeedClock;
+        float speedCoe = 1.0;
+};
+
 #endif

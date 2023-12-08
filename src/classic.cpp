@@ -147,38 +147,38 @@ void Levels::handleEvent()
         if (level1ButtonRect.contains(sf::Mouse::getPosition(*window))) {
             states->push(new Level_1(window, states, player, music));
         }
-            // if (level2ButtonRect.contains(sf::Mouse::getPosition(*window))) {
-            //     states->push(new Level2(window, states));
-            // }
-            // if (level3ButtonRect.contains(sf::Mouse::getPosition(*window))) {
-            //     states->push(new Level3(window, states));
-            // }
-            // if (level4ButtonRect.contains(sf::Mouse::getPosition(*window))) {
-            //     states->push(new Level4(window, states));
-            // }
-            // if (level5ButtonRect.contains(sf::Mouse::getPosition(*window))) {
-            //     states->push(new Level5(window, states));
-            // }
-            // if (level6ButtonRect.contains(sf::Mouse::getPosition(*window))) {
-            //     states->push(new Level6(window, states));
-            // }
+        if (level2ButtonRect.contains(sf::Mouse::getPosition(*window))) {
+            states->push(new Level_2(window, states, player, music));
+        }
+        if (level3ButtonRect.contains(sf::Mouse::getPosition(*window))) {
+            states->push(new Level_3(window, states, player, music));
+        }
+        if (level4ButtonRect.contains(sf::Mouse::getPosition(*window))) {
+            states->push(new Level_4(window, states, player, music));
+        }
+        if (level5ButtonRect.contains(sf::Mouse::getPosition(*window))) {
+            states->push(new Level_5(window, states, player, music));
+        }
+        if (level6ButtonRect.contains(sf::Mouse::getPosition(*window))) {
+            states->push(new Level_6(window, states, player, music));
+        }
             // if (level7ButtonRect.contains(sf::Mouse::getPosition(*window))) {
-            //     states->push(new Level7(window, states));
+            //     states->push(new Level_7(window, states, player, music));
             // }
             // if (level8ButtonRect.contains(sf::Mouse::getPosition(*window))) {
-            //     states->push(new Level8(window, states));
+            //     states->push(new Level_8(window, states, player, music));
             // }
             // if (level9ButtonRect.contains(sf::Mouse::getPosition(*window))) {
-            //     states->push(new Level9(window, states));
+            //     states->push(new Level_9(window, states, player, music));
             // }
             // if (level10ButtonRect.contains(sf::Mouse::getPosition(*window))) {
-            //     states->push(new Level10(window, states));
+            //     states->push(new Level_10(window, states, player, music));
             // }
             // if (level11ButtonRect.contains(sf::Mouse::getPosition(*window))) {
-            //     states->push(new Level11(window, states));
+            //     states->push(new Level_11(window, states, player, music));
             // }
             // if (level12ButtonRect.contains(sf::Mouse::getPosition(*window))) {
-            //     states->push(new Level12(window, states));
+            //     states->push(new Level_12(window, states, player, music));
             // }
         }
     }
@@ -275,9 +275,9 @@ void Levels::render()
 
 Level_1::Level_1(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) {
     setting = new Setting(window, states);
-    // if (!gameOverBuffer.loadFromFile("../../resource/audio/gameOver.wav")) {
-    //     cout << "Cannot load soundfile" << endl;
-    // }
+    if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
+        cout << "Cannot load soundfile" << endl;
+    }
     gameOverSound.setBuffer(gameOverBuffer);
     player->renderInGame();
     laneVector.push_back(new Lane(laneType::garden_first_lane));
@@ -394,6 +394,763 @@ void Level_1::gameOver() {
 }
 
 void Level_1::render()
+{
+    window->setView(*view);
+    for (int i = 0; i < laneVector.size(); i++) {
+        window->draw(*laneVector[i]);
+    }
+    window->draw(player->getPlayerSprite());
+    for (int i = 0; i < stuffVector.size(); i++)
+    {
+        window->draw(*stuffVector[i]);
+    }
+    window->draw(*setting);
+}
+
+Level_2::Level_2(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) {
+    setting = new Setting(window, states);
+    if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
+        cout << "Cannot load soundfile" << endl;
+    }
+    gameOverSound.setBuffer(gameOverBuffer);
+    player->renderInGame();
+    laneVector.push_back(new Lane(laneType::garden_first_lane));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::river));
+    laneVector.push_back(new Lane(laneType::garden_first_lane));
+    laneVector.push_back(new Lane(laneType::river));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::river));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::river));
+    laneVector.push_back(new Lane(laneType::grass));
+    initShape();
+}
+
+void Level_2::initShape()
+{
+    view = new sf::View;
+    view->setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
+    view->setCenter(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2));
+    windowTranslateY = 0;
+
+    Time = sf::Time::Zero;
+    increaseSpeedTime = sf::Time::Zero;
+    srand(time(0));
+
+    int n = laneVector.size();
+    for(int i = 0; i < n; i++)
+    {
+        laneVector[i]->setPosition(0, 990 - landHeight * (i + 1));
+        for(int j = 0; j < laneVector[i]->getStuffVector().size(); j++)
+        {
+            stuffVector.push_back(laneVector[i]->getStuffVector()[j]);
+        }
+    }
+}
+
+void Level_2::handleEvent()
+{
+    const float movementSpeed = 10.0f; 
+    int framesPerDirection = 2;
+    while (window->pollEvent(event)) {
+        if (event.type == sf::Event::Closed) {
+            window->close();
+        }        
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+            window->close();
+        }
+        
+        if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W)) {
+            player->update(static_cast<Direction>(1));
+            player->updateWindowBoundsCollision(window, windowTranslateY);
+        }
+        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)) {
+            player->update(static_cast<Direction>(2));
+            player->updateWindowBoundsCollision(window, windowTranslateY);
+        }
+        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)){
+            player->update(static_cast<Direction>(3));
+            player->updateWindowBoundsCollision(window, windowTranslateY);
+        }
+        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)){
+            player->update(static_cast<Direction>(4));
+            player->updateWindowBoundsCollision(window, windowTranslateY);
+        }
+        else {
+            player->update(static_cast<Direction>(0));
+        }
+        setting->handleEvent(event);
+    }
+}
+
+void Level_2::update()
+{
+    setting->update();
+    for (int i = 0; i < laneVector.size(); i++) laneVector[i]->update();
+    bool gameRunning = true;
+    Time = Clock.getElapsedTime();
+    if (Time.asSeconds() >= 0.01) {
+        view->move(0, -1);
+        setting->move(-1);
+        windowTranslateY += -1;
+        if (-windowTranslateY % landHeight == 0) {
+            isAddNewLane = 1;
+        }
+        player->updateWindowBoundsCollision(window, windowTranslateY);
+        playerCollision(stuffVector); 
+        notBridge();
+        Clock.restart();
+    }
+}
+
+void Level_2::notBridge(){
+    laneType playerLaneType = laneType::river; 
+    for (const auto& lane : laneVector) {
+        if (player->getPlayerSprite().getPosition().y+92.f >= lane->getPosition().y && player->getPlayerSprite().getPosition().y +92.f < lane->getPosition().y + 165.f) {
+            playerLaneType = lane->type;
+            if (lane->type == laneType::river) {
+                Bridge* bridges = lane->getBridge();
+                sf::Vector2f bridge0 = bridges[0].getPosition();
+                sf::Vector2f bridge1 = bridges[1].getPosition();
+                sf::Vector2f playerB = player->getPlayerSprite().getPosition();
+                if ((playerB.x >= bridge0.x && playerB.x <= bridge0.x + bridges[0].getGlobalBounds().width) || 
+                (playerB.x >= bridge1.x && playerB.x <= bridge1.x + bridges[1].getGlobalBounds().width)){}
+                else gameOver();
+            }
+        }
+    }
+}
+
+
+void Level_2::playerCollision(std::vector<Stuff*> stuffVector) {
+    for (auto& stuff : stuffVector) {
+        float negativeMargin = -5.0f;
+        bool isCollision = player->isCollisionWithMargin(stuff->getGlobalBounds(), negativeMargin);
+        if (isCollision) gameOver();
+    } 
+}
+
+void Level_2::gameOver(){
+    gameOverSound.play();        
+    player->setMovementSpeed(0);
+    for (auto& stuff : stuffVector) {
+        stuff->setSpeed(0);
+    }
+
+    sf::Texture backgroundTexture;
+    backgroundTexture.create(window->getSize().x, window->getSize().y);
+    backgroundTexture.update(*window);
+
+    sf::Clock delayTimer;
+    while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
+        // Wait for 2 seconds
+    }
+    states->push(new Lose(window, states, music, backgroundTexture));
+}
+
+void Level_2::render() {
+    window->setView(*view);
+    for (int i = 0; i < laneVector.size(); i++) {
+        window->draw(*laneVector[i]);
+    }
+    window->draw(player->getPlayerSprite());
+    for (int i = 0; i < stuffVector.size(); i++)
+    {
+        window->draw(*stuffVector[i]);
+    }
+    window->draw(*setting);
+}
+
+Level_3::Level_3(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) {
+    setting = new Setting(window, states);
+    if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
+        cout << "Cannot load soundfile" << endl;
+    }
+    gameOverSound.setBuffer(gameOverBuffer);
+    player->renderInGame();
+    laneVector.push_back(new Lane(laneType::garden_first_lane));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::garden_first_lane));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::garden_first_lane));
+    initShape();
+}
+
+void Level_3::initShape()
+{
+    view = new sf::View;
+    view->setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
+    view->setCenter(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2));
+    windowTranslateY = 0;
+
+    Time = sf::Time::Zero;
+    increaseSpeedTime = sf::Time::Zero;
+    srand(time(0));
+
+    int n = laneVector.size();
+    for(int i = 0; i < n; i++)
+    {
+        laneVector[i]->setPosition(0, 990 - landHeight * (i + 1));
+        for(int j = 0; j < laneVector[i]->getStuffVector().size(); j++)
+        {
+            stuffVector.push_back(laneVector[i]->getStuffVector()[j]);
+        }
+    }
+}
+
+void Level_3::handleEvent()
+{
+    const float movementSpeed = 10.0f; 
+    int framesPerDirection = 2;
+    while (window->pollEvent(event)) {
+        if (event.type == sf::Event::Closed) {
+            window->close();
+        }        
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+            window->close();
+        }
+        
+        if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W)) {
+            player->update(static_cast<Direction>(1));
+            player->updateWindowBoundsCollision(window, windowTranslateY);
+        }
+        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)) {
+            player->update(static_cast<Direction>(2));
+            player->updateWindowBoundsCollision(window, windowTranslateY);
+        }
+        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)){
+            player->update(static_cast<Direction>(3));
+            player->updateWindowBoundsCollision(window, windowTranslateY);
+        }
+        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)){
+            player->update(static_cast<Direction>(4));
+            player->updateWindowBoundsCollision(window, windowTranslateY);
+        }
+        else {
+            player->update(static_cast<Direction>(0));
+        }
+        setting->handleEvent(event);
+    }
+}
+
+void Level_3::update()
+{
+    setting->update();
+    for (int i = 0; i < laneVector.size(); i++) laneVector[i]->update();
+    bool gameRunning = true;
+    Time = Clock.getElapsedTime();
+    if (Time.asSeconds() >= 0.01) {
+        view->move(0, -1);
+        setting->move(-1);
+        windowTranslateY += -1;
+        player->updateWindowBoundsCollision(window, windowTranslateY);
+        playerCollision(stuffVector); 
+        Clock.restart();
+    }
+}
+
+void Level_3::playerCollision(std::vector<Stuff*> stuffVector) {
+    for (auto& stuff : stuffVector) {
+        float negativeMargin = -5.0f;
+        bool isCollision = player->isCollisionWithMargin(stuff->getGlobalBounds(), negativeMargin);
+        if (isCollision) gameOver();
+    } 
+}
+
+void Level_3::gameOver(){
+    gameOverSound.play();        
+    player->setMovementSpeed(0);
+    for (auto& stuff : stuffVector) {
+        stuff->setSpeed(0);
+    }
+
+    sf::Texture backgroundTexture;
+    backgroundTexture.create(window->getSize().x, window->getSize().y);
+    backgroundTexture.update(*window);
+
+    sf::Clock delayTimer;
+    while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
+        // Wait for 2 seconds
+    }
+    states->push(new Lose(window, states, music, backgroundTexture));
+}
+
+void Level_3::render() {
+    window->setView(*view);
+    for (int i = 0; i < laneVector.size(); i++) {
+        window->draw(*laneVector[i]);
+    }
+    window->draw(player->getPlayerSprite());
+    for (int i = 0; i < stuffVector.size(); i++)
+    {
+        window->draw(*stuffVector[i]);
+    }
+    window->draw(*setting);
+}
+
+Level_4::Level_4(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) {
+    setting = new Setting(window, states);
+    if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
+        cout << "Cannot load soundfile" << endl;
+    }
+    gameOverSound.setBuffer(gameOverBuffer);
+    player->renderInGame();
+    laneVector.push_back(new Lane(laneType::garden_first_lane));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::river));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::river));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::river));
+    laneVector.push_back(new Lane(laneType::garden_first_lane));
+    laneVector.push_back(new Lane(laneType::river));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::rail)); 
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::river));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::river));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::river));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::river)); 
+    laneVector.push_back(new Lane(laneType::garden_first_lane));
+    initShape();
+}
+
+void Level_4::initShape()
+{
+    view = new sf::View;
+    view->setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
+    view->setCenter(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2));
+    windowTranslateY = 0;
+
+    Time = sf::Time::Zero;
+    increaseSpeedTime = sf::Time::Zero;
+    srand(time(0));
+
+    int n = laneVector.size();
+    for(int i = 0; i < n; i++)
+    {
+        laneVector[i]->setPosition(0, 990 - landHeight * (i + 1));
+        for(int j = 0; j < laneVector[i]->getStuffVector().size(); j++)
+        {
+            stuffVector.push_back(laneVector[i]->getStuffVector()[j]);
+        }
+    }
+}
+
+void Level_4::handleEvent()
+{
+    const float movementSpeed = 10.0f; 
+    int framesPerDirection = 2;
+    while (window->pollEvent(event)) {
+        if (event.type == sf::Event::Closed) {
+            window->close();
+        }        
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+            window->close();
+        }
+        
+        if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W)) {
+            player->update(static_cast<Direction>(1));
+            player->updateWindowBoundsCollision(window, windowTranslateY);
+        }
+        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)) {
+            player->update(static_cast<Direction>(2));
+            player->updateWindowBoundsCollision(window, windowTranslateY);
+        }
+        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)){
+            player->update(static_cast<Direction>(3));
+            player->updateWindowBoundsCollision(window, windowTranslateY);
+        }
+        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)){
+            player->update(static_cast<Direction>(4));
+            player->updateWindowBoundsCollision(window, windowTranslateY);
+        }
+        else {
+            player->update(static_cast<Direction>(0));
+        }
+        setting->handleEvent(event);
+    }
+}
+
+void Level_4::update()
+{
+    setting->update();
+    for (int i = 0; i < laneVector.size(); i++) laneVector[i]->update();
+    bool gameRunning = true;
+    Time = Clock.getElapsedTime();
+    if (Time.asSeconds() >= 0.01) {
+        view->move(0, -1);
+        setting->move(-1);
+        windowTranslateY += -1;
+        player->updateWindowBoundsCollision(window, windowTranslateY);
+        playerCollision(stuffVector); 
+        notBridge();
+        Clock.restart();
+    }
+}
+
+void Level_4::notBridge(){
+    laneType playerLaneType = laneType::river; 
+    for (const auto& lane : laneVector) {
+        if (player->getPlayerSprite().getPosition().y+92.f >= lane->getPosition().y && player->getPlayerSprite().getPosition().y +92.f < lane->getPosition().y + 165.f) {
+            playerLaneType = lane->type;
+            if (lane->type == laneType::river) {
+                Bridge* bridges = lane->getBridge();
+                sf::Vector2f bridge0 = bridges[0].getPosition();
+                sf::Vector2f bridge1 = bridges[1].getPosition();
+                sf::Vector2f playerB = player->getPlayerSprite().getPosition();
+                if ((playerB.x >= bridge0.x && playerB.x <= bridge0.x + bridges[0].getGlobalBounds().width) || 
+                (playerB.x >= bridge1.x && playerB.x <= bridge1.x + bridges[1].getGlobalBounds().width)){}
+                else gameOver();
+            }
+        }
+    }
+}
+
+
+void Level_4::playerCollision(std::vector<Stuff*> stuffVector) {
+    for (auto& stuff : stuffVector) {
+        float negativeMargin = -5.0f;
+        bool isCollision = player->isCollisionWithMargin(stuff->getGlobalBounds(), negativeMargin);
+        if (isCollision) gameOver();
+    } 
+}
+
+void Level_4::gameOver(){
+    gameOverSound.play();        
+    player->setMovementSpeed(0);
+    for (auto& stuff : stuffVector) {
+        stuff->setSpeed(0);
+    }
+
+    sf::Texture backgroundTexture;
+    backgroundTexture.create(window->getSize().x, window->getSize().y);
+    backgroundTexture.update(*window);
+
+    sf::Clock delayTimer;
+    while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
+        // Wait for 2 seconds
+    }
+    states->push(new Lose(window, states, music, backgroundTexture));
+}
+
+void Level_4::render() {
+    window->setView(*view);
+    for (int i = 0; i < laneVector.size(); i++) {
+        window->draw(*laneVector[i]);
+    }
+    window->draw(player->getPlayerSprite());
+    for (int i = 0; i < stuffVector.size(); i++)
+    {
+        window->draw(*stuffVector[i]);
+    }
+    window->draw(*setting);
+}
+
+Level_5::Level_5(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) {
+    setting = new Setting(window, states);
+    if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
+        cout << "Cannot load soundfile" << endl;
+    }
+    gameOverSound.setBuffer(gameOverBuffer);
+    player->renderInGame();
+    laneVector.push_back(new Lane(laneType::desert_first_lane));
+    laneVector.push_back(new Lane(laneType::desert_road));
+    laneVector.push_back(new Lane(laneType::desert_road));
+    laneVector.push_back(new Lane(laneType::desert_path));
+    laneVector.push_back(new Lane(laneType::desert_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::desert_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::desert_path));
+    laneVector.push_back(new Lane(laneType::desert_road));
+    laneVector.push_back(new Lane(laneType::desert_road));
+    laneVector.push_back(new Lane(laneType::desert_road));
+    laneVector.push_back(new Lane(laneType::desert_path));
+    laneVector.push_back(new Lane(laneType::desert_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::desert_first_lane));
+    initShape();
+}
+
+void Level_5::initShape()
+{
+    view = new sf::View;
+    view->setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
+    view->setCenter(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2));
+    windowTranslateY = 0;
+
+    Time = sf::Time::Zero;
+    increaseSpeedTime = sf::Time::Zero;
+    srand(time(0));
+
+    int n = laneVector.size();
+    for(int i = 0; i < n; i++)
+    {
+        laneVector[i]->setPosition(0, 990 - landHeight * (i + 1));
+        for(int j = 0; j < laneVector[i]->getStuffVector().size(); j++)
+        {
+            stuffVector.push_back(laneVector[i]->getStuffVector()[j]);
+        }
+    }
+}
+
+void Level_5::handleEvent()
+{
+    const float movementSpeed = 10.0f; 
+    int framesPerDirection = 2;
+    while (window->pollEvent(event)) {
+        if (event.type == sf::Event::Closed) {
+            window->close();
+        }        
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+            window->close();
+        }
+        
+        if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W)) {
+            player->update(static_cast<Direction>(1));
+            player->updateWindowBoundsCollision(window, windowTranslateY);
+        }
+        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)) {
+            player->update(static_cast<Direction>(2));
+            player->updateWindowBoundsCollision(window, windowTranslateY);
+        }
+        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)){
+            player->update(static_cast<Direction>(3));
+            player->updateWindowBoundsCollision(window, windowTranslateY);
+        }
+        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)){
+            player->update(static_cast<Direction>(4));
+            player->updateWindowBoundsCollision(window, windowTranslateY);
+        }
+        else {
+            player->update(static_cast<Direction>(0));
+        }
+        setting->handleEvent(event);
+    }
+}
+
+void Level_5::update()
+{
+    setting->update();
+    for (int i = 0; i < laneVector.size(); i++) laneVector[i]->update();
+    bool gameRunning = true;
+    Time = Clock.getElapsedTime();
+    if (Time.asSeconds() >= 0.01) {
+        view->move(0, -1);
+        setting->move(-1);
+        windowTranslateY += -1;
+        player->updateWindowBoundsCollision(window, windowTranslateY);
+        playerCollision(stuffVector); 
+        Clock.restart();
+    }
+}
+
+void Level_5::playerCollision(std::vector<Stuff*> stuffVector) {
+    for (auto& stuff : stuffVector) {
+        float negativeMargin = -5.0f;
+        bool isCollision = player->isCollisionWithMargin(stuff->getGlobalBounds(), negativeMargin);
+        if (isCollision) gameOver();
+    } 
+}
+
+void Level_5::gameOver() {
+    gameOverSound.play();        
+    player->setMovementSpeed(0);
+    for (auto& stuff : stuffVector) {
+        stuff->setSpeed(0);
+    }
+
+    sf::Texture backgroundTexture;
+    backgroundTexture.create(window->getSize().x, window->getSize().y);
+    backgroundTexture.update(*window);
+
+    sf::Clock delayTimer;
+    while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
+        // Wait for 2 seconds
+    }
+    states->push(new Lose(window, states, music, backgroundTexture));
+}
+
+void Level_5::render()
+{
+    window->setView(*view);
+    for (int i = 0; i < laneVector.size(); i++) {
+        window->draw(*laneVector[i]);
+    }
+    window->draw(player->getPlayerSprite());
+    for (int i = 0; i < stuffVector.size(); i++)
+    {
+        window->draw(*stuffVector[i]);
+    }
+    window->draw(*setting);
+}
+
+Level_6::Level_6(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) {
+    setting = new Setting(window, states);
+    if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
+        cout << "Cannot load soundfile" << endl;
+    }
+    gameOverSound.setBuffer(gameOverBuffer);
+    player->renderInGame();
+    laneVector.push_back(new Lane(laneType::desert_first_lane));
+    laneVector.push_back(new Lane(laneType::desert_road));
+    laneVector.push_back(new Lane(laneType::desert_rail));
+    laneVector.push_back(new Lane(laneType::desert_rail));
+    laneVector.push_back(new Lane(laneType::desert_road));
+    laneVector.push_back(new Lane(laneType::desert_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::desert_path));
+    laneVector.push_back(new Lane(laneType::desert_path));
+    laneVector.push_back(new Lane(laneType::desert_road));
+    laneVector.push_back(new Lane(laneType::desert_rail));
+    laneVector.push_back(new Lane(laneType::desert_rail));
+    laneVector.push_back(new Lane(laneType::desert_road));
+    laneVector.push_back(new Lane(laneType::desert_rail));
+    laneVector.push_back(new Lane(laneType::desert_rail));
+    laneVector.push_back(new Lane(laneType::desert_road));
+    laneVector.push_back(new Lane(laneType::desert_path));
+    laneVector.push_back(new Lane(laneType::desert_path));
+    laneVector.push_back(new Lane(laneType::desert_rail));
+    laneVector.push_back(new Lane(laneType::desert_rail));
+    laneVector.push_back(new Lane(laneType::desert_first_lane));
+    laneVector.push_back(new Lane(laneType::desert_road));
+    laneVector.push_back(new Lane(laneType::desert_first_lane));
+    initShape();
+}
+
+void Level_6::initShape()
+{
+    view = new sf::View;
+    view->setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
+    view->setCenter(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2));
+    windowTranslateY = 0;
+
+    Time = sf::Time::Zero;
+    increaseSpeedTime = sf::Time::Zero;
+    srand(time(0));
+
+    int n = laneVector.size();
+    for(int i = 0; i < n; i++)
+    {
+        laneVector[i]->setPosition(0, 990 - landHeight * (i + 1));
+        for(int j = 0; j < laneVector[i]->getStuffVector().size(); j++)
+        {
+            stuffVector.push_back(laneVector[i]->getStuffVector()[j]);
+        }
+    }
+}
+
+void Level_6::handleEvent()
+{
+    const float movementSpeed = 10.0f; 
+    int framesPerDirection = 2;
+    while (window->pollEvent(event)) {
+        if (event.type == sf::Event::Closed) {
+            window->close();
+        }        
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+            window->close();
+        }
+        
+        if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W)) {
+            player->update(static_cast<Direction>(1));
+            player->updateWindowBoundsCollision(window, windowTranslateY);
+        }
+        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)) {
+            player->update(static_cast<Direction>(2));
+            player->updateWindowBoundsCollision(window, windowTranslateY);
+        }
+        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)){
+            player->update(static_cast<Direction>(3));
+            player->updateWindowBoundsCollision(window, windowTranslateY);
+        }
+        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)){
+            player->update(static_cast<Direction>(4));
+            player->updateWindowBoundsCollision(window, windowTranslateY);
+        }
+        else {
+            player->update(static_cast<Direction>(0));
+        }
+        setting->handleEvent(event);
+    }
+}
+
+void Level_6::update()
+{
+    setting->update();
+    for (int i = 0; i < laneVector.size(); i++) laneVector[i]->update();
+    bool gameRunning = true;
+    Time = Clock.getElapsedTime();
+    if (Time.asSeconds() >= 0.01) {
+        view->move(0, -1);
+        setting->move(-1);
+        windowTranslateY += -1;
+        player->updateWindowBoundsCollision(window, windowTranslateY);
+        playerCollision(stuffVector); 
+        Clock.restart();
+    }
+}
+
+void Level_6::playerCollision(std::vector<Stuff*> stuffVector) {
+    for (auto& stuff : stuffVector) {
+        float negativeMargin = -5.0f;
+        bool isCollision = player->isCollisionWithMargin(stuff->getGlobalBounds(), negativeMargin);
+        if (isCollision) gameOver();
+    } 
+}
+
+void Level_6::gameOver() {
+    gameOverSound.play();        
+    player->setMovementSpeed(0);
+    for (auto& stuff : stuffVector) {
+        stuff->setSpeed(0);
+    }
+
+    sf::Texture backgroundTexture;
+    backgroundTexture.create(window->getSize().x, window->getSize().y);
+    backgroundTexture.update(*window);
+
+    sf::Clock delayTimer;
+    while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
+        // Wait for 2 seconds
+    }
+    states->push(new Lose(window, states, music, backgroundTexture));
+}
+
+void Level_6::render()
 {
     window->setView(*view);
     for (int i = 0; i < laneVector.size(); i++) {

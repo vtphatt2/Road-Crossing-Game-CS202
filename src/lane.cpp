@@ -132,6 +132,15 @@ Lane::Lane(laneType type) : type(type) {
 	case laneType::snow_first_lane:
 		texture.loadFromFile("../resource/lane/snow_path_plain.png");
 		break;
+	case laneType::desert_finish:
+		texture.loadFromFile("../resource/lane/desert_finish.png");
+		break;
+	case laneType::garden_finish:
+		texture.loadFromFile("../resource/lane/garden_finish.png");
+		break;
+	case laneType::snow_finish:
+		texture.loadFromFile("../resource/lane/snow_finish.png");
+		break;
 	}
 	sprite.setTexture(texture);
 }

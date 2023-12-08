@@ -291,6 +291,12 @@ Level_1::Level_1(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     laneVector.push_back(new Lane(laneType::road));
     laneVector.push_back(new Lane(laneType::road));
     laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::garden_finish));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));
     initShape();
 }
 
@@ -425,6 +431,12 @@ Level_2::Level_2(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     laneVector.push_back(new Lane(laneType::grass));
     laneVector.push_back(new Lane(laneType::river));
     laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::garden_finish));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));  
     initShape();
 }
 
@@ -587,7 +599,12 @@ Level_3::Level_3(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     laneVector.push_back(new Lane(laneType::rail));
     laneVector.push_back(new Lane(laneType::road));
     laneVector.push_back(new Lane(laneType::grass));
-    laneVector.push_back(new Lane(laneType::garden_first_lane));
+    laneVector.push_back(new Lane(laneType::garden_finish));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));  
     initShape();
 }
 
@@ -740,7 +757,13 @@ Level_4::Level_4(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     laneVector.push_back(new Lane(laneType::grass));
     laneVector.push_back(new Lane(laneType::road));
     laneVector.push_back(new Lane(laneType::river)); 
-    laneVector.push_back(new Lane(laneType::garden_first_lane));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::garden_finish));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));  
     initShape();
 }
 
@@ -899,7 +922,12 @@ Level_5::Level_5(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     laneVector.push_back(new Lane(laneType::desert_path));
     laneVector.push_back(new Lane(laneType::road));
     laneVector.push_back(new Lane(laneType::road));
-    laneVector.push_back(new Lane(laneType::desert_first_lane));
+    laneVector.push_back(new Lane(laneType::desert_finish));
+    laneVector.push_back(new Lane(laneType::desert_road));
+    laneVector.push_back(new Lane(laneType::desert_path));
+    laneVector.push_back(new Lane(laneType::desert_path));
+    laneVector.push_back(new Lane(laneType::desert_road));
+    laneVector.push_back(new Lane(laneType::desert_path));
     initShape();
 }
 
@@ -981,6 +1009,7 @@ void Level_5::playerCollision(std::vector<Stuff*> stuffVector) {
         float negativeMargin = -5.0f;
         bool isCollision = player->isCollisionWithMargin(stuff->getGlobalBounds(), negativeMargin);
         if (isCollision) gameOver();
+        
     } 
 }
 
@@ -1045,9 +1074,12 @@ Level_6::Level_6(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     laneVector.push_back(new Lane(laneType::desert_path));
     laneVector.push_back(new Lane(laneType::desert_rail));
     laneVector.push_back(new Lane(laneType::desert_rail));
-    laneVector.push_back(new Lane(laneType::desert_first_lane));
+    laneVector.push_back(new Lane(laneType::desert_finish));
     laneVector.push_back(new Lane(laneType::desert_road));
-    laneVector.push_back(new Lane(laneType::desert_first_lane));
+    laneVector.push_back(new Lane(laneType::desert_path));
+    laneVector.push_back(new Lane(laneType::desert_path));
+    laneVector.push_back(new Lane(laneType::desert_road));
+    laneVector.push_back(new Lane(laneType::desert_path));
     initShape();
 }
 

@@ -1,5 +1,5 @@
 #include "header/endless.hpp"
-#include<iostream>
+
 Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) {
     setting = new Setting(window, states);
     initShape();

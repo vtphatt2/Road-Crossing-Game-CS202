@@ -1,4 +1,5 @@
 #include "header/lane.hpp"
+
 Lane::Lane(laneType type) : type(type) {
 	((!(rand() % 3) && type != laneType::river) ? light = new TraficLight() : light = nullptr);
 	((!(rand() % 5) && type != laneType::river) ? coin = new Coin[3] : coin = nullptr);

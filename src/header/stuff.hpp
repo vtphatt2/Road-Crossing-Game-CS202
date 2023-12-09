@@ -1,5 +1,7 @@
-﻿#pragma once
-#include "SFML/Graphics.hpp"
+﻿#ifndef STUFF_HPP
+#define STUFF_HPP
+
+#include <SFML/Graphics.hpp>
 //Edit here!
 #define blueUFOPath "../resource/blueUFO.png"
 #define brownUFOPath "../resource/brownUFO.png"
@@ -496,3 +498,4 @@ private:
 	lightColor currentColor;
 };
 
+#endif

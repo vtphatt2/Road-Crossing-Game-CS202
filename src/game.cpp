@@ -3,10 +3,11 @@
 Game::Game() : widthWindow(1430), heightWindow(990) {
     window = new sf::RenderWindow(sf::VideoMode(widthWindow, heightWindow), "ROAD CROSSING");
     window->setFramerateLimit(60);
-    states.push(new Entry(window, &states));
+    setup();
+    // states.push(new Entry(window, &states, music));
 
-    // // debugg
-    //states.push(new Lose(window, &states, music));
+    // debugg
+    states.push(new Character(window, &states, music));
 }
 
 Game::~Game() {
@@ -16,6 +17,13 @@ Game::~Game() {
         states.pop();
     }
     std::cout << "Deallocated ok !\n";
+}
+
+void Game::setup() {
+    music.openFromFile("../resource/audio/audio1.mp3");
+    music.setVolume(50);
+    music.setLoop(true);
+    music.play();
 }
 
 void Game::run() {

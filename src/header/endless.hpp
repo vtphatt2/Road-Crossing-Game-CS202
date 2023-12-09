@@ -8,7 +8,7 @@
 #include "state.hpp"
 #include "setting_ingame.hpp"
 #include "lane.hpp"
-#include"stuff.hpp"
+#include "stuff.hpp"
 #include "player.hpp"
 #include "lose.hpp"
 #include "lane.hpp"

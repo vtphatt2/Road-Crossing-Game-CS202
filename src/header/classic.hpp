@@ -226,6 +226,8 @@ class Level_4 : public State
         void playerCollision(std::vector<Stuff*> stuffVector);
         void gameOver();
         void notBridge();
+        int getLevel();
+        void win();
         
     private:
         sf::RenderWindow* window;
@@ -235,6 +237,7 @@ class Level_4 : public State
         sf::Music& music;
         Player* player;
         int choice;
+        int level = 4;
         std::vector<Stuff*> stuffVector;
         Setting* setting;
         std::vector<Lane*> laneVector;
@@ -261,6 +264,8 @@ class Level_5 : public State
         void render();
         void playerCollision(std::vector<Stuff*> stuffVector);
         void gameOver();
+        int getLevel();
+        void win();
         
     private:
         sf::RenderWindow* window;
@@ -270,6 +275,7 @@ class Level_5 : public State
         sf::Music& music;
         Player* player;
         int choice;
+        int level = 5;
         std::vector<Stuff*> stuffVector;
         Setting* setting;
         std::vector<Lane*> laneVector;
@@ -296,6 +302,8 @@ class Level_6 : public State
         void render();
         void playerCollision(std::vector<Stuff*> stuffVector);
         void gameOver();
+        int getLevel();
+        void win();
         
     private:
         sf::RenderWindow* window;
@@ -305,6 +313,7 @@ class Level_6 : public State
         sf::Music& music;
         Player* player;
         int choice;
+        int level = 6;
         std::vector<Stuff*> stuffVector;
         Setting* setting;
         std::vector<Lane*> laneVector;

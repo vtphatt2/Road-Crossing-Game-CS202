@@ -936,6 +936,33 @@ void Level_4::handleEvent()
     }
 }
 
+int Level_4::getLevel(){
+    return level;
+}
+
+void Level_4::win(){
+    sf::SoundBuffer gameWinBuffer;
+    sf::Sound gameWinSound; 
+    if (!gameWinBuffer.loadFromFile("../resource/audio/gameWin.wav")) {
+        cout << "Cannot load soundfile" << endl;
+    }
+    gameWinSound.setBuffer(gameWinBuffer);       
+    player->setMovementSpeed(0);
+    for (auto& stuff : stuffVector) {
+        stuff->setSpeed(0);
+    }
+
+    sf::Texture backgroundTexture;
+    backgroundTexture.create(window->getSize().x, window->getSize().y);
+    backgroundTexture.update(*window);
+
+    sf::Clock delayTimer;
+    while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
+        // Wait for 2 seconds
+    }
+    states->push(new Win(window, states, player, music, backgroundTexture, getLevel()));
+}
+
 void Level_4::update()
 {
     setting->update();
@@ -950,6 +977,17 @@ void Level_4::update()
         playerCollision(stuffVector); 
         notBridge();
         Clock.restart();
+    }
+
+    for (const auto& lane : laneVector) {
+        if (lane->type == laneType::snow_finish || lane->type == laneType::desert_finish || lane->type == laneType::garden_finish){
+            float playerY = player->getPlayerSprite().getPosition().y;
+            float laneY = lane->getPosition().y;
+            float laneHeight = 165.f;
+            if (playerY >= laneY && playerY <= laneY + laneHeight - 150){
+                win();                
+            }
+        }
     }
 }
 
@@ -1100,6 +1138,10 @@ void Level_5::handleEvent()
     }
 }
 
+int Level_5::getLevel(){
+    return level;
+}
+
 void Level_5::update()
 {
     setting->update();
@@ -1114,6 +1156,17 @@ void Level_5::update()
         playerCollision(stuffVector); 
         Clock.restart();
     }
+
+    for (const auto& lane : laneVector) {
+        if (lane->type == laneType::snow_finish || lane->type == laneType::desert_finish || lane->type == laneType::garden_finish){
+            float playerY = player->getPlayerSprite().getPosition().y;
+            float laneY = lane->getPosition().y;
+            float laneHeight = 165.f;
+            if (playerY >= laneY && playerY <= laneY + laneHeight - 150){
+                win();                
+            }
+        }
+    }
 }
 
 void Level_5::playerCollision(std::vector<Stuff*> stuffVector) {
@@ -1123,6 +1176,29 @@ void Level_5::playerCollision(std::vector<Stuff*> stuffVector) {
         if (isCollision) gameOver();
         
     } 
+}
+
+void Level_5::win(){
+    sf::SoundBuffer gameWinBuffer;
+    sf::Sound gameWinSound; 
+    if (!gameWinBuffer.loadFromFile("../resource/audio/gameWin.wav")) {
+        cout << "Cannot load soundfile" << endl;
+    }
+    gameWinSound.setBuffer(gameWinBuffer);       
+    player->setMovementSpeed(0);
+    for (auto& stuff : stuffVector) {
+        stuff->setSpeed(0);
+    }
+
+    sf::Texture backgroundTexture;
+    backgroundTexture.create(window->getSize().x, window->getSize().y);
+    backgroundTexture.update(*window);
+
+    sf::Clock delayTimer;
+    while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
+        // Wait for 2 seconds
+    }
+    states->push(new Win(window, states, player, music, backgroundTexture, getLevel()));
 }
 
 void Level_5::gameOver() {
@@ -1252,6 +1328,10 @@ void Level_6::handleEvent()
     }
 }
 
+int Level_6::getLevel(){
+    return level;
+}
+
 void Level_6::update()
 {
     setting->update();
@@ -1266,6 +1346,40 @@ void Level_6::update()
         playerCollision(stuffVector); 
         Clock.restart();
     }
+
+    for (const auto& lane : laneVector) {
+        if (lane->type == laneType::snow_finish || lane->type == laneType::desert_finish || lane->type == laneType::garden_finish){
+            float playerY = player->getPlayerSprite().getPosition().y;
+            float laneY = lane->getPosition().y;
+            float laneHeight = 165.f;
+            if (playerY >= laneY && playerY <= laneY + laneHeight - 150){
+                win();                
+            }
+        }
+    }
+}
+
+void Level_6::win(){
+    sf::SoundBuffer gameWinBuffer;
+    sf::Sound gameWinSound; 
+    if (!gameWinBuffer.loadFromFile("../resource/audio/gameWin.wav")) {
+        cout << "Cannot load soundfile" << endl;
+    }
+    gameWinSound.setBuffer(gameWinBuffer);       
+    player->setMovementSpeed(0);
+    for (auto& stuff : stuffVector) {
+        stuff->setSpeed(0);
+    }
+
+    sf::Texture backgroundTexture;
+    backgroundTexture.create(window->getSize().x, window->getSize().y);
+    backgroundTexture.update(*window);
+
+    sf::Clock delayTimer;
+    while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
+        // Wait for 2 seconds
+    }
+    states->push(new Win(window, states, player, music, backgroundTexture, getLevel()));
 }
 
 void Level_6::playerCollision(std::vector<Stuff*> stuffVector) {

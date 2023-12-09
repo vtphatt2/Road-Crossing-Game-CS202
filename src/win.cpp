@@ -4,6 +4,7 @@ Win::Win(sf::RenderWindow* window, std::stack <State*>* states, Player* player, 
 background(background), currentLevel(level), player(player) {
     window->setView(window->getDefaultView());
     initShape();
+    player->setMovementSpeed(10.0f);
 }
 
 void Win::initShape() {
@@ -21,7 +22,7 @@ void Win::initShape() {
 
     starTexture.loadFromFile("../resource/lose/star.png");
     starImage.setTexture(starTexture);
-    starImage.setPosition(554, 423); 
+    starImage.setPosition(window->getSize().x / 2.0f - starImage.getGlobalBounds().width / 2.0f, 423); 
 
     nextButtonTexture.loadFromFile("../resource/lose/next.png");
     nextButtonImage.setTexture(nextButtonTexture);
@@ -45,7 +46,6 @@ void Win::initShape() {
         cout << "Error" <<endl;
     }
 
-    // Create text object
     level.setFont(font);
     level.setString("Level " + to_string(currentLevel));
     level.setCharacterSize(70);
@@ -54,7 +54,10 @@ void Win::initShape() {
     float outlineThickness = 3.0f;
     level.setOutlineColor(sf::Color(174, 118, 64));
     level.setOutlineThickness(outlineThickness);    
-    level.setPosition(570, 315);
+
+    sf::FloatRect textBounds = level.getLocalBounds();
+    float centerX = window->getSize().x / 2.0f - textBounds.width / 2.0f;
+    level.setPosition(centerX, 315);
 }
 
 void Win::handleEvent() {

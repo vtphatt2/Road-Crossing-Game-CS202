@@ -150,6 +150,7 @@ class Level_2 : public State
         void gameOver();
         void notBridge();
         int getLevel();
+        void win();
         
     private:
         sf::RenderWindow* window;
@@ -187,6 +188,7 @@ class Level_3 : public State
         void playerCollision(std::vector<Stuff*> stuffVector);
         void gameOver();
         int getLevel();
+        void win();
         
     private:
         sf::RenderWindow* window;

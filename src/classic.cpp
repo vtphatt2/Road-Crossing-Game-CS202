@@ -380,8 +380,7 @@ void Level_1::update()
         if (lane->type == laneType::snow_finish || lane->type == laneType::desert_finish || lane->type == laneType::garden_finish){
             float playerY = player->getPlayerSprite().getPosition().y;
             float laneY = lane->getPosition().y;
-            float laneHeight = 165.f;  // Assuming lane has a method getHeight()
-
+            float laneHeight = 165.f;
             if (playerY >= laneY && playerY <= laneY + laneHeight - 150){
                 win();                
             }
@@ -390,7 +389,12 @@ void Level_1::update()
 }
 
 void Level_1::win(){
-    gameOverSound.play();        
+    sf::SoundBuffer gameWinBuffer;
+    sf::Sound gameWinSound; 
+    if (!gameWinBuffer.loadFromFile("../resource/audio/gameWin.wav")) {
+        cout << "Cannot load soundfile" << endl;
+    }
+    gameWinSound.setBuffer(gameWinBuffer);       
     player->setMovementSpeed(0);
     for (auto& stuff : stuffVector) {
         stuff->setSpeed(0);
@@ -534,6 +538,29 @@ int Level_2::getLevel(){
     return level;
 }
 
+void Level_2::win(){
+    sf::SoundBuffer gameWinBuffer;
+    sf::Sound gameWinSound; 
+    if (!gameWinBuffer.loadFromFile("../resource/audio/gameWin.wav")) {
+        cout << "Cannot load soundfile" << endl;
+    }
+    gameWinSound.setBuffer(gameWinBuffer);       
+    player->setMovementSpeed(0);
+    for (auto& stuff : stuffVector) {
+        stuff->setSpeed(0);
+    }
+
+    sf::Texture backgroundTexture;
+    backgroundTexture.create(window->getSize().x, window->getSize().y);
+    backgroundTexture.update(*window);
+
+    sf::Clock delayTimer;
+    while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
+        // Wait for 2 seconds
+    }
+    states->push(new Win(window, states, player, music, backgroundTexture, getLevel()));
+}
+
 void Level_2::update()
 {
     setting->update();
@@ -555,11 +582,11 @@ void Level_2::update()
 
     for (const auto& lane : laneVector) {
         if (lane->type == laneType::snow_finish || lane->type == laneType::desert_finish || lane->type == laneType::garden_finish){
-            if (player->getPlayerSprite().getPosition().y <= windowTranslateY + 66){
-                sf::Texture backgroundTexture;
-                backgroundTexture.create(window->getSize().x, window->getSize().y);
-                backgroundTexture.update(*window);
-                states->push(new Win(window, states, player, music, backgroundTexture, getLevel()));
+            float playerY = player->getPlayerSprite().getPosition().y;
+            float laneY = lane->getPosition().y;
+            float laneHeight = 165.f;
+            if (playerY >= laneY && playerY <= laneY + laneHeight - 150){
+                win();                
             }
         }
     }
@@ -582,7 +609,6 @@ void Level_2::notBridge(){
         }
     }
 }
-
 
 void Level_2::playerCollision(std::vector<Stuff*> stuffVector) {
     for (auto& stuff : stuffVector) {
@@ -717,6 +743,29 @@ int Level_3::getLevel(){
     return level;
 }
 
+void Level_3::win(){
+    sf::SoundBuffer gameWinBuffer;
+    sf::Sound gameWinSound; 
+    if (!gameWinBuffer.loadFromFile("../resource/audio/gameWin.wav")) {
+        cout << "Cannot load soundfile" << endl;
+    }
+    gameWinSound.setBuffer(gameWinBuffer);       
+    player->setMovementSpeed(0);
+    for (auto& stuff : stuffVector) {
+        stuff->setSpeed(0);
+    }
+
+    sf::Texture backgroundTexture;
+    backgroundTexture.create(window->getSize().x, window->getSize().y);
+    backgroundTexture.update(*window);
+
+    sf::Clock delayTimer;
+    while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
+        // Wait for 2 seconds
+    }
+    states->push(new Win(window, states, player, music, backgroundTexture, getLevel()));
+}
+
 void Level_3::update()
 {
     setting->update();
@@ -734,11 +783,11 @@ void Level_3::update()
 
     for (const auto& lane : laneVector) {
         if (lane->type == laneType::snow_finish || lane->type == laneType::desert_finish || lane->type == laneType::garden_finish){
-            if (player->getPlayerSprite().getPosition().y <= windowTranslateY + 66){
-                sf::Texture backgroundTexture;
-                backgroundTexture.create(window->getSize().x, window->getSize().y);
-                backgroundTexture.update(*window);
-                states->push(new Win(window, states, player, music, backgroundTexture, getLevel()));
+            float playerY = player->getPlayerSprite().getPosition().y;
+            float laneY = lane->getPosition().y;
+            float laneHeight = 165.f;
+            if (playerY >= laneY && playerY <= laneY + laneHeight - 150){
+                win();                
             }
         }
     }

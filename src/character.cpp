@@ -3,7 +3,7 @@
 
 class Player;
 
-Character::Character(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music) : window(window), states(states), player(new Player(PlayerSkin::GREEN)), music(music){
+Character::Character(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, Player* player) : window(window), states(states), player(player), music(music){
     initShape();
     player->initPlayer();
 }

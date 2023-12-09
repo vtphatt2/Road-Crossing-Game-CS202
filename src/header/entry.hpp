@@ -5,10 +5,13 @@
 #include <stack>
 #include <SFML/Graphics.hpp>
 #include "menu.hpp"
+#include "player.hpp"
+
+class Player;
 
 class Entry : public State {
     public :
-        Entry(sf::RenderWindow* window, std::stack <State*>* states, sf::Music &music);
+        Entry(sf::RenderWindow* window, std::stack <State*>* states, sf::Music &music, Player* player);
         void initShape();
         void handleEvent();
         void update();
@@ -21,6 +24,7 @@ class Entry : public State {
         sf::Event event;
         sf::Vector2i mousePosition;
         sf::Music& music;
+        Player* player;
 
         // material
         sf::Texture backgroundTexture;

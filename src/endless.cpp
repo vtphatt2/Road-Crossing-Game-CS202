@@ -8,6 +8,7 @@ Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     }
     gameOverSound.setBuffer(gameOverBuffer);
     player->renderInGame();
+    player->setMovementSpeed(10.0f);
 }
 
 Lane* Endless::snowLane()
@@ -802,7 +803,7 @@ void Endless::update()
         while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
             // Wait for 2 seconds
         }
-        states->push(new Lose(window, states, music, backgroundTexture));
+        states->push(new Lose(window, states, music, backgroundTexture, player));
         isGameOver = 0;
     }
     setting->update();

@@ -846,7 +846,9 @@ void Endless::notBridge(){
                 (playerB.x >= bridge1.x && playerB.x <= bridge1.x + bridges[1].getGlobalBounds().width)){}
                 else {
                     player->updatePlayerDrown();
-                    window->draw(player->getPlayerSprite());
+                    sf::Vector2f pos = player->getPlayerSprite().getPosition();
+                    player->getPlayerSprite().setPosition(pos);
+                    render();
                     gameOver();
                 }
             }
@@ -878,7 +880,7 @@ void Endless::gameOver(){
     while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
         // Wait for 2 seconds
     }
-    states->push(new Win(window, states, music, backgroundTexture));
+    states->push(new Lose(window, states, music, backgroundTexture));
 }
 
 void Endless::render() {
@@ -892,5 +894,6 @@ void Endless::render() {
     {
         window->draw(*stuffVector[i]);
     }
+    
     window->draw(*setting);
 }

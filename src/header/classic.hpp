@@ -111,6 +111,7 @@ class Level_1 : public State
         void render();
         void playerCollision(std::vector<Stuff*> stuffVector);
         void gameOver();
+        int getLevel();
     
     private:
         sf::RenderWindow* window;
@@ -122,6 +123,7 @@ class Level_1 : public State
         std::vector<Stuff*> stuffVector;
         Setting* setting;
         std::vector<Lane*> laneVector;
+        int level;
 
         sf::SoundBuffer gameOverBuffer;
         sf::Sound gameOverSound;

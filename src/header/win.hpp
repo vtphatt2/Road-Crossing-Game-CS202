@@ -13,11 +13,12 @@ class Player;
 class Menu;
 class Win: public State{
     public:
-        Win(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, sf::Texture background);
+        Win(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, sf::Texture background, int level);
         void handleEvent();
         void update();
         void render();
         void initShape();
+        void pushNewLevel();
 
     private:
         sf::RenderWindow* window;
@@ -26,6 +27,8 @@ class Win: public State{
         sf::Vector2i mousePosition;
         sf::Music& music;
         sf::Texture background;
+        int currentLevel;
+        Player* player;
 
         sf::Texture backgroundTexture;
         sf::Sprite backgroundImage;

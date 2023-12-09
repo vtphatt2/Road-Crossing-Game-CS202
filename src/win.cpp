@@ -1,6 +1,7 @@
 #include "header/win.hpp"
 #include<iostream>
-Win::Win(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, sf::Texture background) : window(window), states(states), music(music), background(background) {
+Win::Win(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, sf::Texture background, int level) : window(window), states(states), music(music), 
+background(background), currentLevel(level), player(player) {
     window->setView(window->getDefaultView());
     initShape();
 }
@@ -46,7 +47,7 @@ void Win::initShape() {
 
     // Create text object
     level.setFont(font);
-    level.setString("Level xx");
+    level.setString("Level " + to_string(currentLevel));
     level.setCharacterSize(70);
     level.setFillColor(sf::Color(214, 176, 141)); // #D6B08D in RGB
     level.setStyle(sf::Text::Bold);
@@ -67,11 +68,26 @@ void Win::handleEvent() {
                 states->push(new Menu(window, states, music));
             }
             if (nextButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
-                //states->push(new Levels(window, states, music));
+                pushNewLevel();
             }
         }
     }
 }
+
+void Win::pushNewLevel(){
+    if (currentLevel == 1) states->push(new Level_2(window, states, player, music));
+    if (currentLevel == 2) states->push(new Level_3(window, states, player, music));
+    if (currentLevel == 3) states->push(new Level_4(window, states, player, music));
+    if (currentLevel == 4) states->push(new Level_5(window, states, player, music));
+    if (currentLevel == 5) states->push(new Level_6(window, states, player, music));
+    // if (currentLevel == 6) states->push(new Level_7(window, states, player, music));
+    // if (currentLevel == 7) states->push(new Level_8(window, states, player, music));
+    // if (currentLevel == 8) states->push(new Level_9(window, states, player, music));
+    // if (currentLevel == 9) states->push(new Level_10(window, states, player, music));
+    // if (currentLevel == 10) states->push(new Level_11(window, states, player, music));
+}
+
+
 
 void Win::update() {
     mousePosition = sf::Mouse::getPosition(*window);

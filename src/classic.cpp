@@ -357,6 +357,10 @@ void Level_1::handleEvent()
     }
 }
 
+int Level_1::getLevel(){
+    return 1;
+}
+
 void Level_1::update()
 {
     setting->update();
@@ -371,7 +375,21 @@ void Level_1::update()
         playerCollision(stuffVector); 
         Clock.restart();
     }
+
+
+    laneType playerLaneType = laneType::river; 
+    for (const auto& lane : laneVector) {
+        if (lane->type == laneType::snow_finish || lane->type == laneType::desert_finish || lane->type == laneType::garden_finish){
+            if (player->getPlayerSprite().getPosition().y <= windowTranslateY + 66){
+                sf::Texture backgroundTexture;
+                backgroundTexture.create(window->getSize().x, window->getSize().y);
+                backgroundTexture.update(*window);
+                states->push(new Win(window, states, player, music, backgroundTexture, getLevel()));
+            }
+        }
+    }
 }
+
 
 void Level_1::playerCollision(std::vector<Stuff*> stuffVector) {
     for (auto& stuff : stuffVector) {

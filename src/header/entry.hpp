@@ -8,7 +8,7 @@
 
 class Entry : public State {
     public :
-        Entry(sf::RenderWindow* window, std::stack <State*>* states);
+        Entry(sf::RenderWindow* window, std::stack <State*>* states, sf::Music &music);
         void initShape();
         void handleEvent();
         void update();
@@ -20,7 +20,7 @@ class Entry : public State {
 
         sf::Event event;
         sf::Vector2i mousePosition;
-        sf::Music music;
+        sf::Music& music;
 
         // material
         sf::Texture backgroundTexture;

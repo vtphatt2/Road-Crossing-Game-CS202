@@ -65,6 +65,8 @@ class Endless : public State
         sf::Time increaseSpeedTime;
         sf::Clock increaseSpeedClock;
         float speedCoe = 1.0;
+
+        bool isGameOver = 0;
 };
 
 #endif

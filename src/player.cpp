@@ -269,5 +269,5 @@ void Player::updatePlayerDrown(){
             break;        
     }
 	playerTexture.loadFromFile(texturePath);
-    playerSprite.setTexture(playerTexture);
+    playerSprite.setTexture(playerTexture, true);
 }

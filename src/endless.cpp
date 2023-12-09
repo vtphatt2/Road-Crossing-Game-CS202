@@ -788,6 +788,23 @@ void Endless::handleEvent() {
 
 void Endless::update() 
 {
+    if (isGameOver) {
+        gameOverSound.play();
+        player->setMovementSpeed(0);
+        for (auto& stuff : stuffVector) {
+            stuff->setSpeed(0);
+        }
+
+        sf::Texture backgroundTexture;
+        backgroundTexture.create(window->getSize().x, window->getSize().y);
+        backgroundTexture.update(*window);
+        sf::Clock delayTimer;
+        while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
+            // Wait for 2 seconds
+        }
+        states->push(new Lose(window, states, music, backgroundTexture));
+        isGameOver = 0;
+    }
     setting->update();
     for (int i = 0; i < laneVector.size(); i++) laneVector[i]->update();
     if (isAddNewLane) 
@@ -828,7 +845,6 @@ void Endless::update()
         speedCoe *= 1.3;
         increaseSpeedClock.restart();
     }    
-
     notBridge();
 }
 
@@ -848,7 +864,6 @@ void Endless::notBridge(){
                     player->updatePlayerDrown();
                     sf::Vector2f pos = player->getPlayerSprite().getPosition();
                     player->getPlayerSprite().setPosition(pos);
-                    render();
                     gameOver();
                 }
             }
@@ -866,21 +881,7 @@ void Endless::playerCollision(std::vector<Stuff*> stuffVector) {
 }
 
 void Endless::gameOver(){
-    gameOverSound.play();        
-    player->setMovementSpeed(0);
-    for (auto& stuff : stuffVector) {
-        stuff->setSpeed(0);
-    }
-
-    sf::Texture backgroundTexture;
-    backgroundTexture.create(window->getSize().x, window->getSize().y);
-    backgroundTexture.update(*window);
-
-    sf::Clock delayTimer;
-    while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
-        // Wait for 2 seconds
-    }
-    states->push(new Lose(window, states, music, backgroundTexture));
+    isGameOver = 1;
 }
 
 void Endless::render() {
@@ -894,6 +895,5 @@ void Endless::render() {
     {
         window->draw(*stuffVector[i]);
     }
-    
     window->draw(*setting);
 }

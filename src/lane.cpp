@@ -205,11 +205,11 @@ void Lane::update() {
 			}
 			if (type == laneType::river) {
 
-				if (stuffVector[i]->getPosition().x < 1140 && !isJumped1[i]) {
+				if (stuffVector[i]->getPosition().x < bridge[0].getPosition().x + 140 && !isJumped1[i]) {
 					stuffVector[i]->jump();
 					isJumped1[i] = 1;
 				}
-				if (stuffVector[i]->getPosition().x < 290 && !isJumped2[i]) {
+				if (stuffVector[i]->getPosition().x < bridge[1].getPosition().x + 140 && !isJumped2[i]) {
 					stuffVector[i]->jump();
 					isJumped2[i] = 1;
 				}

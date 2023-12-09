@@ -112,6 +112,7 @@ class Level_1 : public State
         void playerCollision(std::vector<Stuff*> stuffVector);
         void gameOver();
         int getLevel();
+        void win();
     
     private:
         sf::RenderWindow* window;
@@ -123,7 +124,7 @@ class Level_1 : public State
         std::vector<Stuff*> stuffVector;
         Setting* setting;
         std::vector<Lane*> laneVector;
-        int level;
+        int level=1;
 
         sf::SoundBuffer gameOverBuffer;
         sf::Sound gameOverSound;
@@ -132,7 +133,6 @@ class Level_1 : public State
         sf::Time increaseSpeedClock;
         float speedCoe = 1.0;
 };
-
 class Level_2 : public State
 {
     public:
@@ -149,6 +149,7 @@ class Level_2 : public State
         void playerCollision(std::vector<Stuff*> stuffVector);
         void gameOver();
         void notBridge();
+        int getLevel();
         
     private:
         sf::RenderWindow* window;
@@ -158,6 +159,7 @@ class Level_2 : public State
         sf::Music& music;
         Player* player;
         int choice;
+        int level = 2;
         std::vector<Stuff*> stuffVector;
         Setting* setting;
         std::vector<Lane*> laneVector;
@@ -184,6 +186,7 @@ class Level_3 : public State
         void render();
         void playerCollision(std::vector<Stuff*> stuffVector);
         void gameOver();
+        int getLevel();
         
     private:
         sf::RenderWindow* window;
@@ -193,6 +196,7 @@ class Level_3 : public State
         sf::Music& music;
         Player* player;
         int choice;
+        int level = 3;
         std::vector<Stuff*> stuffVector;
         Setting* setting;
         std::vector<Lane*> laneVector;

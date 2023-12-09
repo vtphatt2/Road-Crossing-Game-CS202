@@ -358,7 +358,7 @@ void Level_1::handleEvent()
 }
 
 int Level_1::getLevel(){
-    return 1;
+    return level;
 }
 
 void Level_1::update()
@@ -375,22 +375,37 @@ void Level_1::update()
         playerCollision(stuffVector); 
         Clock.restart();
     }
-
-
-    laneType playerLaneType = laneType::river; 
+ 
     for (const auto& lane : laneVector) {
         if (lane->type == laneType::snow_finish || lane->type == laneType::desert_finish || lane->type == laneType::garden_finish){
-            if (player->getPlayerSprite().getPosition().y <= windowTranslateY + 66){
-                sf::Texture backgroundTexture;
-                backgroundTexture.create(window->getSize().x, window->getSize().y);
-                backgroundTexture.update(*window);
-                states->push(new Win(window, states, player, music, backgroundTexture, getLevel()));
+            float playerY = player->getPlayerSprite().getPosition().y;
+            float laneY = lane->getPosition().y;
+            float laneHeight = 165.f;  // Assuming lane has a method getHeight()
+
+            if (playerY >= laneY && playerY <= laneY + laneHeight - 150){
+                win();                
             }
         }
     }
 }
 
+void Level_1::win(){
+    gameOverSound.play();        
+    player->setMovementSpeed(0);
+    for (auto& stuff : stuffVector) {
+        stuff->setSpeed(0);
+    }
 
+    sf::Texture backgroundTexture;
+    backgroundTexture.create(window->getSize().x, window->getSize().y);
+    backgroundTexture.update(*window);
+
+    sf::Clock delayTimer;
+    while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
+        // Wait for 2 seconds
+    }
+    states->push(new Win(window, states, player, music, backgroundTexture, getLevel()));
+}
 void Level_1::playerCollision(std::vector<Stuff*> stuffVector) {
     for (auto& stuff : stuffVector) {
         float negativeMargin = -5.0f;
@@ -515,6 +530,10 @@ void Level_2::handleEvent()
     }
 }
 
+int Level_2::getLevel(){
+    return level;
+}
+
 void Level_2::update()
 {
     setting->update();
@@ -532,6 +551,17 @@ void Level_2::update()
         playerCollision(stuffVector); 
         notBridge();
         Clock.restart();
+    }
+
+    for (const auto& lane : laneVector) {
+        if (lane->type == laneType::snow_finish || lane->type == laneType::desert_finish || lane->type == laneType::garden_finish){
+            if (player->getPlayerSprite().getPosition().y <= windowTranslateY + 66){
+                sf::Texture backgroundTexture;
+                backgroundTexture.create(window->getSize().x, window->getSize().y);
+                backgroundTexture.update(*window);
+                states->push(new Win(window, states, player, music, backgroundTexture, getLevel()));
+            }
+        }
     }
 }
 
@@ -683,6 +713,10 @@ void Level_3::handleEvent()
     }
 }
 
+int Level_3::getLevel(){
+    return level;
+}
+
 void Level_3::update()
 {
     setting->update();
@@ -696,6 +730,17 @@ void Level_3::update()
         player->updateWindowBoundsCollision(window, windowTranslateY);
         playerCollision(stuffVector); 
         Clock.restart();
+    }
+
+    for (const auto& lane : laneVector) {
+        if (lane->type == laneType::snow_finish || lane->type == laneType::desert_finish || lane->type == laneType::garden_finish){
+            if (player->getPlayerSprite().getPosition().y <= windowTranslateY + 66){
+                sf::Texture backgroundTexture;
+                backgroundTexture.create(window->getSize().x, window->getSize().y);
+                backgroundTexture.update(*window);
+                states->push(new Win(window, states, player, music, backgroundTexture, getLevel()));
+            }
+        }
     }
 }
 

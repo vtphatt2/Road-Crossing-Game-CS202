@@ -52,7 +52,7 @@ void Lose::handleEvent() {
                 states->push(new Menu(window, states, music, player));
             }
             if (restartButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
-                states->push(new Endless(window, states,player, music));
+                states->push(new Character(window, states, music, player));
             }
         }
     }

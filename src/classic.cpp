@@ -394,7 +394,8 @@ void Level_1::win(){
     if (!gameWinBuffer.loadFromFile("../resource/audio/gameWin.wav")) {
         cout << "Cannot load soundfile" << endl;
     }
-    gameWinSound.setBuffer(gameWinBuffer);       
+    gameWinSound.setBuffer(gameWinBuffer);    
+    gameWinSound.play();
     player->setMovementSpeed(0);
     for (auto& stuff : stuffVector) {
         stuff->setSpeed(0);
@@ -544,7 +545,8 @@ void Level_2::win(){
     if (!gameWinBuffer.loadFromFile("../resource/audio/gameWin.wav")) {
         cout << "Cannot load soundfile" << endl;
     }
-    gameWinSound.setBuffer(gameWinBuffer);       
+    gameWinSound.setBuffer(gameWinBuffer);  
+    gameWinSound.play();     
     player->setMovementSpeed(0);
     for (auto& stuff : stuffVector) {
         stuff->setSpeed(0);
@@ -749,7 +751,8 @@ void Level_3::win(){
     if (!gameWinBuffer.loadFromFile("../resource/audio/gameWin.wav")) {
         cout << "Cannot load soundfile" << endl;
     }
-    gameWinSound.setBuffer(gameWinBuffer);       
+    gameWinSound.setBuffer(gameWinBuffer); 
+    gameWinSound.play();      
     player->setMovementSpeed(0);
     for (auto& stuff : stuffVector) {
         stuff->setSpeed(0);
@@ -946,7 +949,8 @@ void Level_4::win(){
     if (!gameWinBuffer.loadFromFile("../resource/audio/gameWin.wav")) {
         cout << "Cannot load soundfile" << endl;
     }
-    gameWinSound.setBuffer(gameWinBuffer);       
+    gameWinSound.setBuffer(gameWinBuffer);
+    gameWinSound.play();       
     player->setMovementSpeed(0);
     for (auto& stuff : stuffVector) {
         stuff->setSpeed(0);
@@ -1184,7 +1188,8 @@ void Level_5::win(){
     if (!gameWinBuffer.loadFromFile("../resource/audio/gameWin.wav")) {
         cout << "Cannot load soundfile" << endl;
     }
-    gameWinSound.setBuffer(gameWinBuffer);       
+    gameWinSound.setBuffer(gameWinBuffer);   
+    gameWinSound.play();    
     player->setMovementSpeed(0);
     for (auto& stuff : stuffVector) {
         stuff->setSpeed(0);
@@ -1365,7 +1370,8 @@ void Level_6::win(){
     if (!gameWinBuffer.loadFromFile("../resource/audio/gameWin.wav")) {
         cout << "Cannot load soundfile" << endl;
     }
-    gameWinSound.setBuffer(gameWinBuffer);       
+    gameWinSound.setBuffer(gameWinBuffer);    
+    gameWinSound.play();   
     player->setMovementSpeed(0);
     for (auto& stuff : stuffVector) {
         stuff->setSpeed(0);

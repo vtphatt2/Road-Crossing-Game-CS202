@@ -6,6 +6,7 @@ class Player;
 Character::Character(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, Player* player) : window(window), states(states), player(player), music(music){
     initShape();
     player->initPlayer();
+    player->setMovementSpeed(10.0f);
 }
 
 void Character::initShape() {

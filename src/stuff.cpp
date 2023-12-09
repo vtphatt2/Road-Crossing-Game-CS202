@@ -126,8 +126,11 @@ void Coin::run() {
 	sprite.rotate(0.01 * 60);
 
 }
+void Coin::vanish() {
+	sprite.setColor(sf::Color::Transparent);
+}
 void Coin::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	// target.draw(sprite);
+	target.draw(sprite);
 }
 
 //Ant

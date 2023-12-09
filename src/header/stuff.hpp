@@ -128,6 +128,7 @@ public:
 	void setPosition(const sf::Vector2f& position);
 	void setPosition(float x, float y);
 	sf::FloatRect getGlobalBounds();
+	void vanish();
 	void run();
 private:
 	sf::Texture texture;

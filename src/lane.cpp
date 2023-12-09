@@ -261,3 +261,7 @@ laneType randomFirstLaneType() {
 Bridge* Lane::getBridge(){
 	return bridge;
 }	
+
+Coin* Lane::getCoin() {
+	return coin;
+}

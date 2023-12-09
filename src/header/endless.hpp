@@ -28,11 +28,13 @@ class Endless : public State
         int windowTranslateY;
         bool isAddNewLane = 0;
         Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music);
+        ~Endless();
         void initShape();
         void handleEvent();
         void update();
         void render();
         void playerCollision(std::vector<Stuff*> stuffVector);
+        void eatCredit();
         void gameOver();
         void notBridge();
         

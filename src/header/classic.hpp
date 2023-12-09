@@ -24,6 +24,7 @@ class Levels : public State
         void handleEvent();
         void update();
         void render();
+
     private:
         sf::RenderWindow* window;
         std::stack <State*>* states;

@@ -10,6 +10,11 @@ Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     player->renderInGame();
 }
 
+Endless::~Endless() {
+    for (int i = 0 ; i < stuffVector.size() ; ++i) delete stuffVector[i];
+    for (int i = 0 ; i < laneVector.size() ; ++i) delete laneVector[i];  
+}
+
 Lane* Endless::snowLane()
 {
     Lane* lane = nullptr;
@@ -753,7 +758,7 @@ void Endless::initShape() {
 }
 
 void Endless::handleEvent() {
-    const float movementSpeed = 10.0f; 
+    const float movementSpeed = 20.0f; 
     int framesPerDirection = 2;
     while (window->pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
@@ -767,15 +772,15 @@ void Endless::handleEvent() {
             player->update(static_cast<Direction>(1));
             player->updateWindowBoundsCollision(window, windowTranslateY);
         }
-        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)) {
+        if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)) {
             player->update(static_cast<Direction>(2));
             player->updateWindowBoundsCollision(window, windowTranslateY);
         }
-        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)){
+        if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)){
             player->update(static_cast<Direction>(3));
             player->updateWindowBoundsCollision(window, windowTranslateY);
         }
-        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)){
+        if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)){
             player->update(static_cast<Direction>(4));
             player->updateWindowBoundsCollision(window, windowTranslateY);
         }
@@ -821,6 +826,7 @@ void Endless::update()
         }
         player->updateWindowBoundsCollision(window, windowTranslateY);
         playerCollision(stuffVector); 
+        eatCredit();
         Clock.restart();
     }
     increaseSpeedTime = increaseSpeedClock.getElapsedTime();
@@ -859,10 +865,26 @@ void Endless::notBridge(){
 
 void Endless::playerCollision(std::vector<Stuff*> stuffVector) {
     for (auto& stuff : stuffVector) {
-        float negativeMargin = -5.0f;
+        float negativeMargin = -15.0f;
         bool isCollision = player->isCollisionWithMargin(stuff->getGlobalBounds(), negativeMargin);
         if (isCollision) gameOver();
     } 
+}
+
+void Endless::eatCredit() {
+    float negativeMargin = -15.0f;
+    for (int i = 0 ; i < laneVector.size() ; ++i) 
+    {
+        if (laneVector[i]->getCoin()) 
+        {
+            Coin* coins = laneVector[i]->getCoin();
+            for (int j = 0 ; j < 3 ; ++j) 
+            {
+                if (player->isCollisionWithMargin(coins[j].getGlobalBounds(), negativeMargin)) 
+                    coins[j].vanish();
+            }
+        }
+    }
 }
 
 void Endless::gameOver(){

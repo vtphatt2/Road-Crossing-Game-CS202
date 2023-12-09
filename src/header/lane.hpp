@@ -21,6 +21,7 @@ public:
 	laneType type;
 	std::vector<Stuff*> getStuffVector();
 	Bridge* getBridge();
+	Coin* getCoin();
 private:
 	sf::Texture texture;
 	sf::Sprite sprite;

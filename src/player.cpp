@@ -30,7 +30,8 @@ void Player::initPlayer() {
     }
 
 	playerTexture.loadFromFile(texturePath);
-    playerSprite.setTexture(playerTexture);
+    playerSprite.setTexture(playerTexture);	
+	playerSprite.setTextureRect(sf::IntRect(0,0,playerTexture.getSize().x, playerTexture.getSize().y));
 	playerSprite.setPosition(622, 412);
 }
 
@@ -269,5 +270,5 @@ void Player::updatePlayerDrown(){
             break;        
     }
 	playerTexture.loadFromFile(texturePath);
-    playerSprite.setTexture(playerTexture);
+    playerSprite.setTexture(playerTexture, true);
 }

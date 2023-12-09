@@ -433,7 +433,7 @@ void Level_1::gameOver() {
     while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
         // Wait for 2 seconds
     }
-    states->push(new Lose(window, states, music, backgroundTexture));
+    states->push(new Lose(window, states, music, backgroundTexture, player));
 }
 
 void Level_1::render()
@@ -633,7 +633,7 @@ void Level_2::gameOver(){
     while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
         // Wait for 2 seconds
     }
-    states->push(new Lose(window, states, music, backgroundTexture));
+    states->push(new Lose(window, states, music, backgroundTexture, player));
 }
 
 void Level_2::render() {
@@ -816,7 +816,7 @@ void Level_3::gameOver(){
     while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
         // Wait for 2 seconds
     }
-    states->push(new Lose(window, states, music, backgroundTexture));
+    states->push(new Lose(window, states, music, backgroundTexture, player));
 }
 
 void Level_3::render() {
@@ -1033,7 +1033,7 @@ void Level_4::gameOver(){
     while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
         // Wait for 2 seconds
     }
-    states->push(new Lose(window, states, music, backgroundTexture));
+    states->push(new Lose(window, states, music, backgroundTexture, player));
 }
 
 void Level_4::render() {
@@ -1216,7 +1216,7 @@ void Level_5::gameOver() {
     while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
         // Wait for 2 seconds
     }
-    states->push(new Lose(window, states, music, backgroundTexture));
+    states->push(new Lose(window, states, music, backgroundTexture, player));
 }
 
 void Level_5::render()
@@ -1405,7 +1405,7 @@ void Level_6::gameOver() {
     while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
         // Wait for 2 seconds
     }
-    states->push(new Lose(window, states, music, backgroundTexture));
+    states->push(new Lose(window, states, music, backgroundTexture, player));
 }
 
 void Level_6::render()

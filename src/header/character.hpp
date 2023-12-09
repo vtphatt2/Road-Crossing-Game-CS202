@@ -10,11 +10,11 @@ const int NUM_CHARACTERS = 5;
 #include "mode.hpp"
 #include "player.hpp"
 
-class Player; // Forward declaration of Player class
+class Player; 
 
 class Character: public State {
     public :
-        Character(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music);
+        Character(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, Player* player);
         void initShape();
         void handleEvent();
         void update();

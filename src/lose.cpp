@@ -1,6 +1,6 @@
 #include "header/lose.hpp"
 #include<iostream>
-Lose::Lose(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, sf::Texture background) : window(window), states(states), music(music), background(background) {
+Lose::Lose(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, sf::Texture background, Player* player) : window(window), states(states), music(music), background(background), player(player) {
     window->setView(window->getDefaultView());
     initShape();
 }
@@ -49,10 +49,10 @@ void Lose::handleEvent() {
 
         if (event.type == sf::Event::MouseButtonPressed) {
             if (menuButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
-                states->push(new Menu(window, states, music));
+                states->push(new Menu(window, states, music, player));
             }
             if (restartButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
-                states->push(new Character(window, states, music));
+                states->push(new Endless(window, states,player, music));
             }
         }
     }

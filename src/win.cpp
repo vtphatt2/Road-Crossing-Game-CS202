@@ -68,7 +68,7 @@ void Win::handleEvent() {
 
         if (event.type == sf::Event::MouseButtonPressed) {
             if (menuButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
-                states->push(new Menu(window, states, music));
+                states->push(new Menu(window, states, music, player));
             }
             if (nextButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
                 pushNewLevel();

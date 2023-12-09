@@ -1,6 +1,6 @@
 #include "header/entry.hpp"
 
-Entry::Entry(sf::RenderWindow* window, std::stack <State*>* states, sf::Music &music) : window(window), states(states), music(music) {
+Entry::Entry(sf::RenderWindow* window, std::stack <State*>* states, sf::Music &music, Player* player) : window(window), states(states), music(music), player(player) {
     initShape();
     music.openFromFile("../resource/audio/audio1.mp3");
     music.setVolume(50);
@@ -30,7 +30,7 @@ void Entry::handleEvent() {
                 if (event.mouseButton.button == sf::Mouse::Left) {
                     mousePosition = sf::Mouse::getPosition(*window);
                     if (playButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
-                        states->push(new Menu(window, states, music));
+                        states->push(new Menu(window, states, music, player));
                     }
                 }
                 break ;

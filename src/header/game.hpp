@@ -22,6 +22,7 @@ class Game {
         sf::RenderWindow* window;
         std::stack <State*> states;
         sf::Music music;
+        Player* player;
 
         void setup();
         void handleEvent();

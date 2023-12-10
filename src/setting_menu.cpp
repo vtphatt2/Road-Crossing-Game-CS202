@@ -1,5 +1,4 @@
 #include "header/setting_menu.hpp"
-#include <SFML/Audio.hpp>
 
 SettingMenu::SettingMenu(sf::RenderWindow* window, std::stack <State*>* states, Game* game)
     : window(window), states(states), game(game){

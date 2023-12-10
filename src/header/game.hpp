@@ -32,6 +32,7 @@ class Game {
         std::stack <State*> states;
         sf::Music music;
         Player* player;
+        float musicVolume = 50.0f;
 
 
         void setup();

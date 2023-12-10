@@ -63,7 +63,7 @@ void Game::render() {
 
 void Game::playMusic(){
     music.openFromFile("../resource/audio/audio1.mp3");
-    musicVolume=50.0f;
+    musicVolume = 50.0f;
     music.setVolume(musicVolume);
     music.setLoop(true);
     music.play();

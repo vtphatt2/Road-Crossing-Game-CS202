@@ -23,7 +23,6 @@ class Menu: public State {
         void handleEvent();
         void update();
         void render();
-        void initShape();
 
     private :
         sf::RenderWindow* window;

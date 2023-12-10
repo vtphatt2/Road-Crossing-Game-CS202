@@ -9,6 +9,8 @@ Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     gameOverSound.setBuffer(gameOverBuffer);
     player->renderInGame();
     player->setMovementSpeed(10.0f);
+    slowSpeed = player->getMovementSpeed() * 0.8;
+    normalSpeed = player->getMovementSpeed();
 }
 
 Endless::~Endless() {
@@ -709,6 +711,7 @@ void Endless::initShape() {
     view->setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
     view->setCenter(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2));
     windowTranslateY = 0;
+
     
     scoreBoardTexture.loadFromFile("../resource/Score.png");
     scoreBoardImage.setTexture(scoreBoardTexture);
@@ -835,7 +838,6 @@ void Endless::update()
         }
         isAddNewLane = 0;
     }
-
     bool gameRunning = true;
     Time = Clock.getElapsedTime();
     if (Time.asSeconds() >= 0.01) {
@@ -858,6 +860,21 @@ void Endless::update()
         increaseSpeedClock.restart();
     }    
     notBridge();
+    for (int i = 0; i < laneVector.size(); i++) {
+        if (laneVector[i]->type == laneType::snow_path && 
+            player->getPosition().y + player->getPlayerSprite().getGlobalBounds().height > laneVector[i]->getPosition().y &&
+            player->getPosition().y + player->getPlayerSprite().getGlobalBounds().height < laneVector[i]->getPosition().y + landHeight) 
+        { 
+            isSlow = 1;
+        }
+        else if (laneVector[i]->type != laneType::snow_path &&
+            player->getPosition().y + player->getPlayerSprite().getGlobalBounds().height > laneVector[i]->getPosition().y &&
+            player->getPosition().y + player->getPlayerSprite().getGlobalBounds().height < laneVector[i]->getPosition().y + landHeight)
+        {
+            isSlow = 0;
+        }
+    }
+    (isSlow ? player->setMovementSpeed(slowSpeed) : player->setMovementSpeed(normalSpeed));
 }
 
 void Endless::notBridge(){

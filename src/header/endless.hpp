@@ -69,6 +69,9 @@ class Endless : public State
         float speedCoe = 1.0;
 
         bool isGameOver = 0;
+        bool isSlow = 0;
+        float slowSpeed;
+        float normalSpeed;
 };
 
 #endif

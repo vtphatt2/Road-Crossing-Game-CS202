@@ -30,7 +30,6 @@ class SettingMenu: public State {
     private :
         sf::RenderWindow* window;
         std::stack <State*>* states;
-        Game* game;
         sf::Event event;
         sf::Vector2i mousePosition;
         sf::Font font;

@@ -1,7 +1,7 @@
 #include "header/setting_menu.hpp"
 
-SettingMenu::SettingMenu(sf::RenderWindow* window, std::stack <State*>* states, Game* game)
-    : window(window), states(states), game(game){
+SettingMenu::SettingMenu(sf::RenderWindow* window, std::stack <State*>* states, sf::Music &music)
+    : window(window), states(states), music(music){
     initShape();
     updateButtonTextures();
 
@@ -75,24 +75,24 @@ void SettingMenu::handleEvent() {
         if ((event.type == sf::Event::MouseButtonPressed && soundButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) ||
             (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::P)) {
             //0 stopped, 1 paused, 2 playing
-            game->toggleMusic();
+            toggleMusic();
             updateButtonTextures();     
         }
 
         if ((event.type == sf::Event::MouseButtonPressed && upButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) ||
             (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right)) {
-            game->setMusicVolume(game->increaseVolume()); 
+            setMusicVolume(increaseVolume()); 
             updateVolumeText();
         } else if ((event.type == sf::Event::MouseButtonPressed && downButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) ||
                    (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left)) {
-            game->setMusicVolume(game->decreaseVolume()); 
+            setMusicVolume(decreaseVolume()); 
             updateVolumeText();
         }
     }
 }
 
 void SettingMenu::updateButtonTextures() {
-    if (game->getStatusMusic() == 2) {
+    if (getStatusMusic() == 2) {
         soundButtonTexture.loadFromFile("../resource/music_on.png");
     } else {
         soundButtonTexture.loadFromFile("../resource/music_off.png");
@@ -109,7 +109,7 @@ void SettingMenu::updateVolumeText(){
     volumeText.setOutlineColor(outlineColor);
     volumeText.setOutlineThickness(outlineThickness);    
 
-    int volume = static_cast<int>(game->getMusicVolume());
+    int volume = static_cast<int>(getMusicVolume());
     volumeText.setString(std::to_string(volume));
 
     float centerX = (upButtonRect.left + downButtonRect.left + downButtonRect.width) / 2.0f;
@@ -150,4 +150,43 @@ void SettingMenu::render() {
     window->draw(volumeText);
     window->draw(upButtonImage);
     window->draw(downButtonImage);
+}
+
+void SettingMenu::stopMusic(){
+    music.stop();
+}
+
+void SettingMenu::pauseMusic(){
+    music.pause();
+}
+
+void SettingMenu::toggleMusic(){
+    if (music.getStatus() == 2){
+        music.pause();
+    }
+    else{
+        music.play();
+    }
+}
+
+int SettingMenu::getStatusMusic(){
+    return music.getStatus();
+}
+
+void SettingMenu::setMusicVolume(float volume){
+    music.setVolume(volume);
+}
+
+float SettingMenu::getMusicVolume() const {
+    return musicVolume;
+}
+
+float SettingMenu::increaseVolume(){
+    musicVolume = std::min(musicVolume + 10, 100.0f);
+    return musicVolume;
+}
+
+float SettingMenu::decreaseVolume(){
+    musicVolume = std::max(musicVolume - 10, 0.0f);
+    return musicVolume;
 }

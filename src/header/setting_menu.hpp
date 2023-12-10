@@ -11,13 +11,21 @@
 class Game;
 class SettingMenu: public State {
     public :
-        SettingMenu(sf::RenderWindow* window, std::stack<State*>* states, Game* game);
+        SettingMenu(sf::RenderWindow* window, std::stack <State*>* states, sf::Music &music);
         void initShape();
         void handleEvent();
         void update();
         void render();
         void updateButtonTextures();
         void updateVolumeText();
+        void stopMusic();
+        void pauseMusic();
+        void toggleMusic();
+        int getStatusMusic();
+        void setMusicVolume(float volume);
+        float getMusicVolume() const;
+        float increaseVolume();
+        float decreaseVolume();
 
     private :
         sf::RenderWindow* window;
@@ -27,6 +35,8 @@ class SettingMenu: public State {
         sf::Vector2i mousePosition;
         sf::Font font;
         sf::Text volumeText;
+        sf::Music& music;
+        float musicVolume = 50.f;
 
         sf::Texture backgroundTexture;
         sf::Sprite backgroundImage;

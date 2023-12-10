@@ -751,9 +751,12 @@ void Endless::initShape() {
         }
         laneVector.push_back(lane);
         laneVector[i]->setPosition(0, 990 - landHeight * (i + 1));
-        for (int j = 0; j < laneVector[i]->getStuffVector().size(); j++) {
-            stuffVector.push_back(laneVector[i]->getStuffVector()[j]);
+        if (i != 0 && i != 1) {
+            for (int j = 0; j < laneVector[i]->getStuffVector().size(); j++) {
+                stuffVector.push_back(laneVector[i]->getStuffVector()[j]);
+            }
         }
+        
     }
     
 }
@@ -848,8 +851,10 @@ void Endless::update()
         Clock.restart();
     }
     increaseSpeedTime = increaseSpeedClock.getElapsedTime();
-    if (increaseSpeedTime.asSeconds() >= 15) {
-        speedCoe *= 1.3;
+    if (increaseSpeedTime.asSeconds() >= 20) {
+        if (speedCoe < 1.3 * 1.3 * 1.3 * 1.3 * 1.3 * 1.3 * 1.3 * 1.3) {
+            speedCoe *= 1.3;
+        }
         increaseSpeedClock.restart();
     }    
     notBridge();

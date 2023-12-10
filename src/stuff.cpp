@@ -1,8 +1,6 @@
 #include "header/stuff.hpp"
 #include<iostream>
 
-
-
 //UFO 
 UFO::UFO() {
 	int randomNum = rand() % 4;
@@ -61,10 +59,10 @@ void UFO::setSpeed(float speed) {
 void UFO::run() {
 	if (isRunning) {
 		if (numOfMoves < limit) {
-			sprite.move(speed, speed);
+			sprite.move(speed, -speed);
 		}
 		else if (numOfMoves >= limit && numOfMoves < 2 * limit) {
-			sprite.move(speed, -speed);
+			sprite.move(speed, speed);
 		}
 		else {
 			numOfMoves = 0;
@@ -600,11 +598,9 @@ sf::Vector2f Frog::getPosition() {
 }
 void Frog::setPosition(const sf::Vector2f& position) {
 	sprite.setPosition(position);
-	sprite.setRotation(0);
 }
 void Frog::setPosition(float x, float y) {
 	sprite.setPosition(sf::Vector2f(x, y));
-	sprite.setRotation(0);
 }
 sf::FloatRect Frog::getGlobalBounds() {
 	return sprite.getGlobalBounds();
@@ -615,12 +611,14 @@ float Frog::getSpeed() {
 void Frog::setSpeed(float speed) {
 	this->speed = speed;
 	limit = 20 / speed;
+	if (limit < 2) {
+		limit = 2;
+	}
 }
 void Frog::run() {
 	if (isRunning) {
 		if (numOfMoves < 2 * limit) {
 			sprite.setTexture(texture[0]);
-
 		}
 		else if (numOfMoves >= 2 * limit && numOfMoves < 3 * limit) {
 			sprite.setTexture(texture[1]);
@@ -635,16 +633,18 @@ void Frog::run() {
 			numOfMoves = 0;
 			sprite.move(0, 0);
 			sprite.rotate((speed / 2) * limit);
+			sprite.setRotation(0);
 		}
 		numOfMoves++;
 	}
 	else {
 		sprite.setTexture(texture[0]);
+		sprite.setRotation(0);
 	}
 }
 void Frog::stop() {
 	isRunning = 0;
-	sprite.setRotation(0);
+	
 }
 void Frog::resume() {
 	isRunning = 1;

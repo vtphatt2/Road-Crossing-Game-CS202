@@ -29,10 +29,11 @@ void Player::initPlayer() {
             break;        
     }
 
-	playerTexture.loadFromFile(texturePath);
+
+	  playerTexture.loadFromFile(texturePath);
     playerSprite.setTexture(playerTexture);	
-	playerSprite.setTextureRect(sf::IntRect(0,0,playerTexture.getSize().x, playerTexture.getSize().y));
-	playerSprite.setPosition(622, 412);
+	  playerSprite.setTextureRect(sf::IntRect(0,0,playerTexture.getSize().x, playerTexture.getSize().y));
+	  playerSprite.setPosition(622, 412);
 }
 
 void Player::resetPos(){
@@ -272,3 +273,4 @@ void Player::updatePlayerDrown(){
 	playerTexture.loadFromFile(texturePath);
     playerSprite.setTexture(playerTexture, true);
 }
+

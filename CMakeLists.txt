@@ -13,7 +13,7 @@ elseif (WIN32)
     set(SFML_DIR "C:/SFML-2.6.0")
 endif()
 
-find_package(SFML 2.6 COMPONENTS graphics window system REQUIRED)
+find_package(SFML 2.6 COMPONENTS graphics window system audio REQUIRED)
 
 add_executable(game ${SOURCES})
 

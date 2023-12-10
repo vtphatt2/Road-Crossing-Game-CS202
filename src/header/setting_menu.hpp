@@ -6,24 +6,27 @@
 #include <SFML/Audio.hpp>
 #include <stack>
 #include "state.hpp"
+#include "game.hpp"
 
+class Game;
 class SettingMenu: public State {
     public :
-        SettingMenu(sf::RenderWindow* window, std::stack<State*>* states, sf::Music& music);
+        SettingMenu(sf::RenderWindow* window, std::stack<State*>* states, Game* game);
         void initShape();
         void handleEvent();
         void update();
         void render();
         void updateButtonTextures();
+        void updateVolumeText();
 
     private :
         sf::RenderWindow* window;
         std::stack <State*>* states;
+        Game* game;
         sf::Event event;
         sf::Vector2i mousePosition;
-
-        bool isSoundOn = true;
-        sf::Music& music;
+        sf::Font font;
+        sf::Text volumeText;
 
         sf::Texture backgroundTexture;
         sf::Sprite backgroundImage;
@@ -31,9 +34,20 @@ class SettingMenu: public State {
         sf::Texture soundTitleTexture;
         sf::Sprite soundTitleImage;
 
+        sf::Texture volumeTitleTexture;
+        sf::Sprite volumeTitleImage;
+
         sf::Texture soundButtonTexture;
         sf::Sprite soundButtonImage;
         sf::IntRect soundButtonRect;
+
+        sf::Texture upButtonTexture;
+        sf::Sprite upButtonImage;
+        sf::IntRect upButtonRect;
+
+        sf::Texture downButtonTexture;
+        sf::Sprite downButtonImage;
+        sf::IntRect downButtonRect;
         
         sf::Texture backButtonTexture;
         sf::Sprite backButtonImage;
@@ -41,18 +55,3 @@ class SettingMenu: public State {
 };
 
 #endif
-
-class SoundSettings {
-private:
-    static bool isSoundOn;
-    SoundSettings() {}
-
-public:
-    static bool getIsSoundOn() {
-        return isSoundOn;
-    }
-
-    static void setIsSoundOn(bool value) {
-        isSoundOn = value;
-    }
-};

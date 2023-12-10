@@ -10,7 +10,8 @@ const int NUM_CHARACTERS = 5;
 #include "mode.hpp"
 #include "player.hpp"
 
-class Player; 
+
+class Player; // Forward declaration of Player class
 
 class Character: public State {
     public :

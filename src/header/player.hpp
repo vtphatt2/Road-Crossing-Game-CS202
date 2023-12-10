@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include <memory>
 
+
 #define movingBlue "../resource/player/MovingBlue.png"
 #define standingLeftBlue "../resource/player/StandingLeftBlue.png"
 #define standingRightBlue "../resource/player/StandingRightBlue.png"

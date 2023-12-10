@@ -2,6 +2,7 @@
 #define MENU_HPP
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <stack>
 #include "state.hpp"
 #include "instruction.hpp"
@@ -13,6 +14,8 @@
 
 class Player;
 
+class Game;
+
 class Menu: public State {
     public :
         Menu(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, Player* player);
@@ -20,14 +23,17 @@ class Menu: public State {
         void handleEvent();
         void update();
         void render();
+        void initShape();
 
     private :
         sf::RenderWindow* window;
         std::stack <State*>* states;
+        Game* game;
 
         sf::Event event;
         sf::Music& music;
         Player* player;
+
 
         sf::Vector2i mousePosition;
 

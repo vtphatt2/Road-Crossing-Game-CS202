@@ -1,13 +1,17 @@
+#pragma once
 #ifndef ENTRY_HPP
 #define ENTRY_HPP
 
 #include "state.hpp"
 #include <stack>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "menu.hpp"
 #include "player.hpp"
 
 class Player;
+
+class Game;
 
 class Entry : public State {
     public :
@@ -20,6 +24,7 @@ class Entry : public State {
     private :
         sf::RenderWindow* window;
         std::stack <State*>* states;
+        Game* game;
 
         sf::Event event;
         sf::Vector2i mousePosition;

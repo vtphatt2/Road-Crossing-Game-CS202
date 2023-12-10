@@ -14,6 +14,15 @@ class Game {
         Game();
         ~Game();
         void run();
+        void playMusic();
+        void stopMusic();
+        void pauseMusic();
+        void toggleMusic();
+        int getStatusMusic();
+        void setMusicVolume(float volume);
+        float getMusicVolume() const;
+        float increaseVolume();
+        float decreaseVolume();
 
     private :
         const int widthWindow;
@@ -23,6 +32,7 @@ class Game {
         std::stack <State*> states;
         sf::Music music;
         Player* player;
+
 
         void setup();
         void handleEvent();

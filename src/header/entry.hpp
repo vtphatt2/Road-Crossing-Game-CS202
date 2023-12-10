@@ -7,12 +7,15 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "menu.hpp"
-#include "game.hpp"
+#include "player.hpp"
+
+class Player;
 
 class Game;
+
 class Entry : public State {
     public :
-        Entry(sf::RenderWindow* window, std::stack <State*>* states, Game* game);
+        Entry(sf::RenderWindow* window, std::stack <State*>* states, sf::Music &music, Player* player);
         void initShape();
         void handleEvent();
         void update();
@@ -25,6 +28,8 @@ class Entry : public State {
 
         sf::Event event;
         sf::Vector2i mousePosition;
+        sf::Music& music;
+        Player* player;
 
         // material
         sf::Texture backgroundTexture;

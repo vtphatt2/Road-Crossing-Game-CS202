@@ -1,6 +1,6 @@
 #include "header/menu.hpp"
 
-Menu::Menu(sf::RenderWindow* window, std::stack <State*>* states, Game* game) : window(window), states(states), game(game), choice(-1) {
+Menu::Menu(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, Player* player) : window(window), states(states), music(music), choice(-1), player(player){
     initShape();
 }
 
@@ -100,7 +100,7 @@ void Menu::handleEvent() {
 
         if (event.type == sf::Event::MouseButtonPressed) {
             if (newGameButtonRect.contains(mousePosition.x, mousePosition.y)) {
-                states->push(new Character(window, states));
+                states->push(new Character(window, states, music, player));
             }
             //else if (loadGameButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
             //    states->push(new LoadGame(window, states));

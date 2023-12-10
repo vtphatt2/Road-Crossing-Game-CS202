@@ -7,6 +7,7 @@
 #include <SFML/Audio.hpp>
 #include "state.hpp"
 #include "entry.hpp"
+#include "lose.hpp"
 
 class Game {
     public :
@@ -30,8 +31,10 @@ class Game {
         sf::RenderWindow* window;
         std::stack <State*> states;
         sf::Music music;
-        float musicVolume;
+        Player* player;
 
+
+        void setup();
         void handleEvent();
         void update();
         void render();

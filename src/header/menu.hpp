@@ -10,12 +10,16 @@
 #include "mode.hpp"
 #include "highScore.hpp"
 #include "setting_menu.hpp"
-#include "game.hpp"
+#include "player.hpp"
+
+class Player;
 
 class Game;
+
 class Menu: public State {
     public :
-        Menu(sf::RenderWindow* window, std::stack <State*>* states, Game* game);
+        Menu(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, Player* player);
+        void initShape();
         void handleEvent();
         void update();
         void render();
@@ -27,6 +31,9 @@ class Menu: public State {
         Game* game;
 
         sf::Event event;
+        sf::Music& music;
+        Player* player;
+
 
         sf::Vector2i mousePosition;
 

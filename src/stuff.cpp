@@ -1,8 +1,25 @@
 #include "header/stuff.hpp"
 #include<iostream>
+
+
+
 //UFO 
 UFO::UFO() {
-	texture.loadFromFile(blueUFOPath);
+	int randomNum = rand() % 4;
+	switch (randomNum) {
+		case 0:
+			texture.loadFromFile(blueUFOPath);
+			break;
+		case 1:
+			texture.loadFromFile(brownUFOPath);
+			break;
+		case 2:
+			texture.loadFromFile(greenUFOPath);
+			break;
+		case 3:
+			texture.loadFromFile(pinkUFOPath);
+			break;
+	}
 	sprite.setTexture(texture);
 }
 UFO::UFO(UFOColor color) {
@@ -39,6 +56,7 @@ float UFO::getSpeed() {
 }
 void UFO::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void UFO::run() {
 	if (isRunning) {
@@ -66,7 +84,16 @@ void UFO::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 //Coin
 Coin::Coin() {
-	texture.loadFromFile(leftCoinPath);
+	int randomNum = rand() % 2;
+	switch (randomNum)
+	{
+	case 0:
+		texture.loadFromFile(leftCoinPath);
+		break;
+	case 1:
+		texture.loadFromFile(rightCoinPath);
+		break;
+	}
 	sprite.setTexture(texture);
 	sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
 }
@@ -96,8 +123,11 @@ sf::FloatRect Coin::getGlobalBounds() {
 	return sprite.getGlobalBounds();
 }
 void Coin::run() {
-	sprite.rotate(0.01);
+	sprite.rotate(0.01 * 60);
 
+}
+void Coin::vanish() {
+	sprite.setColor(sf::Color::Transparent);
 }
 void Coin::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(sprite);
@@ -127,6 +157,7 @@ float Ant::getSpeed() {
 }
 void Ant::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void Ant::run() {
 	if (isRunning) {
@@ -180,6 +211,7 @@ float Bird::getSpeed() {
 }
 void Bird::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void Bird::run() {
 	if (numOfMoves < limit) {
@@ -230,6 +262,7 @@ float Bat::getSpeed() {
 }
 void Bat::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void Bat::run() {
 
@@ -288,6 +321,7 @@ float Worm::getSpeed() {
 }
 void Worm::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void Worm::run() {
 
@@ -343,6 +377,7 @@ float Monster::getSpeed() {
 }
 void Monster::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void Monster::run() {
 	if (isRunning) {
@@ -378,7 +413,7 @@ Slime::Slime() {
 	texture[0].loadFromFile(slime1Path);
 	texture[1].loadFromFile(slime2Path);
 	texture[2].loadFromFile(slime3Path);
-	sprite.setTexture(texture[0]);
+	sprite.setTexture(texture[2]);
 	hidden = false;
 }
 sf::Vector2f Slime::getPosition() {
@@ -398,23 +433,24 @@ float Slime::getSpeed() {
 }
 void Slime::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void Slime::run() {
 	if (isRunning) {
 		if (numOfMoves < limit) {
-			sprite.setTexture(texture[0]);
+			sprite.setTexture(texture[2]);
 		}
 		else if (numOfMoves >= limit && numOfMoves < 2 * limit) {
 			sprite.setTexture(texture[1]);
 		}
 		else if (numOfMoves >= 2 * limit && numOfMoves < 3 * limit) {
-			sprite.setTexture(texture[2]);
+			sprite.setTexture(texture[0]);
 		}
 		else if (numOfMoves >= 3 * limit && numOfMoves < 4 * limit) {
 			sprite.setTexture(texture[1]);
 		}
 		else if (numOfMoves >= 4 * limit && numOfMoves < 5 * limit) {
-			sprite.setTexture(texture[0]);
+			sprite.setTexture(texture[2]);
 		}
 		else if (numOfMoves >= 5 * limit && numOfMoves < 6 * limit) {
 			hidden = true;
@@ -463,6 +499,7 @@ float Snail::getSpeed() {
 }
 void Snail::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void Snail::run() {
 
@@ -518,6 +555,7 @@ float Ghost::getSpeed() {
 }
 void Ghost::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void Ghost::run() {
 	if (isRunning) {
@@ -562,9 +600,11 @@ sf::Vector2f Frog::getPosition() {
 }
 void Frog::setPosition(const sf::Vector2f& position) {
 	sprite.setPosition(position);
+	sprite.setRotation(0);
 }
 void Frog::setPosition(float x, float y) {
 	sprite.setPosition(sf::Vector2f(x, y));
+	sprite.setRotation(0);
 }
 sf::FloatRect Frog::getGlobalBounds() {
 	return sprite.getGlobalBounds();
@@ -574,6 +614,7 @@ float Frog::getSpeed() {
 }
 void Frog::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void Frog::run() {
 	if (isRunning) {
@@ -603,6 +644,7 @@ void Frog::run() {
 }
 void Frog::stop() {
 	isRunning = 0;
+	sprite.setRotation(0);
 }
 void Frog::resume() {
 	isRunning = 1;
@@ -635,6 +677,7 @@ float Mouse::getSpeed() {
 }
 void Mouse::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void Mouse::run() {
 
@@ -690,6 +733,7 @@ float Moon::getSpeed() {
 }
 void Moon::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void Moon::run() {
 
@@ -745,6 +789,7 @@ float SeaWheet::getSpeed() {
 }
 void SeaWheet::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void SeaWheet::run() {
 
@@ -778,6 +823,16 @@ void SeaWheet::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 //Fish
 Fish::Fish() {
+	int randomNum = rand() % 2;
+	switch (randomNum)
+	{
+	case 0:
+		texture.loadFromFile(blueFishPath);
+		break;
+	case 1:
+		texture.loadFromFile(pinkFishPath);
+		break;
+	}
 	texture.loadFromFile(blueFishPath);
 	sprite.setTexture(texture);
 }
@@ -809,8 +864,10 @@ float Fish::getSpeed() {
 }
 void Fish::setSpeed(float speed) {
 	this->speed = speed;
+	limit = 20 / speed;
 }
 void Fish::run() {
+	
 	if (isRunning && !isJumping) {
 		if (numOfMoves < limit) {
 			sprite.move(-speed, 0);
@@ -821,17 +878,18 @@ void Fish::run() {
 		numOfMoves++;
 	}
 	if (isJumping) {
-		if (numOfMoves < 4 * limit) {
-			sprite.move(-speed, -speed * 2);
+		if (numOfMoves < 2 * limit) {
+			sprite.move(-speed * 2.5, -speed * 2);
 			sprite.rotate(speed / 4.0);
 		}
-		else if (numOfMoves >= 4 * limit && numOfMoves < 8 * limit) {
-			sprite.move(-speed, speed * 2);
+		else if (numOfMoves >= 2 * limit && numOfMoves < 4 * limit) {
+			sprite.move(-speed * 2.5, speed * 2);
 			sprite.rotate(-speed / 4.0);
 		}
 		else {
 			isJumping = 0;
 			numOfMoves = 0;
+			sprite.setRotation(0);
 		}
 		numOfMoves++;
 	}
@@ -841,11 +899,82 @@ void Fish::stop() {
 }
 void Fish::resume() {
 	isRunning = 1;
-	numOfMoves = 0;
 }
 void Fish::jump() {
 	isJumping = 1;
+	numOfMoves = 0;
 }
 void Fish::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(sprite);
 }
+
+//Bridge
+
+Bridge::Bridge() {
+	texture.loadFromFile(bridgePath);
+	sprite.setTexture(texture);
+}
+sf::Vector2f Bridge::getPosition() {
+	return sprite.getPosition();
+}
+void Bridge::setPosition(const sf::Vector2f& position) {
+	sprite.setPosition(position);
+}
+void Bridge::setPosition(float x, float y) {
+	sprite.setPosition(sf::Vector2f(x, y));
+}
+sf::FloatRect Bridge::getGlobalBounds() {
+	return sprite.getGlobalBounds();
+}
+void Bridge::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+	target.draw(sprite);
+}
+
+
+
+//TraficLight
+TraficLight::TraficLight() {
+	texture[0].loadFromFile(redLightPath);
+	texture[1].loadFromFile(yellowLightPath);
+	texture[2].loadFromFile(greenLightPath);
+	sprite.setTexture(texture[2]);
+	time = sf::Time::Zero;
+	randomNum = rand() % 4 + 13;
+	currentColor = lightColor::Green;
+}
+sf::Vector2f TraficLight::getPosition() {
+	return sprite.getPosition();
+}
+void TraficLight::setPosition(const sf::Vector2f& position) {
+	sprite.setPosition(position);
+}
+void TraficLight::setPosition(float x, float y) {
+	sprite.setPosition(sf::Vector2f(x, y));
+}
+void TraficLight::run() {
+	
+	time = clock.getElapsedTime();
+	if (time.asSeconds() >= 20) {
+		clock.restart();
+		randomNum = rand() % 4 + 13;
+	}
+	else if (time.asSeconds() <= randomNum) {
+		sprite.setTexture(texture[2]);
+		currentColor = lightColor::Green;
+	}
+	else if (time.asSeconds() > randomNum && time.asSeconds() <= randomNum + 1) {
+		sprite.setTexture(texture[1]);
+		currentColor = lightColor::Yellow;
+	}
+	else{
+		sprite.setTexture(texture[0]);
+		currentColor = lightColor::Red;
+	}
+}
+lightColor TraficLight::getColor() {
+	return currentColor;
+}
+void TraficLight::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+	target.draw(sprite);
+}
+

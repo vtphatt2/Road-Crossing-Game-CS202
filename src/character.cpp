@@ -3,9 +3,11 @@
 
 class Player;
 
-Character::Character(sf::RenderWindow* window, std::stack <State*>* states) : window(window), states(states), player(new Player(PlayerSkin::GREEN)){
+
+Character::Character(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, Player* player) : window(window), states(states), player(player), music(music){
     initShape();
     player->initPlayer();
+    player->setMovementSpeed(10.0f);
 }
 
 void Character::initShape() {
@@ -64,7 +66,7 @@ void Character::handleEvent() {
                 player->changeSkinLeft();
             }
             else if (playGameButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
-                states->push(new Mode(window, states));
+                states->push(new Mode(window, states, player, music));
             }
             else if (backButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
                 states->pop();

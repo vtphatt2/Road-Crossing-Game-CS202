@@ -1,5 +1,7 @@
-﻿#pragma once
-#include"SFML/Graphics.hpp"
+﻿#ifndef STUFF_HPP
+#define STUFF_HPP
+
+#include <SFML/Graphics.hpp>
 //Edit here!
 #define blueUFOPath "../resource/blueUFO.png"
 #define brownUFOPath "../resource/brownUFO.png"
@@ -57,15 +59,38 @@
 #define blueFishPath "../resource/blueFish.png"
 #define pinkFishPath "../resource/pinkFish.png"
 
+#define bridgePath "../resource/bridge.png"
+
+#define redLightPath "../resource/redLight.png"
+#define yellowLightPath "../resource/yellowLight.png"
+#define greenLightPath "../resource/greenLight.png"
+
 #define defaultSpeed 0.01 * 60;
 
 
+class Stuff: public sf::Drawable
+{
+public:
+	virtual sf::Vector2f getPosition() = 0;
+	virtual void setPosition(const sf::Vector2f& position) = 0;
+	virtual void setPosition(float x, float y) = 0;
+	virtual sf::FloatRect getGlobalBounds() = 0;
+	virtual float getSpeed() = 0;
+	virtual void setSpeed(float speed) = 0;
+	virtual void run() = 0;
+	virtual void stop() = 0;
+	virtual void resume() = 0;
+	virtual void jump() {};
+
+private:
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
+};
 
 //UFO
 enum class UFOColor {
 	blue, brown, pink, green
 };
-class UFO : public sf::Drawable
+class UFO : public Stuff
 {
 public:
 	UFO();
@@ -79,6 +104,7 @@ public:
 	void run();
 	void stop();
 	void resume();
+	void jump() {};
 private:
 	sf::Texture texture;
 	sf::Sprite sprite;
@@ -102,6 +128,7 @@ public:
 	void setPosition(const sf::Vector2f& position);
 	void setPosition(float x, float y);
 	sf::FloatRect getGlobalBounds();
+	void vanish();
 	void run();
 private:
 	sf::Texture texture;
@@ -110,7 +137,7 @@ private:
 };
 
 //Ant
-class Ant : public sf::Drawable
+class Ant : public Stuff
 {
 public:
 	Ant();
@@ -134,7 +161,7 @@ private:
 };
 
 //Bird
-class Bird : public sf::Drawable
+class Bird : public Stuff
 {
 public:
 	Bird();
@@ -158,7 +185,7 @@ private:
 };
 
 //Bat
-class Bat : public sf::Drawable
+class Bat : public Stuff
 {
 public:
 	Bat();
@@ -182,7 +209,7 @@ private:
 };
 
 //Worm
-class Worm : public sf::Drawable
+class Worm : public Stuff
 {
 public:
 	Worm();
@@ -206,7 +233,7 @@ private:
 };
 
 //Monster
-class Monster : public sf::Drawable
+class Monster : public Stuff
 {
 public:
 	Monster();
@@ -231,7 +258,7 @@ private:
 };
 
 //Slime
-class Slime : public sf::Drawable
+class Slime : public Stuff
 {
 public:
 	Slime();
@@ -256,7 +283,7 @@ private:
 };
 
 //Snail
-class Snail : public sf::Drawable
+class Snail : public Stuff
 {
 public:
 	Snail();
@@ -280,7 +307,7 @@ private:
 };
 
 //Ghost
-class Ghost : public sf::Drawable
+class Ghost : public Stuff
 {
 public:
 	Ghost();
@@ -304,7 +331,7 @@ private:
 };
 
 //Frog
-class Frog : public sf::Drawable
+class Frog : public Stuff
 {
 public:
 	Frog();
@@ -328,7 +355,7 @@ private:
 };
 
 //Mouse
-class Mouse : public sf::Drawable
+class Mouse : public Stuff
 {
 public:
 	Mouse();
@@ -348,11 +375,11 @@ private:
 	float speed = defaultSpeed;
 	int numOfMoves = 0;
 	bool isRunning = true;
-	int limit = 10 / speed;
+	int limit = 20 / speed;
 };
 
 //Moon
-class Moon : public sf::Drawable
+class Moon : public Stuff
 {
 public:
 	Moon();
@@ -372,12 +399,12 @@ private:
 	float speed = defaultSpeed;
 	int numOfMoves = 0;
 	bool isRunning = true;
-	int limit = 5 / speed;
+	int limit = 20 / speed;
 	bool toRight = 1;
 };
 
 //SeaWheet
-class SeaWheet : public sf::Drawable
+class SeaWheet : public Stuff
 {
 public:
 	SeaWheet();
@@ -405,7 +432,7 @@ private:
 enum class fishColor {
 	blue, pink
 };
-class Fish : public sf::Drawable
+class Fish : public Stuff
 {
 public:
 	Fish();
@@ -431,3 +458,45 @@ private:
 	bool isJumping = 0;
 };
 
+//Bridge
+class Bridge: public sf::Drawable
+{
+public:
+	Bridge();
+	sf::Vector2f getPosition();
+	void setPosition(const sf::Vector2f& position);
+	void setPosition(float x, float y);
+	sf::FloatRect getGlobalBounds();
+private:
+	sf::Texture texture;
+	sf::Sprite sprite;
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+};
+
+
+
+//TraficLight
+enum class lightColor {
+	Red, Yellow, Green
+};
+class TraficLight: public sf::Drawable
+{
+public:
+	TraficLight();
+	sf::Vector2f getPosition();
+	void setPosition(const sf::Vector2f& position);
+	void setPosition(float x, float y);
+	void run();
+	lightColor getColor();
+
+private:
+	sf::Texture texture[3];
+	sf::Sprite sprite;
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	sf::Time time;
+	sf::Clock clock;
+	int randomNum;
+	lightColor currentColor;
+};
+
+#endif

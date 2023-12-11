@@ -16,6 +16,8 @@ class Setting : public sf::Drawable
         void handleEvent(sf::Event event);
         void update();
         void move(int translateY);
+        std::string positionComponents();
+        void setPositionComponents(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4);
     private:
         sf::View *view;
         

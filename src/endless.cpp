@@ -31,8 +31,13 @@ void Endless::saveToFile(std::string fileName) {
 
     fout << player->getPlayerSkin() << "\n";
     fout << player->getPlayerSprite().getPosition().x << " " << player->getPlayerSprite().getPosition().y << "\n";
+
     fout << view->getCenter().x << " " << view->getCenter().y << "\n";
     fout << windowTranslateY << "\n";
+    fout << scoreBoardImage.getPosition().x << " " << scoreBoardImage.getPosition().y << "\n";
+
+    fout << setting->positionComponents() << "\n";
+
     fout << desert << " " << garden << " " << snow << " ";
     fout << cont_path << " " << cont_road << " ";
     fout << points << " ";
@@ -878,7 +883,6 @@ void Endless::update()
         if (-windowTranslateY % landHeight == 0) {
             isAddNewLane = 1;
         }
-        std::cout << player->getPlayerSprite().getPosition().x << " " << player->getPlayerSprite().getPosition().y << "\n";
         player->updateWindowBoundsCollision(window, windowTranslateY);
         playerCollision(stuffVector); 
         eatCredit();
@@ -949,11 +953,11 @@ void Endless::render() {
     // for (int i = 0; i < laneVector.size(); i++) {
     //     window->draw(*laneVector[i]);
     // }
-    // window->draw(scoreBoardImage);
+    window->draw(scoreBoardImage);
     window->draw(player->getPlayerSprite());
     // for (int i = 0; i < stuffVector.size(); i++)
     // {
     //     window->draw(*stuffVector[i]);
     // }
-    // window->draw(*setting);
+    window->draw(*setting);
 }

@@ -106,6 +106,21 @@ void Setting::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 }
 
+std::string Setting::positionComponents() {
+    std::string s = std::to_string((int)FAQButtonImage.getPosition().x) + " " + std::to_string((int)FAQButtonImage.getPosition().y) + " ";
+    s += std::to_string((int)leaderboardButtonImage.getPosition().x) + " " + std::to_string((int)leaderboardButtonImage.getPosition().y) + " ";
+    s += std::to_string((int)settingButtonImage.getPosition().x) + " " + std::to_string((int)settingButtonImage.getPosition().y) + " ";
+    s += std::to_string((int)pauseButtonImage.getPosition().x) + " " + std::to_string((int)pauseButtonImage.getPosition().y);
+    return s;
+}
+
+void Setting::setPositionComponents(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4) {
+    FAQButtonImage.setPosition(x1, y1);
+    leaderboardButtonImage.setPosition(x2, y2);
+    settingButtonImage.setPosition(x3, y3);
+    pauseButtonImage.setPosition(x4, y4);
+}
+
 LeaderboardIngame::LeaderboardIngame(sf::RenderWindow* window, std::stack <State*>* states) : window(window), states(states) {
     initShape();
 }

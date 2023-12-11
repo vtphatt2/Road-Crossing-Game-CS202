@@ -1,6 +1,7 @@
 Line 1 : playerSkin
 Line 2 : position of player sprite
 Line 3 : windowTranslateY;
-Line 4 : deesert, garden, snow, cont_path, cont_road, points, railed, rivered, iced
-Line 5 : Size of lane vector
-Line 6... : Type of lane and its position
+Line 4 : position of scoreboard image
+Line 5 : deesert, garden, snow, cont_path, cont_road, points, railed, rivered, iced
+Line 6 : Size of lane vector
+Line 7... : Type of lane and its position

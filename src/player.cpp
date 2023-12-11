@@ -1,5 +1,4 @@
 #include "header/player.hpp"
-#include <cmath>
 
 Player::Player(PlayerSkin initialSkin) : playerSkin(initialSkin) {
     initPlayer();
@@ -7,7 +6,28 @@ Player::Player(PlayerSkin initialSkin) : playerSkin(initialSkin) {
 	aniTime.restart();
 }
 
-Player::~Player() {};
+Player::~Player() {
+	std::ofstream fout("../data/save-game.txt");
+	switch (playerSkin) {
+		case PlayerSkin::GREEN :
+			fout << "G\n";
+			break;
+		case PlayerSkin::BLUE:
+			fout << "B\n";
+			break;
+        case PlayerSkin::RED:
+			fout << "R\n";
+			break;
+		case PlayerSkin::YELLOW:
+			fout << "Y\n";
+			break;
+		case PlayerSkin::BROWN:
+			fout << "B\n";
+			break;   
+		case PlayerSkin::NUM_SKINS:   
+			break;
+	}
+};
 
 void Player::initPlayer() {
     std::string texturePath;
@@ -26,14 +46,16 @@ void Player::initPlayer() {
             break;
 		case PlayerSkin::BROWN:
             texturePath = "../resource/Character5.png";
-            break;        
+            break;     
+		case PlayerSkin::NUM_SKINS:   
+			break;
     }
 
 
-	  playerTexture.loadFromFile(texturePath);
+	playerTexture.loadFromFile(texturePath);
     playerSprite.setTexture(playerTexture);	
-	  playerSprite.setTextureRect(sf::IntRect(0,0,playerTexture.getSize().x, playerTexture.getSize().y));
-	  playerSprite.setPosition(622, 412);
+	playerSprite.setTextureRect(sf::IntRect(0,0,playerTexture.getSize().x, playerTexture.getSize().y));
+	playerSprite.setPosition(622, 412);
 }
 
 void Player::resetPos(){
@@ -57,7 +79,9 @@ void Player::renderInGame(){
             break;
 		case PlayerSkin::BROWN:
             texturePath = "../resource/player/MovingBeige.png";
-            break;        
+            break; 
+		case PlayerSkin::NUM_SKINS:   
+			break;       
     }
 	playerTexture.loadFromFile(texturePath);
     playerSprite.setTexture(playerTexture);
@@ -268,7 +292,9 @@ void Player::updatePlayerDrown(){
             break;
 		case PlayerSkin::BROWN:
             texturePath = "../resource/player/alienBeige_duck.png";
-            break;        
+            break;  
+		case PlayerSkin::NUM_SKINS:   
+			break;      
     }
 	playerTexture.loadFromFile(texturePath);
     playerSprite.setTexture(playerTexture, true);

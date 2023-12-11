@@ -4,7 +4,7 @@ Levels::Levels(sf::RenderWindow* window, std::stack <State*>* states, Player* pl
 {
     initShape();
     if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
-        cout << "Cannot load soundfile" << endl;
+        std::cout << "Cannot load soundfile" << std::endl;
     }
     gameOverSound.setBuffer(gameOverBuffer);
     player->renderInGame();
@@ -276,7 +276,7 @@ void Levels::render()
 Level_1::Level_1(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) {
     setting = new Setting(window, states);
     if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
-        cout << "Cannot load soundfile" << endl;
+        std::cout << "Cannot load soundfile" << std::endl;
     }
     gameOverSound.setBuffer(gameOverBuffer);
     player->renderInGame();
@@ -392,7 +392,7 @@ void Level_1::win(){
     sf::SoundBuffer gameWinBuffer;
     sf::Sound gameWinSound; 
     if (!gameWinBuffer.loadFromFile("../resource/audio/gameWin.wav")) {
-        cout << "Cannot load soundfile" << endl;
+        std::cout << "Cannot load soundfile" << std::endl;
     }
     gameWinSound.setBuffer(gameWinBuffer);    
     gameWinSound.play();
@@ -454,7 +454,7 @@ void Level_1::render()
 Level_2::Level_2(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) {
     setting = new Setting(window, states);
     if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
-        cout << "Cannot load soundfile" << endl;
+        std::cout << "Cannot load soundfile" << std::endl;
     }
     gameOverSound.setBuffer(gameOverBuffer);
     player->renderInGame();
@@ -543,7 +543,7 @@ void Level_2::win(){
     sf::SoundBuffer gameWinBuffer;
     sf::Sound gameWinSound; 
     if (!gameWinBuffer.loadFromFile("../resource/audio/gameWin.wav")) {
-        cout << "Cannot load soundfile" << endl;
+        std::cout << "Cannot load soundfile" << std::endl;
     }
     gameWinSound.setBuffer(gameWinBuffer);  
     gameWinSound.play();     
@@ -654,7 +654,7 @@ void Level_2::render() {
 Level_3::Level_3(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) {
     setting = new Setting(window, states);
     if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
-        cout << "Cannot load soundfile" << endl;
+        std::cout << "Cannot load soundfile" << std::endl;
     }
     gameOverSound.setBuffer(gameOverBuffer);
     player->renderInGame();
@@ -749,7 +749,7 @@ void Level_3::win(){
     sf::SoundBuffer gameWinBuffer;
     sf::Sound gameWinSound; 
     if (!gameWinBuffer.loadFromFile("../resource/audio/gameWin.wav")) {
-        cout << "Cannot load soundfile" << endl;
+        std::cout << "Cannot load soundfile" << std::endl;
     }
     gameWinSound.setBuffer(gameWinBuffer); 
     gameWinSound.play();      
@@ -838,7 +838,7 @@ void Level_3::render() {
 Level_4::Level_4(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) {
     setting = new Setting(window, states);
     if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
-        cout << "Cannot load soundfile" << endl;
+        std::cout << "Cannot load soundfile" << std::endl;
     }
     gameOverSound.setBuffer(gameOverBuffer);
     player->renderInGame();
@@ -947,7 +947,7 @@ void Level_4::win(){
     sf::SoundBuffer gameWinBuffer;
     sf::Sound gameWinSound; 
     if (!gameWinBuffer.loadFromFile("../resource/audio/gameWin.wav")) {
-        cout << "Cannot load soundfile" << endl;
+        std::cout << "Cannot load soundfile" << std::endl;
     }
     gameWinSound.setBuffer(gameWinBuffer);
     gameWinSound.play();       
@@ -1056,7 +1056,7 @@ void Level_4::render() {
 Level_5::Level_5(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) {
     setting = new Setting(window, states);
     if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
-        cout << "Cannot load soundfile" << endl;
+        std::cout << "Cannot load soundfile" << std::endl;
     }
     gameOverSound.setBuffer(gameOverBuffer);
     player->renderInGame();
@@ -1186,7 +1186,7 @@ void Level_5::win(){
     sf::SoundBuffer gameWinBuffer;
     sf::Sound gameWinSound; 
     if (!gameWinBuffer.loadFromFile("../resource/audio/gameWin.wav")) {
-        cout << "Cannot load soundfile" << endl;
+        std::cout << "Cannot load soundfile" << std::endl;
     }
     gameWinSound.setBuffer(gameWinBuffer);   
     gameWinSound.play();    
@@ -1241,7 +1241,7 @@ void Level_5::render()
 Level_6::Level_6(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) {
     setting = new Setting(window, states);
     if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
-        cout << "Cannot load soundfile" << endl;
+        std::cout << "Cannot load soundfile" << std::endl;
     }
     gameOverSound.setBuffer(gameOverBuffer);
     player->renderInGame();
@@ -1368,7 +1368,7 @@ void Level_6::win(){
     sf::SoundBuffer gameWinBuffer;
     sf::Sound gameWinSound; 
     if (!gameWinBuffer.loadFromFile("../resource/audio/gameWin.wav")) {
-        cout << "Cannot load soundfile" << endl;
+        std::cout << "Cannot load soundfile" << std::endl;
     }
     gameWinSound.setBuffer(gameWinBuffer);    
     gameWinSound.play();   

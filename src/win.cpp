@@ -43,11 +43,11 @@ void Win::initShape() {
     menuButtonRect.height = menuButtonImage.getGlobalBounds().height;
 
     if (!font.loadFromFile("../resource/Inter-Bold.ttf")) {
-        cout << "Error" <<endl;
+        std::cout << "Error" <<std::endl;
     }
 
     level.setFont(font);
-    level.setString("Level " + to_string(currentLevel));
+    level.setString("Level " + std::to_string(currentLevel));
     level.setCharacterSize(70);
     level.setFillColor(sf::Color(214, 176, 141)); // #D6B08D in RGB
     level.setStyle(sf::Text::Bold);

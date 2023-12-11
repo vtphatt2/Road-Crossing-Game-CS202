@@ -1,21 +1,23 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
+
 #include <stack>
-#include "state.hpp"
-#include "character.hpp"
 #include <unordered_map>
 #include <memory>
+#include <cmath>
+#include <fstream>
 
+#include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
+
+#include "state.hpp"
+#include "character.hpp"
 
 #define movingBlue "../resource/player/MovingBlue.png"
 #define standingLeftBlue "../resource/player/StandingLeftBlue.png"
 #define standingRightBlue "../resource/player/StandingRightBlue.png"
 #define standingBlue "../resource/player/alienBlue.png"
 
-
-using namespace std;
 
 enum class PlayerSkin {
     GREEN,
@@ -33,7 +35,6 @@ enum class Direction{
 class Player{
     public: 
         Player(PlayerSkin initialSkin);
-        Player();
         ~Player(); 
 
         void initPlayer();
@@ -75,4 +76,5 @@ class Player{
 
         sf::Clock aniTime;
 };
+
 #endif

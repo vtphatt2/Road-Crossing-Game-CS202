@@ -4,7 +4,7 @@ Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     setting = new Setting(window, states);
     initShape();
     if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
-        cout << "Cannot load soundfile" << endl;
+        std::cout << "Cannot load soundfile" << std::endl;
     }
     gameOverSound.setBuffer(gameOverBuffer);
     player->renderInGame();
@@ -182,7 +182,7 @@ Lane* Endless::snowLane()
                 laneTypeVector.push_back(laneType::snow_path);
                 laneTypeVector.push_back(laneType::road);
                 int randomNum = rand() % 2;
-                cerr << randomNum << endl;
+                std::cerr << randomNum << std::endl;
                 lane = new Lane(laneTypeVector[randomNum]);
             }
             if(lane->type == laneType::road) cont_road++;

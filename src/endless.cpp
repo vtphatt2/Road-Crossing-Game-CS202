@@ -950,9 +950,9 @@ void Endless::gameOver(){
 
 void Endless::render() {
     window->setView(*view);
-    // for (int i = 0; i < laneVector.size(); i++) {
-    //     window->draw(*laneVector[i]);
-    // }
+    for (int i = 0; i < laneVector.size(); i++) {
+        window->draw(*laneVector[i]);
+    }
     window->draw(scoreBoardImage);
     window->draw(player->getPlayerSprite());
     // for (int i = 0; i < stuffVector.size(); i++)

@@ -14,6 +14,7 @@ Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* 
 
     initShape();
     loadPositionFromFile("../data/save-game.txt");
+    loadLane("../data/save-game.txt");
 }
 
 void Endless::loadSkinFromFile(std::string fileName) {
@@ -49,6 +50,24 @@ void Endless::loadPositionFromFile(std::string fileName) {
     int x1, y1, x2, y2, x3, y3, x4, y4;
     fin >> x1 >> y1 >> x2 >> y2 >> x3 >> y3 >> x4 >> y4;
     setting->setPositionComponents(x1, y1, x2, y2, x3, y3, x4, y4);
+
+    fin.close();
+}
+
+void Endless::loadLane(std::string fileName) {
+    std::ifstream fin(fileName);
+    std::string empty;
+    for (int i = 0 ; i < 7 ; ++i) getline(fin, empty);
+
+    laneVector.clear();
+    int n, type, posX, posY;
+    fin >> n;
+    for (int i = 0 ; i < n ; ++i) 
+    {
+        fin >> type >> posX >> posY;
+        laneVector.push_back(new Lane(static_cast<laneType>(type)));
+        laneVector[i]->setPosition(posX, posY);
+    }
 
     fin.close();
 }

@@ -46,7 +46,7 @@ class Endless : public State
         // LOAD GAME
         void loadSkinFromFile(std::string fileName);
         void loadPositionFromFile(std::string fileName);
-
+        void loadLane(std::string fileName);
 
     private:
         sf::RenderWindow* window;

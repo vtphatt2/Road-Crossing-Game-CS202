@@ -18,11 +18,6 @@ Endless::~Endless() {
         std::ofstream fout("../data/save-game.txt", std::ofstream::trunc);
         fout.close();
     }
-    std::cout << laneVector.size();
-    for (int i = 0 ; i < laneVector.size() ; ++i) {
-        std::cout << i + 1 << " " << laneVector[i] << "\n";
-        delete laneVector[i];
-    }
 }
 
 void Endless::saveToFile(std::string fileName) {

@@ -2,9 +2,11 @@
 #define ENDLESS_HPP
 
 #include <iostream>
+#include <fstream>
 #include <stack>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <set>
 #include "state.hpp"
 #include "setting_ingame.hpp"
 #include "lane.hpp"
@@ -19,15 +21,17 @@ class Lose;
 class Win;
 enum class laneType;
 class Bridge;
+
 class Endless : public State
 {
     public:
-        sf::View *view;
+        sf::View* view = nullptr;
         sf::Time Time;
         sf::Clock Clock;
         int windowTranslateY;
         bool isAddNewLane = 0;
         Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music);
+        Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int a);
         ~Endless();
         void initShape();
         void handleEvent();
@@ -37,7 +41,13 @@ class Endless : public State
         void eatCredit();
         void gameOver();
         void notBridge();
-        
+        void saveToFile(std::string fileName);
+
+        // LOAD GAME
+        void loadSkinFromFile(std::string fileName);
+        void loadPositionFromFile(std::string fileName);
+
+
     private:
         sf::RenderWindow* window;
         std::stack <State*>* states;
@@ -47,7 +57,7 @@ class Endless : public State
         Player* player;
         int choice;
         std::vector<Stuff*> stuffVector;
-        Setting* setting;
+        Setting* setting = nullptr;
         std::vector<Lane*> laneVector;
         int desert = 0, garden = 0, snow = 0;
         int cont_path = 0, cont_road = 0;

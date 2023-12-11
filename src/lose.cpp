@@ -49,9 +49,12 @@ void Lose::handleEvent() {
 
         if (event.type == sf::Event::MouseButtonPressed) {
             if (menuButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
+                while (!states->empty()) states->pop();
                 states->push(new Menu(window, states, music, player));
             }
             if (restartButtonRect.contains(event.mouseButton.x, event.mouseButton.y)) {
+                while (!states->empty()) states->pop();
+                states->push(new Menu(window, states, music, player));
                 states->push(new Character(window, states, music, player));
             }
         }

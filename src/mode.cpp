@@ -2,7 +2,6 @@
 
 Mode::Mode(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) {
     initShape();
-
 }
 
 void Mode::initShape() {

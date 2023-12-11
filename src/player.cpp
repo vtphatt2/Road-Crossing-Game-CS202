@@ -6,28 +6,7 @@ Player::Player(PlayerSkin initialSkin) : playerSkin(initialSkin) {
 	aniTime.restart();
 }
 
-Player::~Player() {
-	std::ofstream fout("../data/save-game.txt");
-	switch (playerSkin) {
-		case PlayerSkin::GREEN :
-			fout << "G\n";
-			break;
-		case PlayerSkin::BLUE:
-			fout << "B\n";
-			break;
-        case PlayerSkin::RED:
-			fout << "R\n";
-			break;
-		case PlayerSkin::YELLOW:
-			fout << "Y\n";
-			break;
-		case PlayerSkin::BROWN:
-			fout << "B\n";
-			break;   
-		case PlayerSkin::NUM_SKINS:   
-			break;
-	}
-};
+Player::~Player() {};
 
 void Player::initPlayer() {
     std::string texturePath;
@@ -50,7 +29,6 @@ void Player::initPlayer() {
 		case PlayerSkin::NUM_SKINS:   
 			break;
     }
-
 
 	playerTexture.loadFromFile(texturePath);
     playerSprite.setTexture(playerTexture);	
@@ -91,6 +69,24 @@ void Player::renderInGame(){
 
 sf::Sprite Player::getPlayerSprite(){
 	return playerSprite;
+}
+
+std::string Player::getPlayerSkin() {
+	switch (playerSkin) {
+	case PlayerSkin::GREEN:
+		return "GREEN";
+	case PlayerSkin::BLUE:
+		return "BLUE";
+	case PlayerSkin::RED:
+		return "RED";
+	case PlayerSkin::YELLOW:
+		return "YELLOW";
+	case PlayerSkin::BROWN:
+		return "BROWN";
+	case PlayerSkin::NUM_SKINS:
+		break;
+	}
+	return "";
 }
 
 void Player::move(Direction direction) {
@@ -180,8 +176,6 @@ void Player::updateAnimation(Direction direction){
 	}
 }
 
-
-
 void Player::update(Direction direction){
 	move(direction);
 	updateAnimation(direction);
@@ -200,7 +194,6 @@ void Player::initMoveVariable(){
 	isUp = false;
 
 }
-
 
 void Player::changeSkinRight() {
     int skinIndex = static_cast<int>(playerSkin);
@@ -259,6 +252,10 @@ const sf::Vector2f& Player::getPosition() const {
     return playerSprite.getPosition();
 }
 
+void Player::setPosition(int posX, int posY) {
+	playerSprite.setPosition(posX, posY);
+}
+
 void Player::setMovementSpeed(float speed){
 	movementSpeed = speed;
 }
@@ -300,3 +297,6 @@ void Player::updatePlayerDrown(){
     playerSprite.setTexture(playerTexture, true);
 }
 
+void Player::setPlayerSkin(PlayerSkin skin) {
+	playerSkin = skin;
+}

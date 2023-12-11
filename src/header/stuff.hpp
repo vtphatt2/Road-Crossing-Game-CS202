@@ -71,6 +71,7 @@
 class Stuff: public sf::Drawable
 {
 public:
+	virtual ~Stuff(){}
 	virtual sf::Vector2f getPosition() = 0;
 	virtual void setPosition(const sf::Vector2f& position) = 0;
 	virtual void setPosition(float x, float y) = 0;

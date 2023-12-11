@@ -1,7 +1,5 @@
 #include "header/stuff.hpp"
-#include<iostream>
-
-
+#include <iostream>
 
 //UFO 
 UFO::UFO() {

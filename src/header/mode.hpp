@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <stack>
+#include <fstream>
 #include "state.hpp"
 #include "character.hpp"
 #include "endless.hpp"

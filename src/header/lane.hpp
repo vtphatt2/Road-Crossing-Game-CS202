@@ -1,7 +1,8 @@
 #ifndef LANE_HPP
 #define LANE_HPP
 
-#include "SFML/Graphics.hpp"
+#include <iostream>
+#include <SFML/Graphics.hpp>
 #include "stuff.hpp"
 
 const int landHeight = 165;
@@ -14,6 +15,7 @@ class Lane : public sf::Drawable
 {
 public:
 	Lane(laneType type);
+	~Lane();
 	sf::Vector2f getPosition();
 	void setPosition(const sf::Vector2f& position);
 	void setPosition(float x, float y);
@@ -26,10 +28,10 @@ private:
 	sf::Texture texture;
 	sf::Sprite sprite;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-	TraficLight* light;
+	TraficLight* light = nullptr;
 	std::vector<Stuff*> stuffVector;
-	Coin* coin;
-	Bridge* bridge;
+	Coin* coin = nullptr;
+	Bridge* bridge = nullptr;
 	bool isJumped1[3];
 	bool isJumped2[3];
 };

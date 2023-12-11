@@ -1,5 +1,12 @@
 #include "header/lane.hpp"
 
+Lane::~Lane() {
+	delete light;
+	delete[] coin;
+	delete[] bridge;
+	for (int i = 0 ; i < stuffVector.size() ; ++i) delete stuffVector[i]; 
+}
+
 Lane::Lane(laneType type) : type(type) {
 	((!(rand() % 3) && type != laneType::river) ? light = new TraficLight() : light = nullptr);
 	((!(rand() % 5) && type != laneType::river) ? coin = new Coin[3] : coin = nullptr);
@@ -145,12 +152,15 @@ Lane::Lane(laneType type) : type(type) {
 	}
 	sprite.setTexture(texture);
 }
+
 sf::Vector2f Lane::getPosition() {
 	return sprite.getPosition();
 }
+
 void Lane::setPosition(const sf::Vector2f& position) {
 	sprite.setPosition(position);
 }
+
 void Lane::setPosition(float x, float y) {
 	if (light) {
 		light->setPosition(x + 17, y + 23);
@@ -176,6 +186,7 @@ void Lane::setPosition(float x, float y) {
 	}
 	sprite.setPosition(sf::Vector2f(x, y));
 }
+
 void Lane::update() {
 	if (light) {
 		light->run();
@@ -219,9 +230,11 @@ void Lane::update() {
 		
 	}
 }
+
 std::vector<Stuff*> Lane::getStuffVector() {
 	return stuffVector;
 }
+
 void Lane::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(sprite);
 	if (type == laneType::river) {
@@ -237,7 +250,6 @@ void Lane::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	if (light) {
 		target.draw(*light);
 	}
-	
 }
 
 laneType randomFirstLaneType() {
@@ -265,3 +277,4 @@ Bridge* Lane::getBridge(){
 Coin* Lane::getCoin() {
 	return coin;
 }
+

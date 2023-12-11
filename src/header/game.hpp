@@ -8,6 +8,7 @@
 #include "state.hpp"
 #include "entry.hpp"
 #include "lose.hpp"
+#include "endless.hpp"
 
 class Game {
     public :

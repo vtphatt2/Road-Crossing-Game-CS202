@@ -12,14 +12,49 @@ Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* 
 }
 
 Endless::~Endless() {
-    for (int i = 0 ; i < stuffVector.size() ; ++i) delete stuffVector[i];
-    for (int i = 0 ; i < laneVector.size() ; ++i) delete laneVector[i];  
+    if (!isGameOver) saveToFile("../data/save-game.txt");
+    else {
+        // make the file empty
+        std::ofstream fout("../data/save-game.txt", std::ofstream::trunc);
+        fout.close();
+    }
+    std::cout << laneVector.size();
+    for (int i = 0 ; i < laneVector.size() ; ++i) {
+        std::cout << i + 1 << " " << laneVector[i] << "\n";
+        delete laneVector[i];
+    }
+}
+
+void Endless::saveToFile(std::string fileName) {
+	std::ofstream fout(fileName, std::ofstream::trunc);
+    if (!fout.is_open()) 
+    {
+        std::cout << "Can not open file !\n";
+        fout.close();
+        return ;
+    }
+
+    fout << player->getPlayerSkin() << "\n";
+    fout << player->getPlayerSprite().getPosition().x << " " << player->getPlayerSprite().getPosition().y << "\n";
+    fout << view->getCenter().x << " " << view->getCenter().y << "\n";
+    fout << windowTranslateY << "\n";
+    fout << desert << " " << garden << " " << snow << " ";
+    fout << cont_path << " " << cont_road << " ";
+    fout << points << " ";
+    fout << railed << " " << rivered << " " << iced << "\n";
+    
+    fout << laneVector.size() << "\n";
+    for (int i = 0 ; i < laneVector.size() ; ++i)
+    {
+        fout << (int)laneVector[i]->type << " " << laneVector[i]->getPosition().x << " " << laneVector[i]->getPosition().y << "\n";
+    }
+    fout.close();
 }
 
 Lane* Endless::snowLane()
 {
     Lane* lane = nullptr;
-    if(snow >= 10)
+    if (snow >= 10)
     {
         desert = 0;
         garden = 0;
@@ -31,7 +66,7 @@ Lane* Endless::snowLane()
         iced = false;
         int randomNum = rand() % 2;
         lane = new Lane(laneType::road);
-        if(randomNum == 0) 
+        if (randomNum == 0) 
         {
             cont_road++;
             garden++;
@@ -42,11 +77,11 @@ Lane* Endless::snowLane()
             snow++;
         }
     }
-    else if(snow != 0 && snow < 10)
+    else if (snow != 0 && snow < 10)
     {
-        if(cont_path != 0 && cont_path < 7)
+        if (cont_path != 0 && cont_path < 7)
         {
-            if(railed == false && iced == false)
+            if (railed == false && iced == false)
             {
                 std::vector<laneType> laneTypeVector;
                 laneTypeVector.push_back(laneType::snow_path);
@@ -56,7 +91,7 @@ Lane* Endless::snowLane()
                 int randomNum = rand() % 4;
                 lane = new Lane(laneTypeVector[randomNum]);
             }
-            else if(railed == true && iced == false)
+            else if (railed == true && iced == false)
             {
                 std::vector<laneType> laneTypeVector;
                 laneTypeVector.push_back(laneType::snow_path);
@@ -65,7 +100,7 @@ Lane* Endless::snowLane()
                 int randomNum = rand() % 3;
                 lane = new Lane(laneTypeVector[randomNum]);
             }
-            else if(railed == false && iced == true)
+            else if (railed == false && iced == true)
             {
                 std::vector<laneType> laneTypeVector;
                 laneTypeVector.push_back(laneType::snow_path);
@@ -74,7 +109,7 @@ Lane* Endless::snowLane()
                 int randomNum = rand() % 3;
                 lane = new Lane(laneTypeVector[randomNum]);
             }
-            else if(railed == true && iced == true)
+            else if (railed == true && iced == true)
             {
                 std::vector<laneType> laneTypeVector;
                 laneTypeVector.push_back(laneType::snow_path);
@@ -82,24 +117,24 @@ Lane* Endless::snowLane()
                 int randomNum = rand() % 2;
                 lane = new Lane(laneTypeVector[randomNum]);
             }
-            if(lane->type == laneType::snow_path) cont_path++;
-            else if(lane->type == laneType::road) 
+            if (lane->type == laneType::snow_path) cont_path++;
+            else if (lane->type == laneType::road) 
             {
                 cont_road++;
                 cont_path = 0;
             }
-            else if(lane->type == laneType::rail) 
+            else if (lane->type == laneType::rail) 
             {
                 railed = true;
                 cont_path = 0;
             }
-            else if(lane->type == laneType::ice) 
+            else if (lane->type == laneType::ice) 
             {
                 iced = true;
                 cont_path = 0;
             }
         }
-        else if(cont_path == 7)
+        else if (cont_path == 7)
         {
             if(railed == false && iced == false)
             {
@@ -110,7 +145,7 @@ Lane* Endless::snowLane()
                 int randomNum = rand() % 3;
                 lane = new Lane(laneTypeVector[randomNum]);
             }
-            else if(railed == true && iced == false)
+            else if (railed == true && iced == false)
             {
                 std::vector<laneType> laneTypeVector;
                 laneTypeVector.push_back(laneType::road);
@@ -118,7 +153,7 @@ Lane* Endless::snowLane()
                 int randomNum = rand() % 2;
                 lane = new Lane(laneTypeVector[randomNum]);
             }
-            else if(railed == false && iced == true)
+            else if (railed == false && iced == true)
             {
                 std::vector<laneType> laneTypeVector;
                 laneTypeVector.push_back(laneType::rail);
@@ -126,29 +161,29 @@ Lane* Endless::snowLane()
                 int randomNum = rand() % 2;
                 lane = new Lane(laneTypeVector[randomNum]);
             }
-            else if(railed == true && iced == true)
+            else if (railed == true && iced == true)
             {
                 lane = new Lane(laneType::snow_path);
             }
-            if(lane->type == laneType::road)
+            if (lane->type == laneType::road)
             {
                 cont_road++;
                 cont_path = 0;
             }
-            else if(lane->type == laneType::rail)
+            else if (lane->type == laneType::rail)
             {
                 railed = true;
                 cont_path = 0;
             }
-            else if(lane->type == laneType::ice)
+            else if (lane->type == laneType::ice)
             {
                 iced = true;
                 cont_path = 0;
             }
         }
-        else if(cont_road != 0 && cont_road < 2)
+        else if (cont_road != 0 && cont_road < 2)
         {
-            if(railed == false && iced == false)
+            if (railed == false && iced == false)
             {
                 std::vector<laneType> laneTypeVector;
                 laneTypeVector.push_back(laneType::snow_path);
@@ -158,7 +193,7 @@ Lane* Endless::snowLane()
                 int randomNum = rand() % 4;
                 lane = new Lane(laneTypeVector[randomNum]);
             }
-            else if(railed == true && iced == false)
+            else if (railed == true && iced == false)
             {
                 std::vector<laneType> laneTypeVector;
                 laneTypeVector.push_back(laneType::snow_path);
@@ -167,7 +202,7 @@ Lane* Endless::snowLane()
                 int randomNum = rand() % 3;
                 lane = new Lane(laneTypeVector[randomNum]);
             }
-            else if(railed == false && iced == true)
+            else if (railed == false && iced == true)
             {
                 std::vector<laneType> laneTypeVector;
                 laneTypeVector.push_back(laneType::snow_path);
@@ -176,7 +211,7 @@ Lane* Endless::snowLane()
                 int randomNum = rand() % 3;
                 lane = new Lane(laneTypeVector[randomNum]);
             }
-            else if(railed == true && iced == true)
+            else if (railed == true && iced == true)
             {
                 std::vector<laneType> laneTypeVector;
                 laneTypeVector.push_back(laneType::snow_path);
@@ -185,26 +220,26 @@ Lane* Endless::snowLane()
                 std::cerr << randomNum << std::endl;
                 lane = new Lane(laneTypeVector[randomNum]);
             }
-            if(lane->type == laneType::road) cont_road++;
-            else if(lane->type == laneType::snow_path)
+            if (lane->type == laneType::road) cont_road++;
+            else if (lane->type == laneType::snow_path)
             {
                 cont_path++;
                 cont_road = 0;
             } 
-            else if(lane->type == laneType::rail)
+            else if (lane->type == laneType::rail)
             {
                 railed = true;
                 cont_road = 0;
             }
-            else if(lane->type == laneType::ice)
+            else if (lane->type == laneType::ice)
             {
                 iced = true;
                 cont_road = 0;
             }
         }
-        else if(cont_road == 2)
+        else if (cont_road == 2)
         {
-            if(railed == false && iced == false)
+            if (railed == false && iced == false)
             {
                 std::vector<laneType> laneTypeVector;
                 laneTypeVector.push_back(laneType::snow_path);
@@ -213,7 +248,7 @@ Lane* Endless::snowLane()
                 int randomNum = rand() % 3;
                 lane = new Lane(laneTypeVector[randomNum]);
             }
-            else if(railed == true && iced == false)
+            else if (railed == true && iced == false)
             {
                 std::vector<laneType> laneTypeVector;
                 laneTypeVector.push_back(laneType::snow_path);
@@ -221,7 +256,7 @@ Lane* Endless::snowLane()
                 int randomNum = rand() % 2;
                 lane = new Lane(laneTypeVector[randomNum]);
             }
-            else if(railed == false && iced == true)
+            else if (railed == false && iced == true)
             {
                 std::vector<laneType> laneTypeVector;
                 laneTypeVector.push_back(laneType::snow_path);
@@ -229,27 +264,27 @@ Lane* Endless::snowLane()
                 int randomNum = rand() % 2;
                 lane = new Lane(laneTypeVector[randomNum]);
             }
-            else if(railed == true && iced == true)
+            else if (railed == true && iced == true)
             {
                 lane = new Lane(laneType::snow_path);
             }
-            if(lane->type == laneType::snow_path) 
+            if (lane->type == laneType::snow_path) 
             {
                 cont_path++;
                 cont_road = 0;
             }
-            else if(lane->type == laneType::rail) 
+            else if (lane->type == laneType::rail) 
             {
                 railed = true;
                 cont_road = 0;
             }
-            else if(lane->type == laneType::ice) 
+            else if (lane->type == laneType::ice) 
             {
                 iced = true;
                 cont_road = 0;
             }
         }    
-        else if(railed == true && iced == true)
+        else if (railed == true && iced == true)
         {
             std::vector<laneType> laneTypeVector;
             laneTypeVector.push_back(laneType::snow_path);
@@ -259,7 +294,7 @@ Lane* Endless::snowLane()
             if(lane->type == laneType::snow_path) cont_path++;
             else if(lane->type == laneType::road) cont_road++;
         }
-        else if(railed == true && iced == false)
+        else if (railed == true && iced == false)
         {
             std::vector<laneType> laneTypeVector;
             laneTypeVector.push_back(laneType::snow_path);
@@ -269,7 +304,7 @@ Lane* Endless::snowLane()
             if(lane->type == laneType::snow_path) cont_path++;
             else if(lane->type == laneType::road) cont_road++;
         }
-        else if(railed == false && iced == true)
+        else if (railed == false && iced == true)
         {
             std::vector<laneType> laneTypeVector;
             laneTypeVector.push_back(laneType::snow_path);
@@ -281,6 +316,7 @@ Lane* Endless::snowLane()
         }
         snow++;
     }
+
     return lane;
 }
 
@@ -704,12 +740,13 @@ Lane* Endless::gardenLane()
     return lane;
 }
 
-void Endless::initShape() {
+void Endless::initShape()
+{
     view = new sf::View;
     view->setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
     view->setCenter(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2));
     windowTranslateY = 0;
-    
+
     scoreBoardTexture.loadFromFile("../resource/Score.png");
     scoreBoardImage.setTexture(scoreBoardTexture);
     scoreBoardImage.setPosition(1075, 990 - 12);
@@ -722,22 +759,23 @@ void Endless::initShape() {
     increaseSpeedTime = sf::Time::Zero;
     srand(time(0));
 
-    for (int i = 0; i < 10; i++) {
-        Lane *lane;
-        if(i == 0)
+    for (int i = 0; i < 10; i++)
+    {
+        Lane* lane = nullptr;
+        if (i == 0)
         {
             lane = new Lane(randomFirstLaneType());
-            if(lane->type == laneType::desert_first_lane) 
+            if (lane->type == laneType::desert_first_lane)
             {
                 desert++;
                 cont_path++;
             }
-            else if(lane->type == laneType::garden_first_lane)
+            else if (lane->type == laneType::garden_first_lane)
             {
                 garden++;
                 cont_path++;
             }
-            else if(lane->type == laneType::snow_first_lane)
+            else if (lane->type == laneType::snow_first_lane)
             {
                 snow++;
                 cont_path++;
@@ -745,17 +783,20 @@ void Endless::initShape() {
         }
         else
         {
-            if(desert != 0) lane = desertLane();
-            else if(garden != 0) lane = gardenLane();
-            else if(snow != 0) lane = snowLane();
+            if (desert != 0)
+                lane = desertLane();
+            else if (garden != 0)
+                lane = gardenLane();
+            else if (snow != 0)
+                lane = snowLane();
         }
         laneVector.push_back(lane);
         laneVector[i]->setPosition(0, 990 - landHeight * (i + 1));
-        for (int j = 0; j < laneVector[i]->getStuffVector().size(); j++) {
+        for (int j = 0; j < laneVector[i]->getStuffVector().size(); j++)
+        {
             stuffVector.push_back(laneVector[i]->getStuffVector()[j]);
         }
     }
-    
 }
 
 void Endless::handleEvent() {
@@ -805,8 +846,8 @@ void Endless::update()
         backgroundTexture.create(window->getSize().x, window->getSize().y);
         backgroundTexture.update(*window);
         sf::Clock delayTimer;
-        while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
-            // Wait for 2 seconds
+        while (delayTimer.getElapsedTime().asSeconds() < 1.0f) {
+            // Wait for 1 seconds
         }
         states->push(new Lose(window, states, music, backgroundTexture, player));
         isGameOver = 0;
@@ -816,13 +857,13 @@ void Endless::update()
     if (isAddNewLane) 
     {
         int i = laneVector.size();
-        Lane *lane = nullptr;
+        Lane* lane = nullptr;
         
         if(desert != 0) lane = desertLane();
         else if(garden != 0) lane = gardenLane();
         else if(snow != 0) lane = snowLane();
 
-        if(lane != nullptr) laneVector.push_back(lane);
+        if (lane != nullptr) laneVector.push_back(lane);
         laneVector[laneVector.size() - 1]->setPosition(0, 990 - landHeight * (i + 1));
 
         for (int j = 0; j < laneVector[laneVector.size() - 1]->getStuffVector().size(); j++) 
@@ -842,6 +883,7 @@ void Endless::update()
         if (-windowTranslateY % landHeight == 0) {
             isAddNewLane = 1;
         }
+        std::cout << player->getPlayerSprite().getPosition().x << " " << player->getPlayerSprite().getPosition().y << "\n";
         player->updateWindowBoundsCollision(window, windowTranslateY);
         playerCollision(stuffVector); 
         eatCredit();
@@ -909,14 +951,14 @@ void Endless::gameOver(){
 
 void Endless::render() {
     window->setView(*view);
-    for (int i = 0; i < laneVector.size(); i++) {
-        window->draw(*laneVector[i]);
-    }
-    window->draw(scoreBoardImage);
+    // for (int i = 0; i < laneVector.size(); i++) {
+    //     window->draw(*laneVector[i]);
+    // }
+    // window->draw(scoreBoardImage);
     window->draw(player->getPlayerSprite());
-    for (int i = 0; i < stuffVector.size(); i++)
-    {
-        window->draw(*stuffVector[i]);
-    }
-    window->draw(*setting);
+    // for (int i = 0; i < stuffVector.size(); i++)
+    // {
+    //     window->draw(*stuffVector[i]);
+    // }
+    // window->draw(*setting);
 }

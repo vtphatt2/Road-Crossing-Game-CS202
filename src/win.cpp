@@ -1,5 +1,5 @@
 #include "header/win.hpp"
-#include<iostream>
+
 Win::Win(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, sf::Texture background, int level) : window(window), states(states), music(music), 
 background(background), currentLevel(level), player(player) {
     window->setView(window->getDefaultView());

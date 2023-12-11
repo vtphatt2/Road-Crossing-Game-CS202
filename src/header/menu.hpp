@@ -27,7 +27,6 @@ class Menu: public State {
     private :
         sf::RenderWindow* window;
         std::stack <State*>* states;
-        Game* game;
 
         sf::Event event;
         sf::Music& music;

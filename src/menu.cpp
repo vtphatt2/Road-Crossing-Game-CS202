@@ -102,9 +102,9 @@ void Menu::handleEvent() {
             if (newGameButtonRect.contains(mousePosition.x, mousePosition.y)) {
                 states->push(new Character(window, states, music, player));
             }
-            //else if (loadGameButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
-            //    states->push(new LoadGame(window, states));
-            //}
+            else if (loadGameButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+                states->push(new Endless(window, states, player, music, 1));
+            }
             else if (highScoreButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
                states->push(new highScore(window, states));
             }
@@ -115,6 +115,7 @@ void Menu::handleEvent() {
                 states->push(new Instruction(window, states));
             }
             else if (backButtonRect.contains(mousePosition.x, mousePosition.y)) {
+                delete states->top();
                 states->pop();
             }
         }

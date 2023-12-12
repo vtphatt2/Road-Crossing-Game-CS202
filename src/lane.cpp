@@ -235,6 +235,12 @@ std::vector<Stuff*> Lane::getStuffVector() {
 	return stuffVector;
 }
 
+void Lane::setStuffVector(std::vector<Stuff*> &subStuffVector) {
+	for (int i = 0 ; i < stuffVector.size() ; ++i) delete stuffVector[i];
+	stuffVector.clear();
+	for (int i = 0 ; i < subStuffVector.size() ; ++i) stuffVector.push_back(subStuffVector[i]);
+}
+
 void Lane::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(sprite);
 	if (type == laneType::river) {

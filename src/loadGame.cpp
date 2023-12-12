@@ -188,8 +188,9 @@ void Endless::loadLane(std::string fileName) {
         fin >> type >> posX >> posY;
         laneVector.push_back(new Lane(static_cast<laneType>(type)));
         laneVector[i]->setPosition(posX, posY);
-        (laneVector[i]->getStuffVector()).clear();
+        std::vector <Stuff*> subStuffVector;
         fin >> size_stuffVector;
+
         for (int j = 0 ; j < size_stuffVector ; ++j) 
         {
             std::string stuffName;
@@ -199,56 +200,55 @@ void Endless::loadLane(std::string fileName) {
 
             if (stuffName == "UFO") {
                 fin >> type;
-                laneVector[i]->getStuffVector().push_back(new UFO(static_cast<UFOColor>(type)));
+                subStuffVector.push_back(new UFO(static_cast<UFOColor>(type)));
             }
             else if (stuffName == "Ant") {
-                laneVector[i]->getStuffVector().push_back(new Ant());
+                subStuffVector.push_back(new Ant());
             }
             else if (stuffName == "Bird") {
-                laneVector[i]->getStuffVector().push_back(new Bird());
+                subStuffVector.push_back(new Bird());
             }
             else if (stuffName == "Bat") {
-                laneVector[i]->getStuffVector().push_back(new Bat());
+                subStuffVector.push_back(new Bat());
             }
             else if (stuffName == "Worm") {
-                laneVector[i]->getStuffVector().push_back(new Worm());
+                subStuffVector.push_back(new Worm());
             }
             else if (stuffName == "Monster") {
-                laneVector[i]->getStuffVector().push_back(new Monster());
+                subStuffVector.push_back(new Monster());
             }
             else if (stuffName == "Slime") {
-                laneVector[i]->getStuffVector().push_back(new Slime());
+                subStuffVector.push_back(new Slime());
             }
             else if (stuffName == "Snail") {
-                laneVector[i]->getStuffVector().push_back(new Snail());
+                subStuffVector.push_back(new Snail());
             }
             else if (stuffName == "Ghost") {
-                laneVector[i]->getStuffVector().push_back(new Ghost());
+                subStuffVector.push_back(new Ghost());
             }
             else if (stuffName == "Frog") {
-                laneVector[i]->getStuffVector().push_back(new Frog());
+                subStuffVector.push_back(new Frog());
             }
             else if (stuffName == "Mouse") {
-                laneVector[i]->getStuffVector().push_back(new Mouse());
+                subStuffVector.push_back(new Mouse());
             }
             else if (stuffName == "Moon") {
-                laneVector[i]->getStuffVector().push_back(new Moon());
+                subStuffVector.push_back(new Moon());
             }
             else if (stuffName == "SeaWheet") {
-                laneVector[i]->getStuffVector().push_back(new SeaWheet());
+                subStuffVector.push_back(new SeaWheet());
             }
             else if (stuffName == "Fish") {
                 fin >> type;
-                laneVector[i]->getStuffVector().push_back(new Fish(static_cast<fishColor>(type)));
+                subStuffVector.push_back(new Fish(static_cast<fishColor>(type)));
             }
-            fin >> posX >> posY >> speed;
-            std::cout << i << " " << j << "\n";
-            std::cout << posX << " " << posY << "\n";
 
-            auto stuffVec = laneVector[i]->getStuffVector();
-            stuffVec[j]->setPosition(sf::Vector2f(posX, posY));
-            // laneVector[i]->getStuffVector()[j]->setSpeed(speed);
+            fin >> posX >> posY >> speed;
+            subStuffVector[j]->setPosition(sf::Vector2f(posX, posY));
+            subStuffVector[j]->setSpeed(speed);
         }
+
+        laneVector[i]->setStuffVector(subStuffVector);
     }
 
     // fin >> n;

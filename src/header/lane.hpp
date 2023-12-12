@@ -22,6 +22,7 @@ public:
 	void update();
 	laneType type;
 	std::vector<Stuff*> getStuffVector();
+	void setStuffVector(std::vector<Stuff*> &subStuffVector);
 	Bridge* getBridge();
 	Coin* getCoin();
 private:

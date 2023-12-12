@@ -1,5 +1,11 @@
 #include "header/lane.hpp"
 
+bool hasLight(laneType type) {
+	if(type == laneType::road) return 1;
+	if(type == laneType::desert_road) return 1;
+	return 0;
+}
+
 Lane::~Lane() {
 	delete light;
 	delete[] coin;
@@ -8,7 +14,7 @@ Lane::~Lane() {
 }
 
 Lane::Lane(laneType type) : type(type) {
-	((!(rand() % 3) && type != laneType::river) ? light = new TraficLight() : light = nullptr);
+	(((rand() % 2 && hasLight(type))) ? light = new TraficLight() : light = nullptr);
 	((!(rand() % 5) && type != laneType::river) ? coin = new Coin[3] : coin = nullptr);
 	if (!(rand() % 6)) {
 		stuffVector.push_back(new UFO());
@@ -183,6 +189,14 @@ void Lane::setPosition(float x, float y) {
 	if (type == laneType::river) {
 		bridge[0].setPosition(((rand() % 50) + 1) * 10, y);
 		bridge[1].setPosition(((rand() % 50) + 1) * 10 + 700, y);
+	}
+	if(type == laneType::ice)
+	{
+		for (int i = 0; i < stuffVector.size(); i++) {
+			int speed = stuffVector[i]->getSpeed() * 4;
+			stuffVector[i]->setSpeed(speed);
+		}
+	
 	}
 	sprite.setPosition(sf::Vector2f(x, y));
 }

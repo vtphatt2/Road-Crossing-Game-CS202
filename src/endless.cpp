@@ -11,6 +11,11 @@ Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     player->setMovementSpeed(10.0f);
 }
 
+Endless::~Endless() {
+    for (int i = 0 ; i < stuffVector.size() ; ++i) delete stuffVector[i];
+    for (int i = 0 ; i < laneVector.size() ; ++i) delete laneVector[i];  
+}
+
 Lane* Endless::snowLane()
 {
     Lane* lane = nullptr;
@@ -177,7 +182,6 @@ Lane* Endless::snowLane()
                 laneTypeVector.push_back(laneType::snow_path);
                 laneTypeVector.push_back(laneType::road);
                 int randomNum = rand() % 2;
-                std::cerr << randomNum << std::endl;
                 lane = new Lane(laneTypeVector[randomNum]);
             }
             if (lane->type == laneType::road) cont_road++;
@@ -809,7 +813,7 @@ void Endless::update()
         while (delayTimer.getElapsedTime().asSeconds() < 1.0f) {
             // Wait for 1 seconds
         }
-        states->push(new Lose(window, states, music, backgroundTexture, player));
+        states->push(new Lose(window, states, music, backgroundTexture, player, 0));
         isGameOver = 0;
     }
     setting->update();

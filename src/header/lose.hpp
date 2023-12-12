@@ -14,7 +14,7 @@ class Player;
 class Menu;
 class Lose: public State{
     public:
-        Lose(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, sf::Texture background, Player* player);
+        Lose(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, sf::Texture background, Player* player, int level);
         void handleEvent();
         void update();
         void render();
@@ -26,6 +26,7 @@ class Lose: public State{
         sf::Event event;
         sf::Vector2i mousePosition;
         sf::Music& music;
+        int currentLevel;
         Player* player;
         sf::Texture background;
 

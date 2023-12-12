@@ -31,7 +31,6 @@ class Endless : public State
         int windowTranslateY;
         bool isAddNewLane = 0;
         Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music);
-        Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int a);
         ~Endless();
         void initShape();
         void handleEvent();
@@ -56,6 +55,7 @@ class Endless : public State
         sf::Music& music;
         Player* player;
         int choice;
+        int level;
         std::vector<Stuff*> stuffVector;
         Setting* setting = nullptr;
         std::vector<Lane*> laneVector;

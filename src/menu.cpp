@@ -103,7 +103,7 @@ void Menu::handleEvent() {
                 states->push(new Character(window, states, music, player));
             }
             else if (loadGameButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
-                states->push(new Endless(window, states, player, music, 1));
+                states->push(new Endless(window, states, player, music));
             }
             else if (highScoreButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
                states->push(new highScore(window, states));

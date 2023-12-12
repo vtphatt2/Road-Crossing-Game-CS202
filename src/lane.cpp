@@ -198,7 +198,6 @@ void Lane::update() {
 	}
 	for (int i = 0; i < stuffVector.size(); i++)
 	{	
-		std::cout << "Number of obstacles : " << stuffVector.size() << "\n";
 		if (light && light->getColor() == lightColor::Red) {
 			stuffVector[i]->stop();
 		}

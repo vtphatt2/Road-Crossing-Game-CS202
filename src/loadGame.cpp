@@ -15,6 +15,15 @@ Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     initShape();
     loadPositionFromFile("../data/save-game.txt");
     loadLane("../data/save-game.txt");
+
+    stuffVector.clear();
+    for (int i = 0 ; i < laneVector.size() ; ++i)
+    {
+        for (int j = 0 ; j < laneVector[i]->getStuffVector().size(); ++j)
+        {
+            stuffVector.push_back(laneVector[i]->getStuffVector()[j]);
+        }
+    }
 }
 
 Endless::~Endless() {
@@ -56,7 +65,7 @@ void Endless::saveToFile(std::string fileName) {
         fout << laneVector[i]->getStuffVector().size() << "\n";
         for (int j = 0 ; j < laneVector[i]->getStuffVector().size() ; ++j)
         {
-            auto stuff_ptr = laneVector[i]->getStuffVector()[j];
+            Stuff* stuff_ptr = laneVector[i]->getStuffVector()[j];
             if (typeid(*stuff_ptr) == typeid(UFO))
                 fout << "UFO ";
             else if (typeid(*stuff_ptr) == typeid(Ant))
@@ -83,10 +92,9 @@ void Endless::saveToFile(std::string fileName) {
                 fout << "Moon ";
             else if (typeid(*stuff_ptr) == typeid(SeaWheet))
                 fout << "SeaWheet ";
-            else if (typeid(*stuff_ptr) == typeid(Moon))
-                fout << "Moon ";
             else if (typeid(*stuff_ptr) == typeid(Fish))
                 fout << "Fish ";
+
             fout << laneVector[i]->getStuffVector()[j]->getColor() << " " << (int)laneVector[i]->getStuffVector()[j]->getPosition().x << " " << (int)laneVector[i]->getStuffVector()[j]->getPosition().y << " " << laneVector[i]->getStuffVector()[j]->getSpeed() << "\n";
         }
     }
@@ -173,15 +181,14 @@ void Endless::loadLane(std::string fileName) {
     for (int i = 0 ; i < 7 ; ++i) getline(fin, empty);
 
     laneVector.clear();
-    int n, type, posX, posY;
+    int n, type, posX, posY, size_stuffVector;
     fin >> n;
     for (int i = 0 ; i < n ; ++i) 
     {
         fin >> type >> posX >> posY;
         laneVector.push_back(new Lane(static_cast<laneType>(type)));
         laneVector[i]->setPosition(posX, posY);
-
-        int size_stuffVector;
+        (laneVector[i]->getStuffVector()).clear();
         fin >> size_stuffVector;
         for (int j = 0 ; j < size_stuffVector ; ++j) 
         {
@@ -192,108 +199,111 @@ void Endless::loadLane(std::string fileName) {
 
             if (stuffName == "UFO") {
                 fin >> type;
-                stuffVector.push_back(new UFO(static_cast<UFOColor>(type)));
+                laneVector[i]->getStuffVector().push_back(new UFO(static_cast<UFOColor>(type)));
             }
             else if (stuffName == "Ant") {
-                stuffVector.push_back(new Ant());
+                laneVector[i]->getStuffVector().push_back(new Ant());
             }
             else if (stuffName == "Bird") {
-                stuffVector.push_back(new Bird());
+                laneVector[i]->getStuffVector().push_back(new Bird());
             }
             else if (stuffName == "Bat") {
-                stuffVector.push_back(new Bat());
+                laneVector[i]->getStuffVector().push_back(new Bat());
             }
             else if (stuffName == "Worm") {
-                stuffVector.push_back(new Worm());
+                laneVector[i]->getStuffVector().push_back(new Worm());
             }
             else if (stuffName == "Monster") {
-                stuffVector.push_back(new Monster());
+                laneVector[i]->getStuffVector().push_back(new Monster());
             }
             else if (stuffName == "Slime") {
-                stuffVector.push_back(new Slime());
+                laneVector[i]->getStuffVector().push_back(new Slime());
             }
             else if (stuffName == "Snail") {
-                stuffVector.push_back(new Snail());
+                laneVector[i]->getStuffVector().push_back(new Snail());
             }
             else if (stuffName == "Ghost") {
-                stuffVector.push_back(new Ghost());
+                laneVector[i]->getStuffVector().push_back(new Ghost());
             }
             else if (stuffName == "Frog") {
-                stuffVector.push_back(new Frog());
+                laneVector[i]->getStuffVector().push_back(new Frog());
             }
             else if (stuffName == "Mouse") {
-                stuffVector.push_back(new Mouse());
+                laneVector[i]->getStuffVector().push_back(new Mouse());
             }
             else if (stuffName == "Moon") {
-                stuffVector.push_back(new Moon());
+                laneVector[i]->getStuffVector().push_back(new Moon());
             }
             else if (stuffName == "SeaWheet") {
-                stuffVector.push_back(new SeaWheet());
+                laneVector[i]->getStuffVector().push_back(new SeaWheet());
             }
             else if (stuffName == "Fish") {
                 fin >> type;
-                stuffVector.push_back(new Fish(static_cast<fishColor>(type)));
+                laneVector[i]->getStuffVector().push_back(new Fish(static_cast<fishColor>(type)));
             }
             fin >> posX >> posY >> speed;
-            stuffVector[i]->setPosition(posX, posY);
-            stuffVector[i]->setSpeed(speed);
+            std::cout << i << " " << j << "\n";
+            std::cout << posX << " " << posY << "\n";
+
+            auto stuffVec = laneVector[i]->getStuffVector();
+            stuffVec[j]->setPosition(sf::Vector2f(posX, posY));
+            // laneVector[i]->getStuffVector()[j]->setSpeed(speed);
         }
     }
 
-    stuffVector.clear();
-    fin >> n;
-    std::string stuffName;
-    for (int i = 0 ; i < n ; ++i)
-    {
-        fin >> stuffName;
+    // fin >> n;
+    // std::string stuffName;
+    // for (int i = 0 ; i < n ; ++i)
+    // {
+    //     fin >> stuffName;
 
-        if (stuffName == "UFO") {
-            fin >> type;
-            stuffVector.push_back(new UFO(static_cast<UFOColor>(type)));
-        }
-        else if (stuffName == "Ant") {
-            stuffVector.push_back(new Ant());
-        }
-        else if (stuffName == "Bird") {
-            stuffVector.push_back(new Bird());
-        }
-        else if (stuffName == "Bat") {
-            stuffVector.push_back(new Bat());
-        }
-        else if (stuffName == "Worm") {
-            stuffVector.push_back(new Worm());
-        }
-        else if (stuffName == "Monster") {
-            stuffVector.push_back(new Monster());
-        }
-        else if (stuffName == "Slime") {
-            stuffVector.push_back(new Slime());
-        }
-        else if (stuffName == "Snail") {
-            stuffVector.push_back(new Snail());
-        }
-        else if (stuffName == "Ghost") {
-            stuffVector.push_back(new Ghost());
-        }
-        else if (stuffName == "Frog") {
-            stuffVector.push_back(new Frog());
-        }
-        else if (stuffName == "Mouse") {
-            stuffVector.push_back(new Mouse());
-        }
-        else if (stuffName == "Moon") {
-            stuffVector.push_back(new Moon());
-        }
-        else if (stuffName == "SeaWheet") {
-            stuffVector.push_back(new SeaWheet());
-        }
-        else if (stuffName == "Fish") {
-            fin >> type;
-            stuffVector.push_back(new Fish(static_cast<fishColor>(type)));
-        }
-        fin >> posX >> posY;
-        stuffVector[i]->setPosition(posX, posY);
-    }
+    //     if (stuffName == "UFO") {
+    //         fin >> type;
+    //         stuffVector.push_back(new UFO(static_cast<UFOColor>(type)));
+    //     }
+    //     else if (stuffName == "Ant") {
+    //         stuffVector.push_back(new Ant());
+    //     }
+    //     else if (stuffName == "Bird") {
+    //         stuffVector.push_back(new Bird());
+    //     }
+    //     else if (stuffName == "Bat") {
+    //         stuffVector.push_back(new Bat());
+    //     }
+    //     else if (stuffName == "Worm") {
+    //         stuffVector.push_back(new Worm());
+    //     }
+    //     else if (stuffName == "Monster") {
+    //         stuffVector.push_back(new Monster());
+    //     }
+    //     else if (stuffName == "Slime") {
+    //         stuffVector.push_back(new Slime());
+    //     }
+    //     else if (stuffName == "Snail") {
+    //         stuffVector.push_back(new Snail());
+    //     }
+    //     else if (stuffName == "Ghost") {
+    //         stuffVector.push_back(new Ghost());
+    //     }
+    //     else if (stuffName == "Frog") {
+    //         stuffVector.push_back(new Frog());
+    //     }
+    //     else if (stuffName == "Mouse") {
+    //         stuffVector.push_back(new Mouse());
+    //     }
+    //     else if (stuffName == "Moon") {
+    //         stuffVector.push_back(new Moon());
+    //     }
+    //     else if (stuffName == "SeaWheet") {
+    //         stuffVector.push_back(new SeaWheet());
+    //     }
+    //     else if (stuffName == "Fish") {
+    //         fin >> type;
+    //         stuffVector.push_back(new Fish(static_cast<fishColor>(type)));
+    //     }
+    //     fin >> posX >> posY;
+    //     stuffVector[i]->setPosition(posX, posY);
+    // }
 
     fin.close();
 }

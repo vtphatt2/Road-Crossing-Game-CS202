@@ -69,5 +69,89 @@ void Endless::loadLane(std::string fileName) {
         laneVector[i]->setPosition(posX, posY);
     }
 
+    stuffVector.clear();
+    fin >> n;
+    std::string stuffName;
+    float speed;
+    for (int i = 0 ; i < n ; ++i)
+    {
+        fin >> stuffName;
+        if (stuffName == "UFO") {
+            fin >> type >> posX >> posY;
+            stuffVector.push_back(new UFO(static_cast<UFOColor>(type)));
+            stuffVector[i]->setPosition(posX, posY);
+        }
+        else if (stuffName == "Ant") {
+            fin >> posX >> posY;
+            stuffVector.push_back(new Ant());
+            stuffVector[i]->setPosition(posX, posY);
+        }
+        else if (stuffName == "Bird") {
+            fin >> posX >> posY;
+            stuffVector.push_back(new Bird());
+            stuffVector[i]->setPosition(posX, posY);
+        }
+        else if (stuffName == "Bat") {
+            fin >> posX >> posY;
+            stuffVector.push_back(new Bat());
+            stuffVector[i]->setPosition(posX, posY);
+        }
+        else if (stuffName == "Worm") {
+            fin >> posX >> posY;
+            stuffVector.push_back(new Worm());
+            stuffVector[i]->setPosition(posX, posY);
+        }
+        else if (stuffName == "Monster") {
+            fin >> posX >> posY;
+            stuffVector.push_back(new Monster());
+            stuffVector[i]->setPosition(posX, posY);
+        }
+        else if (stuffName == "Slime") {
+            fin >> posX >> posY;
+            stuffVector.push_back(new Slime());
+            stuffVector[i]->setPosition(posX, posY);
+        }
+        else if (stuffName == "Snail") {
+            fin >> posX >> posY;
+            stuffVector.push_back(new Snail());
+            stuffVector[i]->setPosition(posX, posY);
+        }
+        else if (stuffName == "Ghost") {
+            fin >> posX >> posY;
+            stuffVector.push_back(new Ghost());
+            stuffVector[i]->setPosition(posX, posY);
+        }
+        else if (stuffName == "Frog") {
+            fin >> posX >> posY;
+            stuffVector.push_back(new Frog());
+            stuffVector[i]->setPosition(posX, posY);
+        }
+        else if (stuffName == "Mouse") {
+            fin >> posX >> posY;
+            stuffVector.push_back(new Mouse());
+            stuffVector[i]->setPosition(posX, posY);
+        }
+        else if (stuffName == "Moon") {
+            fin >> posX >> posY;
+            stuffVector.push_back(new Moon());
+            stuffVector[i]->setPosition(posX, posY);
+        }
+        else if (stuffName == "SeaWheet") {
+            fin >> posX >> posY;
+            stuffVector.push_back(new SeaWheet());
+            stuffVector[i]->setPosition(posX, posY);
+        }
+        else if (stuffName == "Fish") {
+            fin >> type >> posX >> posY;
+            stuffVector.push_back(new Fish(static_cast<fishColor>(type)));
+            stuffVector[i]->setPosition(posX, posY);
+        }
+
+        fin >> speed;
+        stuffVector[i]->setSpeed(speed);
+        stuffVector[i]->resume();
+        stuffVector[i]->run();
+    }
+
     fin.close();
 }

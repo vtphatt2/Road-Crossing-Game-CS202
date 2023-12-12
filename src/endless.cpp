@@ -48,6 +48,43 @@ void Endless::saveToFile(std::string fileName) {
     {
         fout << (int)laneVector[i]->type << " " << laneVector[i]->getPosition().x << " " << laneVector[i]->getPosition().y << "\n";
     }
+
+    fout << stuffVector.size() << "\n";
+    for (Stuff* stuff : stuffVector) {
+        if (typeid(*stuff) == typeid(UFO)) 
+            fout << "UFO ";
+        else if (typeid(*stuff) == typeid(Ant)) 
+            fout << "Ant ";
+        else if (typeid(*stuff) == typeid(Bird)) 
+            fout << "Bird ";
+        else if (typeid(*stuff) == typeid(Bat))
+            fout << "Bat ";
+        else if (typeid(*stuff) == typeid(Worm))
+            fout << "Worm ";
+        else if (typeid(*stuff) == typeid(Monster))
+            fout << "Monster ";
+        else if (typeid(*stuff) == typeid(Slime))
+            fout << "Slime ";
+        else if (typeid(*stuff) == typeid(Snail))
+            fout << "Snail ";
+        else if (typeid(*stuff) == typeid(Ghost))
+            fout << "Ghost ";
+        else if (typeid(*stuff) == typeid(Frog))
+            fout << "Frog ";
+        else if (typeid(*stuff) == typeid(Mouse))
+            fout << "Mouse ";
+        else if (typeid(*stuff) == typeid(Moon))
+            fout << "Moon ";
+        else if (typeid(*stuff) == typeid(SeaWheet))
+            fout << "SeaWheet ";
+        else if (typeid(*stuff) == typeid(Moon))
+            fout << "Moon ";
+        else if (typeid(*stuff) == typeid(Fish))
+            fout << "Fish ";
+
+        fout << stuff->getColor() << " " << (int)stuff->getPosition().x << " " << (int)stuff->getPosition().y << " " << stuff->getSpeed() << "\n";
+    }
+
     fout.close();
 }
 
@@ -955,9 +992,9 @@ void Endless::render() {
     }
     window->draw(scoreBoardImage);
     window->draw(player->getPlayerSprite());
-    // for (int i = 0; i < stuffVector.size(); i++)
-    // {
-    //     window->draw(*stuffVector[i]);
-    // }
+    for (int i = 0; i < stuffVector.size(); i++)
+    {
+        window->draw(*stuffVector[i]);
+    }
     window->draw(*setting);
 }

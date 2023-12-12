@@ -7,20 +7,24 @@ UFO::UFO() {
 	switch (randomNum) {
 		case 0:
 			texture.loadFromFile(blueUFOPath);
+			color = UFOColor::blue;
 			break;
 		case 1:
 			texture.loadFromFile(brownUFOPath);
+			color = UFOColor::brown;
 			break;
 		case 2:
 			texture.loadFromFile(greenUFOPath);
+			color = UFOColor::green;
 			break;
 		case 3:
 			texture.loadFromFile(pinkUFOPath);
+			color = UFOColor::pink;
 			break;
 	}
 	sprite.setTexture(texture);
 }
-UFO::UFO(UFOColor color) {
+UFO::UFO(UFOColor color) : color(color) {
 	switch (color) {
 	case UFOColor::blue:
 		texture.loadFromFile(blueUFOPath);
@@ -78,6 +82,10 @@ void UFO::resume() {
 }
 void UFO::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(sprite);
+}
+
+std::string UFO::getColor() {
+	return std::to_string(static_cast<int>(color));
 }
 
 //Coin
@@ -826,15 +834,17 @@ Fish::Fish() {
 	{
 	case 0:
 		texture.loadFromFile(blueFishPath);
+		color = fishColor::blue;
 		break;
 	case 1:
 		texture.loadFromFile(pinkFishPath);
+		color = fishColor::pink;
 		break;
 	}
 	texture.loadFromFile(blueFishPath);
 	sprite.setTexture(texture);
 }
-Fish::Fish(fishColor color) {
+Fish::Fish(fishColor color) : color(color) {
 	switch (color) {
 	case fishColor::blue:
 		texture.loadFromFile(blueFishPath);
@@ -904,6 +914,10 @@ void Fish::jump() {
 }
 void Fish::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(sprite);
+}
+
+std::string Fish::getColor() {
+	return std::to_string(static_cast<int>(color));
 }
 
 //Bridge

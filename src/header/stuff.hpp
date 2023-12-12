@@ -67,7 +67,6 @@
 
 #define defaultSpeed 0.01 * 60;
 
-
 class Stuff: public sf::Drawable
 {
 public:
@@ -82,7 +81,7 @@ public:
 	virtual void stop() = 0;
 	virtual void resume() = 0;
 	virtual void jump() {};
-
+	virtual std::string getColor() = 0;
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
 };
@@ -106,6 +105,7 @@ public:
 	void stop();
 	void resume();
 	void jump() {};
+	std::string getColor();
 private:
 	sf::Texture texture;
 	sf::Sprite sprite;
@@ -114,6 +114,7 @@ private:
 	int numOfMoves = 0;
 	bool isRunning = true;
 	int limit = 20 / speed;
+	UFOColor color;
 };
 
 //coin
@@ -151,6 +152,7 @@ public:
 	void run();
 	void stop();
 	void resume();
+	std::string getColor() {return "";}
 private:
 	sf::Texture texture[3];
 	sf::Sprite sprite;
@@ -175,6 +177,7 @@ public:
 	void run();
 	void stop();
 	void resume();
+	std::string getColor() {return "";}
 private:
 	sf::Texture texture[2];
 	sf::Sprite sprite;
@@ -199,6 +202,7 @@ public:
 	void run();
 	void stop();
 	void resume();
+	std::string getColor() {return "";}
 private:
 	sf::Texture texture[3];
 	sf::Sprite sprite;
@@ -223,6 +227,7 @@ public:
 	void run();
 	void stop();
 	void resume();
+	std::string getColor() {return "";}
 private:
 	sf::Texture texture[2];
 	sf::Sprite sprite;
@@ -247,6 +252,7 @@ public:
 	void run();
 	void stop();
 	void resume();
+	std::string getColor() {return "";}
 private:
 	sf::Texture texture[3];
 	sf::Sprite sprite;
@@ -272,6 +278,7 @@ public:
 	void run();
 	void stop();
 	void resume();
+	std::string getColor() {return "";}
 private:
 	sf::Texture texture[3];
 	sf::Sprite sprite;
@@ -297,6 +304,7 @@ public:
 	void run();
 	void stop();
 	void resume();
+	std::string getColor() {return "";}
 private:
 	sf::Texture texture[2];
 	sf::Sprite sprite;
@@ -321,6 +329,7 @@ public:
 	void run();
 	void stop();
 	void resume();
+	std::string getColor() {return "";}
 private:
 	sf::Texture texture[3];
 	sf::Sprite sprite;
@@ -345,6 +354,7 @@ public:
 	void run();
 	void stop();
 	void resume();
+	std::string getColor() {return "";}
 private:
 	sf::Texture texture[3];
 	sf::Sprite sprite;
@@ -369,6 +379,7 @@ public:
 	void run();
 	void stop();
 	void resume();
+	std::string getColor() {return "";}
 private:
 	sf::Texture texture[3];
 	sf::Sprite sprite;
@@ -393,6 +404,7 @@ public:
 	void run();
 	void stop();
 	void resume();
+	std::string getColor() {return "";}
 private:
 	sf::Texture texture[3];
 	sf::Sprite sprite;
@@ -418,6 +430,7 @@ public:
 	void run();
 	void stop();
 	void resume();
+	std::string getColor() {return "";}
 private:
 	sf::Texture texture[3];
 	sf::Sprite sprite;
@@ -448,6 +461,7 @@ public:
 	void stop();
 	void resume();
 	void jump();
+	std::string getColor();
 private:
 	sf::Texture texture;
 	sf::Sprite sprite;
@@ -457,6 +471,7 @@ private:
 	bool isRunning = true;
 	int limit = 20 / speed;
 	bool isJumping = 0;
+	fishColor color;
 };
 
 //Bridge

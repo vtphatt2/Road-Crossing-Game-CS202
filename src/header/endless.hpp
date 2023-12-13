@@ -31,6 +31,7 @@ class Endless : public State
         int windowTranslateY;
         bool isAddNewLane = 0;
         Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music);
+        Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int a);
         ~Endless();
         void initShape();
         void handleEvent();

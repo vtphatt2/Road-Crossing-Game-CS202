@@ -11,11 +11,6 @@ Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     player->setMovementSpeed(10.0f);
 }
 
-Endless::~Endless() {
-    for (int i = 0 ; i < stuffVector.size() ; ++i) delete stuffVector[i];
-    for (int i = 0 ; i < laneVector.size() ; ++i) delete laneVector[i];  
-}
-
 Lane* Endless::snowLane()
 {
     Lane* lane = nullptr;

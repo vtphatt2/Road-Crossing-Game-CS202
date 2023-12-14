@@ -86,8 +86,6 @@ class Endless : public State
         bool isGameOver = 0;
         bool isRaining = true;
         sf::Clock Rain;
-        sf::Time isRainingTimer;
-        sf::Clock rainDurationTimer;
 };
 
 #endif

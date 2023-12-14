@@ -13,6 +13,8 @@ public:
     void updateRain(int windowTranslateY);
     void drawRaindrops();
     std::vector<sf::Sprite> getRaindrops();
+    // void playSound();
+    // void stopSound();
 
 private:
     sf::RenderWindow* window;
@@ -23,6 +25,9 @@ private:
     sf::Clock rainTimer;
     float rainDuration = 5.0f;
     sf::Clock frameClock;
+
+    // sf::SoundBuffer rainBuffer;
+    // sf::Sound rainSound;
 };
 
 #endif //WEATHER_HPP

@@ -854,7 +854,7 @@ void Endless::update()
         increaseSpeedClock.restart();
     }    
     notBridge();
-
+    rainy();
 }
 
 void Endless::rainy(){
@@ -864,9 +864,13 @@ void Endless::rainy(){
     }
     else if (isRaining && Rain.getElapsedTime().asSeconds() >= 8.0f) {
         isRaining = false;
+        //weather->stopSound();
+        music.play();
     }
 
     if (isRaining){  
+        music.stop();
+        //weather->playSound();
         player->setMovementSpeed(7.0f);   
         weather->startRain();          
         weather->updateRain(windowTranslateY);      

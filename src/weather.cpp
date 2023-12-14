@@ -2,6 +2,10 @@
 
 Weather::Weather(sf::RenderWindow* window): window(window) {
     initShape();
+    // if (!rainBuffer.loadFromFile("../resource/audio/rain.wav")) {
+    //     std::cout << "Cannot load sound file" << std::endl;
+    // }
+    // rainSound.setBuffer(rainBuffer);
 }
 
 void Weather::initShape(){
@@ -10,6 +14,7 @@ void Weather::initShape(){
             std::cout << "Error loading raindrop" << i + 1 << ".png\n";
         }
     }
+
 }
 
 void Weather::startRain() { 
@@ -45,3 +50,11 @@ void Weather::drawRaindrops() {
         window->draw(raindrop);
     }
 }
+
+// void Weather::playSound(){
+//     rainSound.play();
+// }
+
+// void Weather::stopSound(){
+//     rainSound.stop();
+// }

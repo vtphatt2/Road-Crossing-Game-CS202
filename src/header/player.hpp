@@ -12,13 +12,6 @@
 
 #include "state.hpp"
 #include "character.hpp"
-
-#define movingBlue "../resource/player/MovingBlue.png"
-#define standingLeftBlue "../resource/player/StandingLeftBlue.png"
-#define standingRightBlue "../resource/player/StandingRightBlue.png"
-#define standingBlue "../resource/player/alienBlue.png"
-
-
 enum class PlayerSkin {
     GREEN,
     BLUE,

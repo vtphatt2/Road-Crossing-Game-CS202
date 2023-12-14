@@ -2,6 +2,7 @@
 
 Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) {
     setting = new Setting(window, states);
+    weather = new Weather(window);
     initShape();
     if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
         std::cout << "Cannot load soundfile" << std::endl;
@@ -853,6 +854,23 @@ void Endless::update()
         increaseSpeedClock.restart();
     }    
     notBridge();
+
+}
+
+void Endless::rainy(){
+    if (Rain.getElapsedTime().asSeconds() >= 30.0f){
+        isRaining = true;
+        Rain.restart();
+    }
+    else if (isRaining && Rain.getElapsedTime().asSeconds() >= 8.0f) {
+        isRaining = false;
+    }
+
+    if (isRaining){  
+        player->setMovementSpeed(7.0f);   
+        weather->startRain();          
+        weather->updateRain(windowTranslateY);      
+    }  
 }
 
 void Endless::notBridge(){
@@ -919,4 +937,7 @@ void Endless::render() {
         window->draw(*stuffVector[i]);
     }
     window->draw(*setting);
+    if (isRaining){
+        weather->drawRaindrops();
+    }
 }

@@ -15,12 +15,14 @@
 #include "lose.hpp"
 #include "lane.hpp"
 #include "win.hpp"
+#include "weather.hpp"
 
 class Player;
 class Lose;
 class Win;
 enum class laneType;
 class Bridge;
+class Weather;
 
 class Endless : public State
 {
@@ -42,6 +44,7 @@ class Endless : public State
         void gameOver();
         void notBridge();
         void saveToFile(std::string fileName);
+        void rainy();
 
         // LOAD GAME
         void loadSkinFromFile(std::string fileName);
@@ -67,6 +70,7 @@ class Endless : public State
         Lane* desertLane();
         Lane* gardenLane();
         Lane* snowLane();
+        Weather* weather;
 
         sf::Texture scoreBoardTexture;
         sf::Sprite scoreBoardImage;
@@ -80,6 +84,10 @@ class Endless : public State
         float speedCoe = 1.0;
 
         bool isGameOver = 0;
+        bool isRaining = true;
+        sf::Clock Rain;
+        sf::Time isRainingTimer;
+        sf::Clock rainDurationTimer;
 };
 
 #endif

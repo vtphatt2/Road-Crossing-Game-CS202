@@ -139,6 +139,7 @@ class Level : public State
         sf::Time increaseSpeedClock;
         float speedCoe = 1.0;
 
+        bool isGameOver = 0;
         bool isRaining = false;
         sf::Clock Rain;
 };

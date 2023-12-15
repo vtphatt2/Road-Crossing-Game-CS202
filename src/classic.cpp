@@ -345,6 +345,23 @@ void Level::handleEvent()
 
 void Level::update()
 {
+    if (isGameOver){
+        gameOverSound.play();        
+        player->setMovementSpeed(0);
+        for (auto& stuff : stuffVector) {
+            stuff->setSpeed(0);
+        }
+
+        sf::Texture backgroundTexture;
+        backgroundTexture.create(window->getSize().x, window->getSize().y);
+        backgroundTexture.update(*window);
+
+        sf::Clock delayTimer;
+        while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
+            // Wait for 2 seconds
+        }
+        states->push(new Lose(window, states, music, backgroundTexture, player, getLevel()));
+    }
     setting->update();
     for (int i = 0; i < laneVector.size(); i++) laneVector[i]->update();
     bool gameRunning = true;
@@ -431,21 +448,7 @@ void Level::playerCollision(std::vector<Stuff*> stuffVector)
 
 void Level::gameOver() 
 {
-    gameOverSound.play();        
-    player->setMovementSpeed(0);
-    for (auto& stuff : stuffVector) {
-        stuff->setSpeed(0);
-    }
-
-    sf::Texture backgroundTexture;
-    backgroundTexture.create(window->getSize().x, window->getSize().y);
-    backgroundTexture.update(*window);
-
-    sf::Clock delayTimer;
-    while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
-        // Wait for 2 seconds
-    }
-    states->push(new Lose(window, states, music, backgroundTexture, player, getLevel()));
+    isGameOver = 1;
 }
 
 void Level::notBridge()

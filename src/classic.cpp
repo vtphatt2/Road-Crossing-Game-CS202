@@ -360,7 +360,7 @@ void Level::update()
         while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
             // Wait for 2 seconds
         }
-        states->push(new Lose(window, states, music, backgroundTexture, player, getLevel()));
+        states->push(new Lose(window, states, music, backgroundTexture, player, getLevel(), 0));
     }
     setting->update();
     for (int i = 0; i < laneVector.size(); i++) laneVector[i]->update();

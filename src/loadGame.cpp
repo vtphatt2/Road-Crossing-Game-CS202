@@ -46,7 +46,7 @@ void Endless::saveToFile(std::string fileName) {
 
     fout << setting->positionComponents() << "\n";
 
-    fout << score << "\n";
+    fout << score << " " << (int)scoreText.getPosition().x << " " << (int)scoreText.getPosition().y << "\n";
     
     fout << laneVector.size() << "\n";
     for (int i = 0 ; i < laneVector.size() ; ++i)
@@ -126,7 +126,8 @@ void Endless::loadPositionFromFile(std::string fileName) {
     fin >> x1 >> y1 >> x2 >> y2 >> x3 >> y3 >> x4 >> y4;
     setting->setPositionComponents(x1, y1, x2, y2, x3, y3, x4, y4);
 
-    fin >> score;
+    fin >> score >> posX >> posY;
+    scoreText.setPosition(posX, posY);
 
     fin.close();
 }
@@ -218,3 +219,24 @@ void Endless::loadLane(std::string fileName) {
         }
     }
 }
+
+
+void Endless::updateHighScore(std::string fileName) {
+    std::ifstream fin(fileName);
+    std::priority_queue <int> scores;
+    int x;
+    while (fin >> x) scores.push(x);
+    fin.close();
+    scores.push(0);
+    scores.push(0);
+    scores.push(0);
+    scores.push(this->score);
+
+    std::ofstream fout(fileName);
+    fout << scores.top() << "\n";
+    scores.pop();
+    fout << scores.top() << "\n";
+    scores.pop();
+    fout << scores.top() << "\n";
+    fout.close();
+} 

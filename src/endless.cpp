@@ -820,8 +820,9 @@ void Endless::update()
             // Wait for 1 seconds
         }
         clearDataLoadGame();
+        updateHighScore("../data/score.txt");
         save = false;
-        states->push(new Lose(window, states, music, backgroundTexture, player, 0));
+        states->push(new Lose(window, states, music, backgroundTexture, player, 0, score));
         isGameOver = 0;
     }
     setting->update();

@@ -1,6 +1,6 @@
 #include "header/lose.hpp"
-#include<iostream>
-Lose::Lose(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, sf::Texture background, Player* player, int level) : window(window), states(states), music(music), background(background), player(player), currentLevel(level) {
+
+Lose::Lose(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, sf::Texture background, Player* player, int level, int score) : window(window), states(states), music(music), background(background), player(player), currentLevel(level), score(score) {
     window->setView(window->getDefaultView());
     initShape();
 }
@@ -39,6 +39,17 @@ void Lose::initShape() {
     menuButtonRect.top = menuButtonImage.getPosition().y;  
     menuButtonRect.width = menuButtonImage.getGlobalBounds().width;
     menuButtonRect.height = menuButtonImage.getGlobalBounds().height;
+
+    font.loadFromFile("../resource/Inter-Bold.ttf");
+    scoreText.setFont(font);
+    scoreText.setCharacterSize(64);
+    scoreText.setFillColor(sf::Color(0xD6, 0xB0, 0x8D));
+    scoreText.setOutlineThickness(4);
+    scoreText.setOutlineColor(sf::Color(0x37, 0x00, 0x00));
+    scoreText.setString(std::to_string(score));
+
+    scoreText.setOrigin(scoreText.getLocalBounds().left + scoreText.getLocalBounds().width / 2.0f, scoreText.getLocalBounds().top + scoreText.getLocalBounds().height / 2.0f);
+    scoreText.setPosition(window->getSize().x / 2.0f, 480);
 }
 
 void Lose::handleEvent() {
@@ -105,4 +116,5 @@ void Lose::render() {
     window->draw(restartButtonImage);
     window->draw(menuButtonImage);
     window->draw(scoreTitleImage);
+    window->draw(scoreText);
 }

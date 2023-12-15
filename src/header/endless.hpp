@@ -53,6 +53,7 @@ class Endless : public State
         void loadPositionFromFile(std::string fileName);
         void loadLane(std::string fileName);
         void clearDataLoadGame();
+        void updateHighScore(std::string fileName);
 
     private:
         sf::RenderWindow* window;

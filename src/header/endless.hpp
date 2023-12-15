@@ -84,7 +84,7 @@ class Endless : public State
         float speedCoe = 1.0;
 
         bool isGameOver = 0;
-        bool isRaining = true;
+        bool isRaining = false;
         sf::Clock Rain;
 };
 

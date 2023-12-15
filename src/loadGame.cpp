@@ -33,6 +33,8 @@ Endless::~Endless() {
         std::ofstream fout("../data/save-game.txt", std::ofstream::trunc);
         fout.close();
     }
+    delete weather;
+    delete setting;
 }
 
 void Endless::saveToFile(std::string fileName) {

@@ -858,22 +858,23 @@ void Endless::update()
 }
 
 void Endless::rainy(){
-    if (Rain.getElapsedTime().asSeconds() >= 30.0f){
+    if (Rain.getElapsedTime().asSeconds() >= 10.0f){
         isRaining = true;
+        music.pause();
+        weather->playSound();
+        player->setMovementSpeed(5.0f);           
         Rain.restart();
     }
     else if (isRaining && Rain.getElapsedTime().asSeconds() >= 8.0f) {
         isRaining = false;
-        //weather->stopSound();
+        weather->stopSound();
         music.play();
+        player->setMovementSpeed(10.0f);
     }
 
-    if (isRaining){  
-        music.stop();
-        //weather->playSound();
-        player->setMovementSpeed(7.0f);   
-        weather->startRain();          
-        weather->updateRain(windowTranslateY);      
+    if (isRaining){ 
+        weather->startRain();   
+        weather->updateRain(windowTranslateY);            
     }  
 }
 
@@ -899,7 +900,6 @@ void Endless::notBridge(){
         }
     }
 }
-
 
 void Endless::playerCollision(std::vector<Stuff*> stuffVector) {
     for (auto& stuff : stuffVector) {

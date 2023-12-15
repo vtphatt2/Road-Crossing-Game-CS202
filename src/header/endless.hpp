@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <filesystem>
 #include <stack>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
@@ -41,6 +42,7 @@ class Endless : public State
         void render();
         void playerCollision(std::vector<Stuff*> stuffVector);
         void eatCredit();
+        void increaseScore(int offset);
         void gameOver();
         void notBridge();
         void saveToFile(std::string fileName);
@@ -50,6 +52,7 @@ class Endless : public State
         void loadSkinFromFile(std::string fileName);
         void loadPositionFromFile(std::string fileName);
         void loadLane(std::string fileName);
+        void clearDataLoadGame();
 
     private:
         sf::RenderWindow* window;
@@ -86,6 +89,14 @@ class Endless : public State
         bool isGameOver = 0;
         bool isRaining = false;
         sf::Clock Rain;
+
+        int score;
+        bool save = true;
+        sf::Font font;
+        sf::Text scoreText;  
+        int count = 0;
+        sf::SoundBuffer coinEatenBuffer;
+        sf::Sound coinEaten; 
 };
 
 #endif

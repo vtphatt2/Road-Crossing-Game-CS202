@@ -103,13 +103,14 @@ void Menu::handleEvent() {
                 states->push(new Character(window, states, music, player));
             }
             else if (loadGameButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
-                states->push(new Endless(window, states, player, music));
+                if (!std::filesystem::is_empty("../data/save-game.txt"))
+                    states->push(new Endless(window, states, player, music, 1));
             }
             else if (highScoreButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
-               states->push(new highScore(window, states));
+                states->push(new highScore(window, states));
             }
             else if (settingsButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
-               states->push(new SettingMenu(window, states, music));
+                states->push(new SettingMenu(window, states, music));
             }
             else if (instructionButtonRect.contains(mousePosition.x, mousePosition.y)) {
                 states->push(new Instruction(window, states));

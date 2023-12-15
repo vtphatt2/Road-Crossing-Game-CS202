@@ -3,7 +3,7 @@
 Levels::Levels(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) 
 {
     initShape();
-
+    
     gameOverSound.setBuffer(gameOverBuffer);
     player->renderInGame();
 }
@@ -126,8 +126,6 @@ void Levels::initShape()
     level12ButtonRect.width = level12ButtonTexture.getSize().x;
     level12ButtonRect.height = level12ButtonTexture.getSize().y;
 }
-
-
 
 void Levels::handleEvent()
 {
@@ -274,10 +272,18 @@ void Levels::render()
 Level::Level(sf::RenderWindow* window, std::stack<State*>* states, Player* player, sf::Music& music, int level)
     : window(window), states(states), player(player), music(music), level(level)
 {
-
+    weather = new Weather(window);
+    if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
+        std::cout << "Cannot load soundfile" << std::endl;
+    }
     gameOverSound.setBuffer(gameOverBuffer);
     player->renderInGame();
+    player->setMovementSpeed(10.0f);
     initShape();
+}
+
+Level::~Level(){
+    delete weather;
 }
 
 void Level::initShape()
@@ -350,6 +356,7 @@ void Level::update()
         player->updateWindowBoundsCollision(window, windowTranslateY);
         playerCollision(stuffVector); 
         if(level == 2 || level == 4) notBridge();
+        rainy();
         Clock.restart();
     }
 
@@ -377,6 +384,9 @@ void Level::render()
         window->draw(*stuffVector[i]);
     }
     window->draw(*setting);
+    if (isRaining){
+        weather->drawRaindrops();
+    }
 }
 
 int Level::getLevel() 
@@ -391,6 +401,7 @@ void Level::win()
     if (!gameWinBuffer.loadFromFile("../resource/audio/gameWin.wav")) {
         std::cout << "Cannot load soundfile" << std::endl;
     }
+    weather->stopSound();
     gameWinSound.setBuffer(gameWinBuffer);    
     gameWinSound.play();
     player->setMovementSpeed(0);
@@ -450,10 +461,38 @@ void Level::notBridge()
                 sf::Vector2f playerB = player->getPlayerSprite().getPosition();
                 if ((playerB.x >= bridge0.x && playerB.x <= bridge0.x + bridges[0].getGlobalBounds().width) || 
                 (playerB.x >= bridge1.x && playerB.x <= bridge1.x + bridges[1].getGlobalBounds().width)){}
-                else gameOver();
+                else{
+                    player->updatePlayerDrown();
+                    sf::Vector2f pos = player->getPlayerSprite().getPosition();
+                    player->getPlayerSprite().setPosition(pos);
+                    gameOver();
+                }
             }
         }
     }
+}
+
+void Level::rainy(){
+    if (Rain.getElapsedTime().asSeconds() >= 20.0f){
+        isRaining = rand() % 2;
+            if (isRaining==1){
+            music.pause();
+            weather->playSound();
+            player->setMovementSpeed(5.0f);           
+            Rain.restart();
+        }
+    }
+    else if (isRaining && Rain.getElapsedTime().asSeconds() >= 5.0f) {
+        isRaining = false;
+        weather->stopSound();
+        music.play();
+        player->setMovementSpeed(10.0f);
+    }
+
+    if (isRaining){ 
+        weather->startRain();   
+        weather->updateRain(windowTranslateY);            
+    }  
 }
 
 Level_1::Level_1(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level) : Level(window, states, player, music, level) 

@@ -13,6 +13,7 @@
 #include "player.hpp"
 #include "lose.hpp"
 #include "lane.hpp"
+#include "weather.hpp"
 
 class Player;
 
@@ -102,6 +103,7 @@ class Level : public State
 {
     public:
         Level(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level);
+        virtual ~Level();
         virtual void initShape();
         void handleEvent();
         virtual void update();
@@ -111,6 +113,7 @@ class Level : public State
         virtual void gameOver();
         virtual void notBridge();
         virtual void win();
+        virtual void rainy();
         
     protected:
         sf::View *view;
@@ -127,6 +130,7 @@ class Level : public State
         Setting* setting;
         std::vector<Lane*> laneVector;
         int level;
+        Weather* weather;
 
         sf::SoundBuffer gameOverBuffer;
         sf::Sound gameOverSound;
@@ -134,6 +138,9 @@ class Level : public State
         sf::Time increaseSpeedTime;
         sf::Time increaseSpeedClock;
         float speedCoe = 1.0;
+
+        bool isRaining = false;
+        sf::Clock Rain;
 };
 
 class Level_1 : public Level

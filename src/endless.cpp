@@ -858,12 +858,14 @@ void Endless::update()
 }
 
 void Endless::rainy(){
-    if (Rain.getElapsedTime().asSeconds() >= 10.0f){
-        isRaining = true;
-        music.pause();
-        weather->playSound();
-        player->setMovementSpeed(5.0f);           
-        Rain.restart();
+    if (Rain.getElapsedTime().asSeconds() >= 20.0f){
+        isRaining = rand() % 2;
+        if (isRaining){
+            music.pause();
+            weather->playSound();
+            player->setMovementSpeed(5.0f);           
+            Rain.restart();
+        }
     }
     else if (isRaining && Rain.getElapsedTime().asSeconds() >= 8.0f) {
         isRaining = false;

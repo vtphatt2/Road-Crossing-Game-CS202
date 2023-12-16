@@ -1,8 +1,6 @@
 #include "header/endless.hpp"
 
 Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int a) : window(window), states(states), player(player), music(music) {
-    setting = new Setting(window, states);
-
     if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
         std::cout << "Cannot load soundfile" << std::endl;
     }
@@ -13,6 +11,7 @@ Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     player->setMovementSpeed(10.0f);
 
     initShape();
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view);
     loadPositionFromFile("../data/save-game.txt");
     loadLane("../data/save-game.txt");
 }

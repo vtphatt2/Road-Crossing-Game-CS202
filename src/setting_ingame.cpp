@@ -1,13 +1,12 @@
 #include "header/setting_ingame.hpp"
-Setting::Setting(sf::RenderWindow* window, std::stack <State*>* states) : window(window), states(states) {
+
+Setting::Setting(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, Player* player, std::vector<Stuff*>& stuffVector, std::vector<Lane*>& laneVector, sf::View *view)
+    : window(window), states(states), music(music), player(player), stuffVector(stuffVector), laneVector(laneVector), view(view)
+{
     initShape();
 }
 
 void Setting::initShape() {
-
-    view = new sf::View;
-    view->setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
-    view->setCenter(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2));
     FAQButtonTexture.loadFromFile("../resource/FAQ.png");
     FAQButtonImage.setTexture(FAQButtonTexture);
     FAQButtonImage.setPosition(1029, 895);
@@ -62,7 +61,7 @@ void Setting::handleEvent(sf::Event event) {
             if(pauseButtonRect.contains(mousePosition)) 
             {
                 window->setView(*view);
-                states->push(new Pause(window, states));
+                states->push(new Pause(window, states, music, player, stuffVector, laneVector));
             }
         }
 }
@@ -228,35 +227,5 @@ void FAQ::update() {
 }
 
 void FAQ::render() {
-    window->draw(backgroundImage);
-}
-
-Pause::Pause(sf::RenderWindow* window, std::stack <State*>* states) : window(window), states(states) {
-    initShape();
-}
-
-void Pause::initShape() {
-    backgroundTexture.loadFromFile("../resource/Background.png");
-    backgroundImage.setTexture(backgroundTexture);
-    backgroundImage.setPosition(0, 0);
-}
-
-void Pause::handleEvent() {
-    while (window->pollEvent(event)) {
-        if (event.type == sf::Event::Closed) 
-        {
-            window->close();
-        }
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) 
-        {
-            window->close();
-        }
-    }
-}
-
-void Pause::update() {
-}
-
-void Pause::render() {
     window->draw(backgroundImage);
 }

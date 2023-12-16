@@ -1,9 +1,9 @@
 #include "header/endless.hpp"
 
 Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) {
-    setting = new Setting(window, states);
-    weather = new Weather(window);
     initShape();
+    weather = new Weather(window);
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view);
     gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav");
     gameOverSound.setBuffer(gameOverBuffer);
     coinEatenBuffer.loadFromFile("../resource/audio/short-success.mp3");

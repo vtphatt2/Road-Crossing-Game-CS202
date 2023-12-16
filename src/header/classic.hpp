@@ -16,6 +16,7 @@
 #include "weather.hpp"
 
 class Player;
+class Setting;
 
 class Levels : public State
 {

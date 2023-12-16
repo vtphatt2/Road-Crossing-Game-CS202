@@ -24,6 +24,7 @@ class Win;
 enum class laneType;
 class Bridge;
 class Weather;
+class Setting;
 
 class Endless : public State
 {

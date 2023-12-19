@@ -18,6 +18,7 @@ Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* 
 
 Endless::~Endless() {
     if (save) saveToFile("../data/save-game.txt");
+    coinEaten.stop();
     delete weather;
     delete setting;
 }

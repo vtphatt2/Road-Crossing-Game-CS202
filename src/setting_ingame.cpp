@@ -3,6 +3,13 @@
 Setting::Setting(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, Player* player, std::vector<Stuff*>& stuffVector, std::vector<Lane*>& laneVector, sf::View *view)
     : window(window), states(states), music(music), player(player), stuffVector(stuffVector), laneVector(laneVector), view(view)
 {
+    level = 0;
+    initShape();
+}
+
+Setting::Setting(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, Player* player, std::vector<Stuff*>& stuffVector, std::vector<Lane*>& laneVector, sf::View *view, int currentLevel)
+    : window(window), states(states), music(music), player(player), stuffVector(stuffVector), laneVector(laneVector), view(view), level(currentLevel)
+{
     initShape();
 }
 
@@ -45,8 +52,9 @@ void Setting::handleEvent(sf::Event event) {
     {
         if(FAQButtonRect.contains(mousePosition)) 
         {
-            window->setView(*view);
+            window->setView(window->getDefaultView());
             states->push(new Instruction(window, states));
+            window->setView(*view);
         }
         if(leaderboardButtonRect.contains(mousePosition)) 
         {
@@ -61,7 +69,7 @@ void Setting::handleEvent(sf::Event event) {
         if(pauseButtonRect.contains(mousePosition)) 
         {
             window->setView(*view);
-            states->push(new Pause(window, states, music, player, stuffVector, laneVector, view));
+            states->push(new Pause(window, states, music, player, stuffVector, laneVector, view, level));
         }
     }
 }

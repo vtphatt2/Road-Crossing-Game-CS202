@@ -15,7 +15,7 @@ class Player;
 
 class Pause : public State {
     public :
-        Pause(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, Player* player, std::vector<Stuff*> &stuffVector, std::vector<Lane*> &laneVector, sf::View* view);
+        Pause(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, Player* player, std::vector<Stuff*> &stuffVector, std::vector<Lane*> &laneVector, sf::View* view, int currentLevel);
         void initShape();
         void handleEvent();
         void update();
@@ -32,6 +32,7 @@ class Pause : public State {
         sf::View* view;
         std::vector<Stuff*> &stuffVector;
         std::vector<Lane*> &laneVector;
+        int level;
 
         sf::RectangleShape blurLayer;
  

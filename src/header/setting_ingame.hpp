@@ -16,6 +16,7 @@ class Setting : public sf::Drawable
 {
     public:
         Setting(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, Player* player, std::vector<Stuff*> &stuffVector, std::vector<Lane*> &laneVector, sf::View *view);
+        Setting(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, Player* player, std::vector<Stuff*>& stuffVector, std::vector<Lane*>& laneVector, sf::View *view, int currentLevel);
         void initShape();
         void handleEvent(sf::Event event);
         void update();
@@ -34,6 +35,7 @@ class Setting : public sf::Drawable
         Player* player;
         std::vector<Stuff*> &stuffVector; 
         std::vector<Lane*> &laneVector;
+        int level;
 
         sf::Texture FAQButtonTexture;
         sf::Sprite FAQButtonImage;

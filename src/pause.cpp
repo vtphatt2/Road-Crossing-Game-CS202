@@ -1,7 +1,7 @@
 #include "header/pause.hpp"
 
-Pause::Pause(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, Player* player, std::vector<Stuff*> &stuffVector, std::vector<Lane*> &laneVector, sf::View* view)
-    : window(window), states(states), music(music), player(player), stuffVector(stuffVector), laneVector(laneVector), view(view)
+Pause::Pause(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, Player* player, std::vector<Stuff*> &stuffVector, std::vector<Lane*> &laneVector, sf::View* view, int currentLevel)
+    : window(window), states(states), music(music), player(player), stuffVector(stuffVector), laneVector(laneVector), view(view), level(currentLevel)
 {
     music.stop();
     initShape();
@@ -53,7 +53,19 @@ void Pause::handleEvent() {
                 states->pop();
                 states->pop();
                 music.play();
-                states->push(new Endless(window, states, player, music));
+                if (level == 0) states->push(new Endless(window, states, player, music));
+                else if (level == 1) states->push(new Level_1(window, states, player, music, 1));
+                else if (level == 2) states->push(new Level_2(window, states, player, music, 2));
+                else if (level == 3) states->push(new Level_3(window, states, player, music, 3));
+                else if (level == 4) states->push(new Level_4(window, states, player, music, 4));
+                else if (level == 5) states->push(new Level_5(window, states, player, music, 5));
+                else if (level == 6) states->push(new Level_6(window, states, player, music, 6));
+                else if (level == 7) states->push(new Level_7(window, states, player, music, 7));
+                else if (level == 8) states->push(new Level_8(window, states, player, music, 8));
+                else if (level == 9) states->push(new Level_9(window, states, player, music, 9));
+                else if (level == 10) states->push(new Level_10(window, states, player, music, 10));
+                // else if (level == 11) states->push(new Level_11(window, states, player, music, 11));
+                // else if (level == 12) states->push(new Level_12(window, states, player, music, 12));
             }
             else if (continueImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y - window->getSize().y / 2 + view->getCenter().y)) {
                 music.play();

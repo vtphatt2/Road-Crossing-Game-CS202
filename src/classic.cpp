@@ -520,7 +520,7 @@ Level_1::Level_1(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     laneVector.push_back(new Lane(laneType::road));
     laneVector.push_back(new Lane(laneType::grass));
     initShape();
-    setting = new Setting(window, states, music, player, stuffVector, laneVector, view);
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view, 1);
 }
 
 Level_2::Level_2(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level) : Level(window, states, player, music, level) 
@@ -545,7 +545,7 @@ Level_2::Level_2(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     laneVector.push_back(new Lane(laneType::road));
     laneVector.push_back(new Lane(laneType::grass));  
     initShape();
-    setting = new Setting(window, states, music, player, stuffVector, laneVector, view);
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view, 2);
 }
 
 Level_3::Level_3(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level) : Level(window, states, player, music, level) 
@@ -576,7 +576,7 @@ Level_3::Level_3(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     laneVector.push_back(new Lane(laneType::road));
     laneVector.push_back(new Lane(laneType::grass));  
     initShape();
-    setting = new Setting(window, states, music, player, stuffVector, laneVector, view);
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view, 3);
 }
 
 Level_4::Level_4(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level) : Level(window, states, player, music, level) 
@@ -621,7 +621,7 @@ Level_4::Level_4(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     laneVector.push_back(new Lane(laneType::road));
     laneVector.push_back(new Lane(laneType::grass));  
     initShape();
-    setting = new Setting(window, states, music, player, stuffVector, laneVector, view);
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view, 4);
 }
 
 Level_5::Level_5(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level) : Level(window, states, player, music, level) 
@@ -652,7 +652,7 @@ Level_5::Level_5(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     laneVector.push_back(new Lane(laneType::desert_road));
     laneVector.push_back(new Lane(laneType::desert_path));
     initShape();
-    setting = new Setting(window, states, music, player, stuffVector, laneVector, view);
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view, 5);
 }
 
 Level_6::Level_6(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level) : Level(window, states, player, music, level) 
@@ -689,7 +689,7 @@ Level_6::Level_6(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     laneVector.push_back(new Lane(laneType::desert_road));
     laneVector.push_back(new Lane(laneType::desert_path));
     initShape();
-    setting = new Setting(window, states, music, player, stuffVector, laneVector, view);
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view, 6);
 }
 
 Level_7::Level_7(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level) : Level(window, states, player, music, level) 
@@ -719,7 +719,7 @@ Level_7::Level_7(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     laneVector.push_back(new Lane(laneType::road));
     laneVector.push_back(new Lane(laneType::snow_path));
     initShape();
-    setting = new Setting(window, states, music, player, stuffVector, laneVector, view);
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view, 7);
 }
 
 Level_8::Level_8(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level) : Level(window, states, player, music, level) 
@@ -746,7 +746,7 @@ Level_8::Level_8(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     laneVector.push_back(new Lane(laneType::road));
     laneVector.push_back(new Lane(laneType::snow_path));  
     initShape();
-    setting = new Setting(window, states, music, player, stuffVector, laneVector, view);
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view, 8);
 }
 
 Level_9::Level_9(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level) : Level(window, states, player, music, level)
@@ -778,7 +778,7 @@ Level_9::Level_9(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     laneVector.push_back(new Lane(laneType::road));
     laneVector.push_back(new Lane(laneType::snow_path));
     initShape();
-    setting = new Setting(window, states, music, player, stuffVector, laneVector, view);
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view, 9);
 };
 
 Level_10::Level_10(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level) : Level(window, states, player, music, level)
@@ -817,5 +817,5 @@ Level_10::Level_10(sf::RenderWindow* window, std::stack <State*>* states, Player
     laneVector.push_back(new Lane(laneType::road));
     laneVector.push_back(new Lane(laneType::snow_path)); 
     initShape();
-    setting = new Setting(window, states, music, player, stuffVector, laneVector, view);
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view, 10);
 };

@@ -41,29 +41,29 @@ void Setting::initShape() {
 }
 
 void Setting::handleEvent(sf::Event event) {
-        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) 
+    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) 
+    {
+        if(FAQButtonRect.contains(mousePosition)) 
         {
-            if(FAQButtonRect.contains(mousePosition)) 
-            {
-                window->setView(*view);
-                states->push(new Instruction(window, states));
-            }
-            if(leaderboardButtonRect.contains(mousePosition)) 
-            {
-                window->setView(*view);
-                states->push(new LeaderboardIngame(window, states));
-            }
-            if(settingButtonRect.contains(mousePosition)) 
-            {
-                window->setView(*view);
-                states->push(new SettingIngame(window, states));
-            }
-            if(pauseButtonRect.contains(mousePosition)) 
-            {
-                window->setView(*view);
-                states->push(new Pause(window, states, music, player, stuffVector, laneVector));
-            }
+            window->setView(*view);
+            states->push(new Instruction(window, states));
         }
+        if(leaderboardButtonRect.contains(mousePosition)) 
+        {
+            window->setView(*view);
+            states->push(new LeaderboardIngame(window, states));
+        }
+        if(settingButtonRect.contains(mousePosition)) 
+        {
+            window->setView(*view);
+            states->push(new SettingIngame(window, states));
+        }
+        if(pauseButtonRect.contains(mousePosition)) 
+        {
+            window->setView(*view);
+            states->push(new Pause(window, states, music, player, stuffVector, laneVector, view));
+        }
+    }
 }
 
 void Setting::update() {

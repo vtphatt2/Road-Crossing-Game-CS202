@@ -70,6 +70,7 @@ void Pause::handleEvent() {
             else if (continueImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y - window->getSize().y / 2 + view->getCenter().y)) {
                 music.play();
                 states->pop();
+                states->push(new CountDown(window, states, laneVector, stuffVector, player, view));
             }
             else if (menuImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y - window->getSize().y / 2 + view->getCenter().y)) {
                 while (!states->empty()) states->pop();
@@ -82,6 +83,7 @@ void Pause::handleEvent() {
 }
 
 void Pause::update() {
+    blurLayer.setPosition(view->getCenter().x - window->getSize().x / 2, view->getCenter().y - window->getSize().y / 2);
     mousePosition = sf::Mouse::getPosition(*window);
 
     if (restartImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y - window->getSize().y / 2 + view->getCenter().y))

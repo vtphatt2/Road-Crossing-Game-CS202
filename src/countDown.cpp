@@ -9,12 +9,15 @@ CountDown::CountDown(sf::RenderWindow* window, std::stack <State*>* states, std:
 void CountDown::initShape() {
     font.loadFromFile("../resource/Inter-Bold.ttf");
     text.setFont(font);
-    text.setCharacterSize(200);
     text.setFillColor(sf::Color(0xD6, 0xB0, 0x8D));
     text.setOutlineThickness(4);
     text.setOutlineColor(sf::Color(0x37, 0x00, 0x00));
     blurLayer.setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
     blurLayer.setFillColor(sf::Color(255, 255, 255, 100));
+
+    countDownBuffer.loadFromFile("../resource/audio/count-down.wav");
+    countDownSound.setBuffer(countDownBuffer);
+    countDownSound.play();
 }
 
 void CountDown::handleEvent() {
@@ -27,11 +30,12 @@ void CountDown::handleEvent() {
 void CountDown::update() {
     blurLayer.setPosition(view->getCenter().x - window->getSize().x / 2, view->getCenter().y - window->getSize().y / 2);
     text.setString(std::to_string(count));
-    text.setPosition(view->getCenter().x - text.getLocalBounds().width/2, view->getCenter().y - text.getLocalBounds().height/2);
+    text.setPosition(view->getCenter().x - text.getLocalBounds().width/2, view->getCenter().y - text.getLocalBounds().height/2 - 50);
 
-    ++time;
-    if (time == 40) {
-        time = 0;
+    text.setCharacterSize(sizeIncrease);
+    sizeIncrease += 7;
+    if (sizeIncrease > 300) {
+        sizeIncrease = 0;
         --count;
     }
 

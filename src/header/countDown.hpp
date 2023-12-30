@@ -31,7 +31,9 @@ class CountDown : public State {
         sf::Font font;
         sf::Text text;
         int count = 3;
-        int time = 0;
+        int sizeIncrease = 20;
+        sf::SoundBuffer countDownBuffer;
+        sf::Sound countDownSound; 
 };
 
 #endif

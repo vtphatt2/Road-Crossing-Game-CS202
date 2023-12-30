@@ -73,7 +73,13 @@ void Pause::handleEvent() {
                 states->push(new CountDown(window, states, laneVector, stuffVector, player, view));
             }
             else if (menuImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y - window->getSize().y / 2 + view->getCenter().y)) {
-                while (!states->empty()) states->pop();
+                State* tmp = states->top();
+                states->pop();
+                while (!states->empty()) {
+                    delete states->top();
+                    states->pop();
+                }
+                delete tmp;
                 music.play();
                 window->setView(window->getDefaultView());
                 states->push(new Menu(window, states, music, player));

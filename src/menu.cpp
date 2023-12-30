@@ -103,8 +103,9 @@ void Menu::handleEvent() {
                 states->push(new Character(window, states, music, player));
             }
             else if (loadGameButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
-                if (!std::filesystem::is_empty("../data/save-game.txt"))
+                if (!std::filesystem::is_empty("../data/save-game.txt")) {
                     states->push(new Endless(window, states, player, music, 1));
+                }
             }
             else if (highScoreButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
                 states->push(new highScore(window, states));

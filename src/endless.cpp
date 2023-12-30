@@ -805,6 +805,13 @@ void Endless::handleEvent() {
 
 void Endless::update() 
 {
+    if (!countedDown) {
+        countedDown = true;
+        window->setView(*view);
+        states->push(new CountDown(window, states, laneVector, stuffVector, player, view));
+        return ;
+    }
+
     if (isGameOver) {
         gameOverSound.play();
         player->setMovementSpeed(0);

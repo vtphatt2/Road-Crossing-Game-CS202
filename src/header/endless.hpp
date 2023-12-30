@@ -17,6 +17,7 @@
 #include "lane.hpp"
 #include "win.hpp"
 #include "weather.hpp"
+#include "countDown.hpp"
 
 class Player;
 class Lose;
@@ -55,6 +56,7 @@ class Endless : public State
         void loadLane(std::string fileName);
         void clearDataLoadGame();
         void updateHighScore(std::string fileName);
+        void setup();
 
     private:
         sf::RenderWindow* window;
@@ -65,9 +67,9 @@ class Endless : public State
         Player* player;
         int choice;
         int level;
-        std::vector<Stuff*> stuffVector;
+        std::vector <Stuff*> stuffVector;
         Setting* setting = nullptr;
-        std::vector<Lane*> laneVector;
+        std::vector <Lane*> laneVector;
         int desert = 0, garden = 0, snow = 0;
         int cont_path = 0, cont_road = 0;
         int points = 0;
@@ -99,6 +101,8 @@ class Endless : public State
         int count = 0;
         sf::SoundBuffer coinEatenBuffer;
         sf::Sound coinEaten; 
+
+        bool countedDown = false;
 };
 
 #endif

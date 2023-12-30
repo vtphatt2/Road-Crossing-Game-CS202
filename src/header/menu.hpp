@@ -32,7 +32,6 @@ class Menu: public State {
         sf::Music& music;
         Player* player;
 
-
         sf::Vector2i mousePosition;
 
         int choice;

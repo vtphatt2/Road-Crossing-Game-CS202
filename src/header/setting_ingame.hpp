@@ -22,7 +22,7 @@ class Setting : public sf::Drawable
         void update();
         void move(int translateY);
         std::string positionComponents();
-        void setPositionComponents(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4);
+        void setPositionComponents(int x, int y);
     private:
         sf::View *view;
         
@@ -37,65 +37,15 @@ class Setting : public sf::Drawable
         std::vector<Lane*> &laneVector;
         int level;
 
-        sf::Texture FAQButtonTexture;
-        sf::Sprite FAQButtonImage;
-        sf::IntRect FAQButtonRect;
-
-        sf::Texture leaderboardButtonTexture;
-        sf::Sprite leaderboardButtonImage;
-        sf::IntRect leaderboardButtonRect;
-
-        sf::Texture settingButtonTexture;
-        sf::Sprite settingButtonImage;
-        sf::IntRect settingButtonRect;
-
         sf::Texture pauseButtonTexture;
         sf::Sprite pauseButtonImage;
         sf::IntRect pauseButtonRect;
-};
-
-class LeaderboardIngame : public State
-{
-    public:
-        LeaderboardIngame(sf::RenderWindow* window, std::stack <State*>* states);
-        void initShape();
-        void handleEvent();
-        void update();
-        void render();
-    private:
-        sf::RenderWindow* window;
-        std::stack <State*>* states;
-        sf::Event event;
-        sf::Vector2i mousePosition;
-
-        sf::Texture backButtonTexture;
-        sf::Sprite backButtonImage;
-        sf::IntRect backButtonRect;
 };
 
 class SettingIngame : public State
 {
     public:
         SettingIngame(sf::RenderWindow* window, std::stack <State*>* states);
-        void initShape();
-        void handleEvent();
-        void update();
-        void render();
-        void updateButtonTextures();
-    private:
-        sf::RenderWindow* window;
-        std::stack <State*>* states;
-        sf::Event event;
-        sf::Vector2i mousePosition;
-        
-        sf::Texture backgroundTexture;
-        sf::Sprite backgroundImage;
-};
-
-class FAQ : public State
-{
-    public:
-        FAQ(sf::RenderWindow* window, std::stack <State*>* states);
         void initShape();
         void handleEvent();
         void update();

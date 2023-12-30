@@ -1,10 +1,12 @@
 #include "header/endless.hpp"
 
 Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int a) : window(window), states(states), player(player), music(music) {
-    if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
-        std::cout << "Cannot load soundfile" << std::endl;
-    }
+    gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav");
     gameOverSound.setBuffer(gameOverBuffer);
+    coinEatenBuffer.loadFromFile("../resource/audio/short-success.mp3");
+    coinEaten.setBuffer(coinEatenBuffer);
+
+    weather = new Weather(window);
 
     loadSkinFromFile("../data/save-game.txt");
     player->renderInGame();
@@ -122,9 +124,8 @@ void Endless::loadPositionFromFile(std::string fileName) {
     fin >> posX >> posY;
     scoreBoardImage.setPosition(posX, posY);
 
-    int x1, y1, x2, y2, x3, y3, x4, y4;
-    fin >> x1 >> y1 >> x2 >> y2 >> x3 >> y3 >> x4 >> y4;
-    setting->setPositionComponents(x1, y1, x2, y2, x3, y3, x4, y4);
+    fin >> posX >> posY;
+    setting->setPositionComponents(posX, posY);
 
     fin >> score >> posX >> posY;
     scoreText.setPosition(posX, posY);

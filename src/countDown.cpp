@@ -40,6 +40,7 @@ void CountDown::update() {
     }
 
     if (count == 0) {
+        delete states->top();
         states->pop();
     }
 }

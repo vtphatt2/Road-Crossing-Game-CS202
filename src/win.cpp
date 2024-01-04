@@ -86,9 +86,10 @@ void Win::pushNewLevel(){
     if (currentLevel == 6) states->push(new Level_7(window, states, player, music, 7));
     if (currentLevel == 7) states->push(new Level_8(window, states, player, music, 8));
     if (currentLevel == 8) states->push(new Level_9(window, states, player, music, 9));
-    // if (currentLevel == 9) states->push(new Level_10(window, states, player, music, 10));
-    // if (currentLevel == 10) states->push(new Level_11(window, states, player, music, 11));
-    // if (currentLevel == 11) states->push(new Level_12(window, states, player, music, 12));
+    if (currentLevel == 9) states->push(new Level_10(window, states, player, music, 10));
+    if (currentLevel == 10) states->push(new Level_11(window, states, player, music, 11));
+    if (currentLevel == 11) states->push(new Level_12(window, states, player, music, 12));
+    if (currentLevel == 12) states->push(new Levels(window, states, player, music));
 }
 
 

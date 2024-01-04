@@ -167,15 +167,15 @@ void Levels::handleEvent()
         if (level9ButtonRect.contains(sf::Mouse::getPosition(*window))) {
             states->push(new Level_9(window, states, player, music, 9));
         }
-            // if (level10ButtonRect.contains(sf::Mouse::getPosition(*window))) {
-            //     states->push(new Level_10(window, states, player, music, 10));
-            // }
-            // if (level11ButtonRect.contains(sf::Mouse::getPosition(*window))) {
-            //     states->push(new Level_11(window, states, player, music, 11));
-            // }
-            // if (level12ButtonRect.contains(sf::Mouse::getPosition(*window))) {
-            //     states->push(new Level_12(window, states, player, music, 12));
-            // }
+        if (level10ButtonRect.contains(sf::Mouse::getPosition(*window))) {
+            states->push(new Level_10(window, states, player, music, 10));
+        }
+        if (level11ButtonRect.contains(sf::Mouse::getPosition(*window))) {
+            states->push(new Level_11(window, states, player, music, 11));
+        }
+        if (level12ButtonRect.contains(sf::Mouse::getPosition(*window))) {
+            states->push(new Level_12(window, states, player, music, 12));
+        }
         }
     }
 }
@@ -810,6 +810,95 @@ Level_10::Level_10(sf::RenderWindow* window, std::stack <State*>* states, Player
     laneVector.push_back(new Lane(laneType::road));
     laneVector.push_back(new Lane(laneType::ice));
     laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::snow_finish));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path)); 
+    initShape();
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view, 10);
+};
+
+Level_11::Level_11(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level) : Level(window, states, player, music, level)
+{
+    gameOverSound.setBuffer(gameOverBuffer);
+    player->renderInGame();
+    laneVector.push_back(new Lane(laneType::desert_first_lane));
+    laneVector.push_back(new Lane(laneType::desert_road));
+    laneVector.push_back(new Lane(laneType::desert_road));
+    laneVector.push_back(new Lane(laneType::desert_path));
+    laneVector.push_back(new Lane(laneType::desert_road));
+    laneVector.push_back(new Lane(laneType::desert_path));
+    laneVector.push_back(new Lane(laneType::desert_rail));
+    laneVector.push_back(new Lane(laneType::desert_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::road)); 
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_finish));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path)); 
+    initShape();
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view, 10);
+};
+
+Level_12::Level_12(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level) : Level(window, states, player, music, level)
+{
+    gameOverSound.setBuffer(gameOverBuffer);
+    player->renderInGame();
+    laneVector.push_back(new Lane(laneType::desert_first_lane));
+    laneVector.push_back(new Lane(laneType::desert_road));
+    laneVector.push_back(new Lane(laneType::desert_rail));
+    laneVector.push_back(new Lane(laneType::desert_rail));
+    laneVector.push_back(new Lane(laneType::desert_road));
+    laneVector.push_back(new Lane(laneType::desert_path));
+    laneVector.push_back(new Lane(laneType::desert_road));
+    laneVector.push_back(new Lane(laneType::desert_rail));
+    laneVector.push_back(new Lane(laneType::desert_rail));
+    laneVector.push_back(new Lane(laneType::desert_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::rail)); 
+    laneVector.push_back(new Lane(laneType::river));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::river));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::river));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::ice));
+    laneVector.push_back(new Lane(laneType::ice));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::road));
     laneVector.push_back(new Lane(laneType::snow_finish));
     laneVector.push_back(new Lane(laneType::road));
     laneVector.push_back(new Lane(laneType::snow_path));

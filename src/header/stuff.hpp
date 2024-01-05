@@ -132,10 +132,12 @@ public:
 	sf::FloatRect getGlobalBounds();
 	void vanish();
 	void run();
+	bool isExist();
 private:
 	sf::Texture texture;
 	sf::Sprite sprite;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	bool exist = true;
 };
 
 //Ant

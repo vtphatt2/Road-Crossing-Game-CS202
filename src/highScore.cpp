@@ -16,15 +16,15 @@ void highScore::initShape() {
 
     goldTexture.loadFromFile("../resource/highscore/gold.png");
     goldImage.setTexture(goldTexture);
-    goldImage.setPosition(476, 533);
+    goldImage.setPosition(550, 533);
 
     silverTexture.loadFromFile("../resource/highscore/silver.png");
     silverImage.setTexture(silverTexture);
-    silverImage.setPosition(476, 626);
+    silverImage.setPosition(550, 626);
 
     bronzeTexture.loadFromFile("../resource/highscore/bronze.png");
     bronzeImage.setTexture(bronzeTexture);
-    bronzeImage.setPosition(476, 719);
+    bronzeImage.setPosition(550, 719);
 
     for (int i = 0 ; i < 3 ; ++i) {
         text[i].setFont(font);
@@ -36,33 +36,16 @@ void highScore::initShape() {
 
     loadScore();
     
-    text[0].setPosition(567, 533);
-    text[1].setPosition(567, 626);
-    text[2].setPosition(566, 719);
+    text[0].setPosition(680, 533);
+    text[1].setPosition(680, 626);
+    text[2].setPosition(680, 719);
 }
 
 void highScore::loadScore() {
+    int first, second, third;
     std::ifstream fin("../data/score.txt");
-    std::priority_queue <int> scores;
-    int x;
-    while (fin >> x) scores.push(x);
+    fin >> first >> second >> third;
     fin.close();
-
-    int first = 0;
-    int second = 0; 
-    int third = 0;
-    if (!scores.empty()) {
-        first = scores.top();
-        scores.pop();
-    }
-    if (!scores.empty()) {
-        second = scores.top();
-        scores.pop();
-    }
-    if (!scores.empty()) {
-        third = scores.top();
-        scores.pop();
-    }
 
     text[0].setString(std::to_string(first));
     text[1].setString(std::to_string(second));

@@ -13,8 +13,10 @@
 #include "player.hpp"
 #include "lose.hpp"
 #include "lane.hpp"
+#include "weather.hpp"
 
 class Player;
+class Setting;
 
 class Levels : public State
 {
@@ -98,24 +100,27 @@ class Levels : public State
         sf::IntRect level12ButtonRect;
 };
 
-class Level_1 : public State 
+class Level : public State
 {
     public:
+        Level(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level);
+        virtual ~Level();
+        virtual void initShape();
+        void handleEvent();
+        virtual void update();
+        virtual void render();
+        virtual int getLevel();
+        virtual void playerCollision(std::vector<Stuff*> stuffVector);
+        virtual void gameOver();
+        virtual void notBridge();
+        virtual void win();
+        virtual void rainy();
+        
+    protected:
         sf::View *view;
         sf::Time Time;
         sf::Clock Clock;
         int windowTranslateY;
-        Level_1(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music);
-        void initShape();
-        void handleEvent();
-        void update();
-        void render();
-        void playerCollision(std::vector<Stuff*> stuffVector);
-        void gameOver();
-        int getLevel();
-        void win();
-    
-    private:
         sf::RenderWindow* window;
         std::stack <State*>* states;
         sf::Event event;
@@ -125,7 +130,8 @@ class Level_1 : public State
         std::vector<Stuff*> stuffVector;
         Setting* setting;
         std::vector<Lane*> laneVector;
-        int level=1;
+        int level;
+        Weather* weather;
 
         sf::SoundBuffer gameOverBuffer;
         sf::Sound gameOverSound;
@@ -133,198 +139,87 @@ class Level_1 : public State
         sf::Time increaseSpeedTime;
         sf::Time increaseSpeedClock;
         float speedCoe = 1.0;
-};
-class Level_2 : public State
-{
-    public:
-        sf::View *view;
-        sf::Time Time;
-        sf::Clock Clock;
-        int windowTranslateY;
-        bool isAddNewLane = 0;
-        Level_2(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music);
-        void initShape();
-        void handleEvent();
-        void update();
-        void render();
-        void playerCollision(std::vector<Stuff*> stuffVector);
-        void gameOver();
-        void notBridge();
-        int getLevel();
-        void win();
-        
-    private:
-        sf::RenderWindow* window;
-        std::stack <State*>* states;
-        sf::Event event;
-        sf::Vector2i mousePosition;
-        sf::Music& music;
-        Player* player;
-        int choice;
-        int level = 2;
-        std::vector<Stuff*> stuffVector;
-        Setting* setting;
-        std::vector<Lane*> laneVector;
 
-        sf::SoundBuffer gameOverBuffer;
-        sf::Sound gameOverSound; 
-
-        sf::Time increaseSpeedTime;
-        sf::Clock increaseSpeedClock;
-        float speedCoe = 1.0;
+        bool isGameOver = 0;
+        bool isRaining = false;
+        sf::Clock Rain;
 };
 
-class Level_3 : public State
+class Level_1 : public Level
 {
     public:
-        sf::View *view;
-        sf::Time Time;
-        sf::Clock Clock;
-        int windowTranslateY;
-        Level_3(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music);
-        void initShape();
-        void handleEvent();
-        void update();
-        void render();
-        void playerCollision(std::vector<Stuff*> stuffVector);
-        void gameOver();
-        int getLevel();
-        void win();
-        
-    private:
-        sf::RenderWindow* window;
-        std::stack <State*>* states;
-        sf::Event event;
-        sf::Vector2i mousePosition;
-        sf::Music& music;
-        Player* player;
-        int choice;
-        int level = 3;
-        std::vector<Stuff*> stuffVector;
-        Setting* setting;
-        std::vector<Lane*> laneVector;
-
-        sf::SoundBuffer gameOverBuffer;
-        sf::Sound gameOverSound; 
-
-        sf::Time increaseSpeedTime;
-        sf::Clock increaseSpeedClock;
-        float speedCoe = 1.0;
+        Level_1(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level);
 };
 
-class Level_4 : public State
+
+class Level_2 : public Level
 {
     public:
-        sf::View *view;
-        sf::Time Time;
-        sf::Clock Clock;
-        int windowTranslateY;
-        Level_4(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music);
-        void initShape();
-        void handleEvent();
-        void update();
-        void render();
-        void playerCollision(std::vector<Stuff*> stuffVector);
-        void gameOver();
-        void notBridge();
-        int getLevel();
-        void win();
-        
-    private:
-        sf::RenderWindow* window;
-        std::stack <State*>* states;
-        sf::Event event;
-        sf::Vector2i mousePosition;
-        sf::Music& music;
-        Player* player;
-        int choice;
-        int level = 4;
-        std::vector<Stuff*> stuffVector;
-        Setting* setting;
-        std::vector<Lane*> laneVector;
-
-        sf::SoundBuffer gameOverBuffer;
-        sf::Sound gameOverSound; 
-
-        sf::Time increaseSpeedTime;
-        sf::Clock increaseSpeedClock;
-        float speedCoe = 1.0;
+        Level_2(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level);
 };
 
-class Level_5 : public State
+class Level_3 : public Level
 {
     public:
-        sf::View *view;
-        sf::Time Time;
-        sf::Clock Clock;
-        int windowTranslateY;
-        Level_5(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music);
-        void initShape();
-        void handleEvent();
-        void update();
-        void render();
-        void playerCollision(std::vector<Stuff*> stuffVector);
-        void gameOver();
-        int getLevel();
-        void win();
-        
-    private:
-        sf::RenderWindow* window;
-        std::stack <State*>* states;
-        sf::Event event;
-        sf::Vector2i mousePosition;
-        sf::Music& music;
-        Player* player;
-        int choice;
-        int level = 5;
-        std::vector<Stuff*> stuffVector;
-        Setting* setting;
-        std::vector<Lane*> laneVector;
-
-        sf::SoundBuffer gameOverBuffer;
-        sf::Sound gameOverSound; 
-
-        sf::Time increaseSpeedTime;
-        sf::Clock increaseSpeedClock;
-        float speedCoe = 1.0;
+        Level_3(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level);
 };
 
-class Level_6 : public State
+class Level_4 : public Level
 {
     public:
-        sf::View *view;
-        sf::Time Time;
-        sf::Clock Clock;
-        int windowTranslateY;
-        Level_6(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music);
-        void initShape();
-        void handleEvent();
-        void update();
-        void render();
-        void playerCollision(std::vector<Stuff*> stuffVector);
-        void gameOver();
-        int getLevel();
-        void win();
-        
-    private:
-        sf::RenderWindow* window;
-        std::stack <State*>* states;
-        sf::Event event;
-        sf::Vector2i mousePosition;
-        sf::Music& music;
-        Player* player;
-        int choice;
-        int level = 6;
-        std::vector<Stuff*> stuffVector;
-        Setting* setting;
-        std::vector<Lane*> laneVector;
+        Level_4(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level);
+};
 
-        sf::SoundBuffer gameOverBuffer;
-        sf::Sound gameOverSound; 
+class Level_5 : public Level
+{
+    public:
+        Level_5(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level);
+};
 
-        sf::Time increaseSpeedTime;
-        sf::Clock increaseSpeedClock;
-        float speedCoe = 1.0;
+class Level_6 : public Level
+{
+    public:
+        Level_6(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level);
+};
+
+class Level_7 : public Level
+{
+    public:
+        Level_7(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level);
+};
+
+class Level_8 : public Level
+{
+    public:
+        Level_8(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level);
+};
+
+class Level_9 : public Level
+{
+    public:
+        Level_9(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level);
+
+};
+
+class Level_10 : public Level
+{
+    public:
+        Level_10(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level);
+
+};
+
+class Level_11 : public Level
+{
+    public:
+        Level_11(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level);
+
+};
+
+class Level_12 : public Level
+{
+    public:
+        Level_12(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level);
+
 };
 
 #endif

@@ -1,14 +1,19 @@
 #include "header/endless.hpp"
 
 Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) {
-    setting = new Setting(window, states);
     initShape();
-    if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
-        std::cout << "Cannot load soundfile" << std::endl;
-    }
+    weather = new Weather(window);
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view);
+    gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav");
     gameOverSound.setBuffer(gameOverBuffer);
+    coinEatenBuffer.loadFromFile("../resource/audio/short-success.mp3");
+    coinEaten.setBuffer(coinEatenBuffer);
     player->renderInGame();
     player->setMovementSpeed(10.0f);
+}
+
+void Endless::increaseScore(int offset) {
+    this->score += offset;
 }
 
 Lane* Endless::snowLane()
@@ -177,7 +182,6 @@ Lane* Endless::snowLane()
                 laneTypeVector.push_back(laneType::snow_path);
                 laneTypeVector.push_back(laneType::road);
                 int randomNum = rand() % 2;
-                std::cerr << randomNum << std::endl;
                 lane = new Lane(laneTypeVector[randomNum]);
             }
             if (lane->type == laneType::road) cont_road++;
@@ -706,14 +710,20 @@ void Endless::initShape()
     view->setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
     view->setCenter(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2));
     windowTranslateY = 0;
+    score = 0;
 
     scoreBoardTexture.loadFromFile("../resource/Score.png");
     scoreBoardImage.setTexture(scoreBoardTexture);
-    scoreBoardImage.setPosition(1075, 990 - 12);
-    scoreBoardRect.left = scoreBoardImage.getPosition().x;
-    scoreBoardRect.top = scoreBoardImage.getPosition().y;
-    scoreBoardRect.width = scoreBoardImage.getGlobalBounds().width;
-    scoreBoardRect.height = scoreBoardImage.getGlobalBounds().height;
+    scoreBoardImage.setPosition(1045, 12);
+    scoreBoardImage.setScale(2, 2);
+
+    font.loadFromFile("../resource/Inter-Bold.ttf");
+    scoreText.setFont(font);
+    scoreText.setCharacterSize(50);
+    scoreText.setFillColor(sf::Color(0xD6, 0xB0, 0x8D));
+    scoreText.setOutlineThickness(4);
+    scoreText.setOutlineColor(sf::Color(0x37, 0x00, 0x00));
+    scoreText.setPosition(1075, 25);
 
     Time = sf::Time::Zero;
     increaseSpeedTime = sf::Time::Zero;
@@ -795,6 +805,13 @@ void Endless::handleEvent() {
 
 void Endless::update() 
 {
+    if (!countedDown) {
+        countedDown = true;
+        window->setView(*view);
+        states->push(new CountDown(window, states, laneVector, stuffVector, player, view));
+        return ;
+    }
+
     if (isGameOver) {
         gameOverSound.play();
         player->setMovementSpeed(0);
@@ -809,7 +826,10 @@ void Endless::update()
         while (delayTimer.getElapsedTime().asSeconds() < 1.0f) {
             // Wait for 1 seconds
         }
-        states->push(new Lose(window, states, music, backgroundTexture, player));
+        clearDataLoadGame();
+        updateHighScore("../data/score.txt");
+        save = false;
+        states->push(new Lose(window, states, music, backgroundTexture, player, 0, score));
         isGameOver = 0;
     }
     setting->update();
@@ -834,11 +854,20 @@ void Endless::update()
         isAddNewLane = 0;
     }
 
+    ++count;
+    if (count == 100)
+    {
+        count = 0;
+        ++score;
+    }
+
     bool gameRunning = true;
     Time = Clock.getElapsedTime();
     if (Time.asSeconds() >= 0.01) {
         view->move(0, -1);
         setting->move(-1);
+        scoreText.move(0, -1);
+        scoreBoardImage.move(0, -1);
         windowTranslateY += -1;
         if (-windowTranslateY % landHeight == 0) {
             isAddNewLane = 1;
@@ -846,6 +875,7 @@ void Endless::update()
         player->updateWindowBoundsCollision(window, windowTranslateY);
         playerCollision(stuffVector); 
         eatCredit();
+        scoreText.setString("Score : " + std::to_string(score));
         Clock.restart();
     }
     increaseSpeedTime = increaseSpeedClock.getElapsedTime();
@@ -854,6 +884,30 @@ void Endless::update()
         increaseSpeedClock.restart();
     }    
     notBridge();
+    rainy();
+}
+
+void Endless::rainy(){
+    if (Rain.getElapsedTime().asSeconds() >= 20.0f){
+        isRaining = rand() % 2;
+        if (isRaining){
+            music.pause();
+            weather->playSound();
+            player->setMovementSpeed(5.0f);           
+            Rain.restart();
+        }
+    }
+    else if (isRaining && Rain.getElapsedTime().asSeconds() >= 8.0f) {
+        isRaining = false;
+        weather->stopSound();
+        music.play();
+        player->setMovementSpeed(10.0f);
+    }
+
+    if (isRaining){ 
+        weather->startRain();   
+        weather->updateRain(windowTranslateY);            
+    }  
 }
 
 void Endless::notBridge(){
@@ -879,7 +933,6 @@ void Endless::notBridge(){
     }
 }
 
-
 void Endless::playerCollision(std::vector<Stuff*> stuffVector) {
     for (auto& stuff : stuffVector) {
         float negativeMargin = -15.0f;
@@ -897,8 +950,12 @@ void Endless::eatCredit() {
             Coin* coins = laneVector[i]->getCoin();
             for (int j = 0 ; j < 3 ; ++j) 
             {
-                if (player->isCollisionWithMargin(coins[j].getGlobalBounds(), negativeMargin)) 
+                if (coins[j].isExist() && player->isCollisionWithMargin(coins[j].getGlobalBounds(), negativeMargin)) 
+                {
                     coins[j].vanish();
+                    coinEaten.play();
+                    increaseScore(5);
+                }
             }
         }
     }
@@ -913,11 +970,15 @@ void Endless::render() {
     for (int i = 0; i < laneVector.size(); i++) {
         window->draw(*laneVector[i]);
     }
-    window->draw(scoreBoardImage);
     window->draw(player->getPlayerSprite());
     for (int i = 0; i < stuffVector.size(); i++)
     {
         window->draw(*stuffVector[i]);
     }
     window->draw(*setting);
+    if (isRaining){
+        weather->drawRaindrops();
+    }
+    window->draw(scoreBoardImage);
+    window->draw(scoreText);
 }

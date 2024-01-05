@@ -3,9 +3,7 @@
 Levels::Levels(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) 
 {
     initShape();
-    if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
-        std::cout << "Cannot load soundfile" << std::endl;
-    }
+    
     gameOverSound.setBuffer(gameOverBuffer);
     player->renderInGame();
 }
@@ -129,8 +127,6 @@ void Levels::initShape()
     level12ButtonRect.height = level12ButtonTexture.getSize().y;
 }
 
-
-
 void Levels::handleEvent()
 {
     while (window->pollEvent(event)) {
@@ -145,41 +141,41 @@ void Levels::handleEvent()
                 states->pop();
             }
         if (level1ButtonRect.contains(sf::Mouse::getPosition(*window))) {
-            states->push(new Level_1(window, states, player, music));
+            states->push(new Level_1(window, states, player, music, 1));
         }
         if (level2ButtonRect.contains(sf::Mouse::getPosition(*window))) {
-            states->push(new Level_2(window, states, player, music));
+            states->push(new Level_2(window, states, player, music, 2));
         }
         if (level3ButtonRect.contains(sf::Mouse::getPosition(*window))) {
-            states->push(new Level_3(window, states, player, music));
+            states->push(new Level_3(window, states, player, music, 3));
         }
         if (level4ButtonRect.contains(sf::Mouse::getPosition(*window))) {
-            states->push(new Level_4(window, states, player, music));
+            states->push(new Level_4(window, states, player, music, 4));
         }
         if (level5ButtonRect.contains(sf::Mouse::getPosition(*window))) {
-            states->push(new Level_5(window, states, player, music));
+            states->push(new Level_5(window, states, player, music, 5));
         }
         if (level6ButtonRect.contains(sf::Mouse::getPosition(*window))) {
-            states->push(new Level_6(window, states, player, music));
+            states->push(new Level_6(window, states, player, music, 6));
         }
-            // if (level7ButtonRect.contains(sf::Mouse::getPosition(*window))) {
-            //     states->push(new Level_7(window, states, player, music));
-            // }
-            // if (level8ButtonRect.contains(sf::Mouse::getPosition(*window))) {
-            //     states->push(new Level_8(window, states, player, music));
-            // }
-            // if (level9ButtonRect.contains(sf::Mouse::getPosition(*window))) {
-            //     states->push(new Level_9(window, states, player, music));
-            // }
-            // if (level10ButtonRect.contains(sf::Mouse::getPosition(*window))) {
-            //     states->push(new Level_10(window, states, player, music));
-            // }
-            // if (level11ButtonRect.contains(sf::Mouse::getPosition(*window))) {
-            //     states->push(new Level_11(window, states, player, music));
-            // }
-            // if (level12ButtonRect.contains(sf::Mouse::getPosition(*window))) {
-            //     states->push(new Level_12(window, states, player, music));
-            // }
+        if (level7ButtonRect.contains(sf::Mouse::getPosition(*window))) {
+            states->push(new Level_7(window, states, player, music, 7));
+        }
+        if (level8ButtonRect.contains(sf::Mouse::getPosition(*window))) {
+            states->push(new Level_8(window, states, player, music, 8));
+        }
+        if (level9ButtonRect.contains(sf::Mouse::getPosition(*window))) {
+            states->push(new Level_9(window, states, player, music, 9));
+        }
+        if (level10ButtonRect.contains(sf::Mouse::getPosition(*window))) {
+            states->push(new Level_10(window, states, player, music, 10));
+        }
+        if (level11ButtonRect.contains(sf::Mouse::getPosition(*window))) {
+            states->push(new Level_11(window, states, player, music, 11));
+        }
+        if (level12ButtonRect.contains(sf::Mouse::getPosition(*window))) {
+            states->push(new Level_12(window, states, player, music, 12));
+        }
         }
     }
 }
@@ -273,34 +269,24 @@ void Levels::render()
     window->draw(level12ButtonImage);
 }
 
-Level_1::Level_1(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) {
-    setting = new Setting(window, states);
+Level::Level(sf::RenderWindow* window, std::stack<State*>* states, Player* player, sf::Music& music, int level)
+    : window(window), states(states), player(player), music(music), level(level)
+{
+    weather = new Weather(window);
     if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
         std::cout << "Cannot load soundfile" << std::endl;
     }
     gameOverSound.setBuffer(gameOverBuffer);
     player->renderInGame();
-    laneVector.push_back(new Lane(laneType::garden_first_lane));
-    laneVector.push_back(new Lane(laneType::road));
-    laneVector.push_back(new Lane(laneType::road));
-    laneVector.push_back(new Lane(laneType::grass));
-    laneVector.push_back(new Lane(laneType::grass));
-    laneVector.push_back(new Lane(laneType::road));
-    laneVector.push_back(new Lane(laneType::road));
-    laneVector.push_back(new Lane(laneType::grass));
-    laneVector.push_back(new Lane(laneType::road));
-    laneVector.push_back(new Lane(laneType::road));
-    laneVector.push_back(new Lane(laneType::grass));
-    laneVector.push_back(new Lane(laneType::garden_finish));
-    laneVector.push_back(new Lane(laneType::road));
-    laneVector.push_back(new Lane(laneType::grass));
-    laneVector.push_back(new Lane(laneType::road));
-    laneVector.push_back(new Lane(laneType::road));
-    laneVector.push_back(new Lane(laneType::grass));
+    player->setMovementSpeed(10.0f);
     initShape();
 }
 
-void Level_1::initShape()
+Level::~Level(){
+    delete weather;
+}
+
+void Level::initShape()
 {
     view = new sf::View;
     view->setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
@@ -322,7 +308,7 @@ void Level_1::initShape()
     }
 }
 
-void Level_1::handleEvent()
+void Level::handleEvent()
 {
     const float movementSpeed = 10.0f; 
     int framesPerDirection = 2;
@@ -357,12 +343,25 @@ void Level_1::handleEvent()
     }
 }
 
-int Level_1::getLevel(){
-    return level;
-}
-
-void Level_1::update()
+void Level::update()
 {
+    if (isGameOver){
+        gameOverSound.play();        
+        player->setMovementSpeed(0);
+        for (auto& stuff : stuffVector) {
+            stuff->setSpeed(0);
+        }
+
+        sf::Texture backgroundTexture;
+        backgroundTexture.create(window->getSize().x, window->getSize().y);
+        backgroundTexture.update(*window);
+
+        sf::Clock delayTimer;
+        while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
+            // Wait for 2 seconds
+        }
+        states->push(new Lose(window, states, music, backgroundTexture, player, getLevel(), 0));
+    }
     setting->update();
     for (int i = 0; i < laneVector.size(); i++) laneVector[i]->update();
     bool gameRunning = true;
@@ -373,9 +372,11 @@ void Level_1::update()
         windowTranslateY += -1;
         player->updateWindowBoundsCollision(window, windowTranslateY);
         playerCollision(stuffVector); 
+        if(level == 2 || level == 4) notBridge();
+        rainy();
         Clock.restart();
     }
- 
+
     for (const auto& lane : laneVector) {
         if (lane->type == laneType::snow_finish || lane->type == laneType::desert_finish || lane->type == laneType::garden_finish){
             float playerY = player->getPlayerSprite().getPosition().y;
@@ -388,12 +389,36 @@ void Level_1::update()
     }
 }
 
-void Level_1::win(){
+void Level::render()
+{
+    window->setView(*view);
+    for (int i = 0; i < laneVector.size(); i++) {
+        window->draw(*laneVector[i]);
+    }
+    window->draw(player->getPlayerSprite());
+    for (int i = 0; i < stuffVector.size(); i++)
+    {
+        window->draw(*stuffVector[i]);
+    }
+    window->draw(*setting);
+    if (isRaining){
+        weather->drawRaindrops();
+    }
+}
+
+int Level::getLevel() 
+{
+    return level;
+}
+
+void Level::win()
+{
     sf::SoundBuffer gameWinBuffer;
     sf::Sound gameWinSound; 
     if (!gameWinBuffer.loadFromFile("../resource/audio/gameWin.wav")) {
         std::cout << "Cannot load soundfile" << std::endl;
     }
+    weather->stopSound();
     gameWinSound.setBuffer(gameWinBuffer);    
     gameWinSound.play();
     player->setMovementSpeed(0);
@@ -411,7 +436,9 @@ void Level_1::win(){
     }
     states->push(new Win(window, states, player, music, backgroundTexture, getLevel()));
 }
-void Level_1::playerCollision(std::vector<Stuff*> stuffVector) {
+
+void Level::playerCollision(std::vector<Stuff*> stuffVector) 
+{
     for (auto& stuff : stuffVector) {
         float negativeMargin = -5.0f;
         bool isCollision = player->isCollisionWithMargin(stuff->getGlobalBounds(), negativeMargin);
@@ -419,182 +446,13 @@ void Level_1::playerCollision(std::vector<Stuff*> stuffVector) {
     } 
 }
 
-void Level_1::gameOver() {
-    gameOverSound.play();        
-    player->setMovementSpeed(0);
-    for (auto& stuff : stuffVector) {
-        stuff->setSpeed(0);
-    }
-
-    sf::Texture backgroundTexture;
-    backgroundTexture.create(window->getSize().x, window->getSize().y);
-    backgroundTexture.update(*window);
-
-    sf::Clock delayTimer;
-    while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
-        // Wait for 2 seconds
-    }
-    states->push(new Lose(window, states, music, backgroundTexture, player));
-}
-
-void Level_1::render()
+void Level::gameOver() 
 {
-    window->setView(*view);
-    for (int i = 0; i < laneVector.size(); i++) {
-        window->draw(*laneVector[i]);
-    }
-    window->draw(player->getPlayerSprite());
-    for (int i = 0; i < stuffVector.size(); i++)
-    {
-        window->draw(*stuffVector[i]);
-    }
-    window->draw(*setting);
+    isGameOver = 1;
 }
 
-Level_2::Level_2(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) {
-    setting = new Setting(window, states);
-    if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
-        std::cout << "Cannot load soundfile" << std::endl;
-    }
-    gameOverSound.setBuffer(gameOverBuffer);
-    player->renderInGame();
-    laneVector.push_back(new Lane(laneType::garden_first_lane));
-    laneVector.push_back(new Lane(laneType::road));
-    laneVector.push_back(new Lane(laneType::grass));
-    laneVector.push_back(new Lane(laneType::river));
-    laneVector.push_back(new Lane(laneType::garden_first_lane));
-    laneVector.push_back(new Lane(laneType::river));
-    laneVector.push_back(new Lane(laneType::grass));
-    laneVector.push_back(new Lane(laneType::river));
-    laneVector.push_back(new Lane(laneType::grass));
-    laneVector.push_back(new Lane(laneType::river));
-    laneVector.push_back(new Lane(laneType::grass));
-    laneVector.push_back(new Lane(laneType::garden_finish));
-    laneVector.push_back(new Lane(laneType::road));
-    laneVector.push_back(new Lane(laneType::grass));
-    laneVector.push_back(new Lane(laneType::road));
-    laneVector.push_back(new Lane(laneType::road));
-    laneVector.push_back(new Lane(laneType::grass));  
-    initShape();
-}
-
-void Level_2::initShape()
+void Level::notBridge()
 {
-    view = new sf::View;
-    view->setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
-    view->setCenter(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2));
-    windowTranslateY = 0;
-
-    Time = sf::Time::Zero;
-    increaseSpeedTime = sf::Time::Zero;
-    srand(time(0));
-
-    int n = laneVector.size();
-    for(int i = 0; i < n; i++)
-    {
-        laneVector[i]->setPosition(0, 990 - landHeight * (i + 1));
-        for(int j = 0; j < laneVector[i]->getStuffVector().size(); j++)
-        {
-            stuffVector.push_back(laneVector[i]->getStuffVector()[j]);
-        }
-    }
-}
-
-void Level_2::handleEvent()
-{
-    const float movementSpeed = 10.0f; 
-    int framesPerDirection = 2;
-    while (window->pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
-            window->close();
-        }        
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-            window->close();
-        }
-        
-        if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W)) {
-            player->update(static_cast<Direction>(1));
-            player->updateWindowBoundsCollision(window, windowTranslateY);
-        }
-        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)) {
-            player->update(static_cast<Direction>(2));
-            player->updateWindowBoundsCollision(window, windowTranslateY);
-        }
-        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)){
-            player->update(static_cast<Direction>(3));
-            player->updateWindowBoundsCollision(window, windowTranslateY);
-        }
-        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)){
-            player->update(static_cast<Direction>(4));
-            player->updateWindowBoundsCollision(window, windowTranslateY);
-        }
-        else {
-            player->update(static_cast<Direction>(0));
-        }
-        setting->handleEvent(event);
-    }
-}
-
-int Level_2::getLevel(){
-    return level;
-}
-
-void Level_2::win(){
-    sf::SoundBuffer gameWinBuffer;
-    sf::Sound gameWinSound; 
-    if (!gameWinBuffer.loadFromFile("../resource/audio/gameWin.wav")) {
-        std::cout << "Cannot load soundfile" << std::endl;
-    }
-    gameWinSound.setBuffer(gameWinBuffer);  
-    gameWinSound.play();     
-    player->setMovementSpeed(0);
-    for (auto& stuff : stuffVector) {
-        stuff->setSpeed(0);
-    }
-
-    sf::Texture backgroundTexture;
-    backgroundTexture.create(window->getSize().x, window->getSize().y);
-    backgroundTexture.update(*window);
-
-    sf::Clock delayTimer;
-    while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
-        // Wait for 2 seconds
-    }
-    states->push(new Win(window, states, player, music, backgroundTexture, getLevel()));
-}
-
-void Level_2::update()
-{
-    setting->update();
-    for (int i = 0; i < laneVector.size(); i++) laneVector[i]->update();
-    bool gameRunning = true;
-    Time = Clock.getElapsedTime();
-    if (Time.asSeconds() >= 0.01) {
-        view->move(0, -1);
-        setting->move(-1);
-        windowTranslateY += -1;
-        if (-windowTranslateY % landHeight == 0) {
-            isAddNewLane = 1;
-        }
-        player->updateWindowBoundsCollision(window, windowTranslateY);
-        playerCollision(stuffVector); 
-        notBridge();
-        Clock.restart();
-    }
-
-    for (const auto& lane : laneVector) {
-        if (lane->type == laneType::snow_finish || lane->type == laneType::desert_finish || lane->type == laneType::garden_finish){
-            float playerY = player->getPlayerSprite().getPosition().y;
-            float laneY = lane->getPosition().y;
-            float laneHeight = 165.f;
-            if (playerY >= laneY && playerY <= laneY + laneHeight - 150){
-                win();                
-            }
-        }
-    }
-}
-
-void Level_2::notBridge(){
     laneType playerLaneType = laneType::river; 
     for (const auto& lane : laneVector) {
         if (player->getPlayerSprite().getPosition().y+92.f >= lane->getPosition().y && player->getPlayerSprite().getPosition().y +92.f < lane->getPosition().y + 165.f) {
@@ -606,56 +464,92 @@ void Level_2::notBridge(){
                 sf::Vector2f playerB = player->getPlayerSprite().getPosition();
                 if ((playerB.x >= bridge0.x && playerB.x <= bridge0.x + bridges[0].getGlobalBounds().width) || 
                 (playerB.x >= bridge1.x && playerB.x <= bridge1.x + bridges[1].getGlobalBounds().width)){}
-                else gameOver();
+                else{
+                    player->updatePlayerDrown();
+                    sf::Vector2f pos = player->getPlayerSprite().getPosition();
+                    player->getPlayerSprite().setPosition(pos);
+                    gameOver();
+                }
             }
         }
     }
 }
 
-void Level_2::playerCollision(std::vector<Stuff*> stuffVector) {
-    for (auto& stuff : stuffVector) {
-        float negativeMargin = -5.0f;
-        bool isCollision = player->isCollisionWithMargin(stuff->getGlobalBounds(), negativeMargin);
-        if (isCollision) gameOver();
-    } 
+void Level::rainy(){
+    if (Rain.getElapsedTime().asSeconds() >= 20.0f){
+        isRaining = rand() % 2;
+            if (isRaining==1){
+            music.pause();
+            weather->playSound();
+            player->setMovementSpeed(5.0f);           
+            Rain.restart();
+        }
+    }
+    else if (isRaining && Rain.getElapsedTime().asSeconds() >= 5.0f) {
+        isRaining = false;
+        weather->stopSound();
+        music.play();
+        player->setMovementSpeed(10.0f);
+    }
+
+    if (isRaining){ 
+        weather->startRain();   
+        weather->updateRain(windowTranslateY);            
+    }  
 }
 
-void Level_2::gameOver(){
-    gameOverSound.play();        
-    player->setMovementSpeed(0);
-    for (auto& stuff : stuffVector) {
-        stuff->setSpeed(0);
-    }
-
-    sf::Texture backgroundTexture;
-    backgroundTexture.create(window->getSize().x, window->getSize().y);
-    backgroundTexture.update(*window);
-
-    sf::Clock delayTimer;
-    while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
-        // Wait for 2 seconds
-    }
-    states->push(new Lose(window, states, music, backgroundTexture, player));
+Level_1::Level_1(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level) : Level(window, states, player, music, level) 
+{
+    gameOverSound.setBuffer(gameOverBuffer);
+    player->renderInGame();
+    laneVector.push_back(new Lane(laneType::garden_first_lane));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::garden_finish));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));
+    initShape();
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view, 1);
 }
 
-void Level_2::render() {
-    window->setView(*view);
-    for (int i = 0; i < laneVector.size(); i++) {
-        window->draw(*laneVector[i]);
-    }
-    window->draw(player->getPlayerSprite());
-    for (int i = 0; i < stuffVector.size(); i++)
-    {
-        window->draw(*stuffVector[i]);
-    }
-    window->draw(*setting);
+Level_2::Level_2(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level) : Level(window, states, player, music, level) 
+{
+    gameOverSound.setBuffer(gameOverBuffer);
+    player->renderInGame();
+    laneVector.push_back(new Lane(laneType::garden_first_lane));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::river));
+    laneVector.push_back(new Lane(laneType::garden_first_lane));
+    laneVector.push_back(new Lane(laneType::river));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::river));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::river));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::garden_finish));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));  
+    initShape();
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view, 2);
 }
 
-Level_3::Level_3(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) {
-    setting = new Setting(window, states);
-    if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
-        std::cout << "Cannot load soundfile" << std::endl;
-    }
+Level_3::Level_3(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level) : Level(window, states, player, music, level) 
+{
     gameOverSound.setBuffer(gameOverBuffer);
     player->renderInGame();
     laneVector.push_back(new Lane(laneType::garden_first_lane));
@@ -682,164 +576,11 @@ Level_3::Level_3(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     laneVector.push_back(new Lane(laneType::road));
     laneVector.push_back(new Lane(laneType::grass));  
     initShape();
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view, 3);
 }
 
-void Level_3::initShape()
+Level_4::Level_4(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level) : Level(window, states, player, music, level) 
 {
-    view = new sf::View;
-    view->setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
-    view->setCenter(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2));
-    windowTranslateY = 0;
-
-    Time = sf::Time::Zero;
-    increaseSpeedTime = sf::Time::Zero;
-    srand(time(0));
-
-    int n = laneVector.size();
-    for(int i = 0; i < n; i++)
-    {
-        laneVector[i]->setPosition(0, 990 - landHeight * (i + 1));
-        for(int j = 0; j < laneVector[i]->getStuffVector().size(); j++)
-        {
-            stuffVector.push_back(laneVector[i]->getStuffVector()[j]);
-        }
-    }
-}
-
-void Level_3::handleEvent()
-{
-    const float movementSpeed = 10.0f; 
-    int framesPerDirection = 2;
-    while (window->pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
-            window->close();
-        }        
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-            window->close();
-        }
-        
-        if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W)) {
-            player->update(static_cast<Direction>(1));
-            player->updateWindowBoundsCollision(window, windowTranslateY);
-        }
-        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)) {
-            player->update(static_cast<Direction>(2));
-            player->updateWindowBoundsCollision(window, windowTranslateY);
-        }
-        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)){
-            player->update(static_cast<Direction>(3));
-            player->updateWindowBoundsCollision(window, windowTranslateY);
-        }
-        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)){
-            player->update(static_cast<Direction>(4));
-            player->updateWindowBoundsCollision(window, windowTranslateY);
-        }
-        else {
-            player->update(static_cast<Direction>(0));
-        }
-        setting->handleEvent(event);
-    }
-}
-
-int Level_3::getLevel(){
-    return level;
-}
-
-void Level_3::win(){
-    sf::SoundBuffer gameWinBuffer;
-    sf::Sound gameWinSound; 
-    if (!gameWinBuffer.loadFromFile("../resource/audio/gameWin.wav")) {
-        std::cout << "Cannot load soundfile" << std::endl;
-    }
-    gameWinSound.setBuffer(gameWinBuffer); 
-    gameWinSound.play();      
-    player->setMovementSpeed(0);
-    for (auto& stuff : stuffVector) {
-        stuff->setSpeed(0);
-    }
-
-    sf::Texture backgroundTexture;
-    backgroundTexture.create(window->getSize().x, window->getSize().y);
-    backgroundTexture.update(*window);
-
-    sf::Clock delayTimer;
-    while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
-        // Wait for 2 seconds
-    }
-    states->push(new Win(window, states, player, music, backgroundTexture, getLevel()));
-}
-
-void Level_3::update()
-{
-    setting->update();
-    for (int i = 0; i < laneVector.size(); i++) laneVector[i]->update();
-    bool gameRunning = true;
-    Time = Clock.getElapsedTime();
-    if (Time.asSeconds() >= 0.01) {
-        view->move(0, -1);
-        setting->move(-1);
-        windowTranslateY += -1;
-        player->updateWindowBoundsCollision(window, windowTranslateY);
-        playerCollision(stuffVector); 
-        Clock.restart();
-    }
-
-    for (const auto& lane : laneVector) {
-        if (lane->type == laneType::snow_finish || lane->type == laneType::desert_finish || lane->type == laneType::garden_finish){
-            float playerY = player->getPlayerSprite().getPosition().y;
-            float laneY = lane->getPosition().y;
-            float laneHeight = 165.f;
-            if (playerY >= laneY && playerY <= laneY + laneHeight - 150){
-                win();                
-            }
-        }
-    }
-}
-
-void Level_3::playerCollision(std::vector<Stuff*> stuffVector) {
-    for (auto& stuff : stuffVector) {
-        float negativeMargin = -5.0f;
-        bool isCollision = player->isCollisionWithMargin(stuff->getGlobalBounds(), negativeMargin);
-        if (isCollision) gameOver();
-    } 
-}
-
-void Level_3::gameOver(){
-    gameOverSound.play();        
-    player->setMovementSpeed(0);
-    for (auto& stuff : stuffVector) {
-        stuff->setSpeed(0);
-    }
-
-    sf::Texture backgroundTexture;
-    backgroundTexture.create(window->getSize().x, window->getSize().y);
-    backgroundTexture.update(*window);
-
-    sf::Clock delayTimer;
-    while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
-        // Wait for 2 seconds
-    }
-    states->push(new Lose(window, states, music, backgroundTexture, player));
-}
-
-void Level_3::render() {
-    window->setView(*view);
-    for (int i = 0; i < laneVector.size(); i++) {
-        window->draw(*laneVector[i]);
-    }
-    window->draw(player->getPlayerSprite());
-    for (int i = 0; i < stuffVector.size(); i++)
-    {
-        window->draw(*stuffVector[i]);
-    }
-    window->draw(*setting);
-}
-
-Level_4::Level_4(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) {
-    setting = new Setting(window, states);
-    if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
-        std::cout << "Cannot load soundfile" << std::endl;
-    }
     gameOverSound.setBuffer(gameOverBuffer);
     player->renderInGame();
     laneVector.push_back(new Lane(laneType::garden_first_lane));
@@ -880,184 +621,12 @@ Level_4::Level_4(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     laneVector.push_back(new Lane(laneType::road));
     laneVector.push_back(new Lane(laneType::grass));  
     initShape();
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view, 4);
 }
 
-void Level_4::initShape()
+Level_5::Level_5(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level) : Level(window, states, player, music, level) 
 {
-    view = new sf::View;
-    view->setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
-    view->setCenter(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2));
-    windowTranslateY = 0;
 
-    Time = sf::Time::Zero;
-    increaseSpeedTime = sf::Time::Zero;
-    srand(time(0));
-
-    int n = laneVector.size();
-    for(int i = 0; i < n; i++)
-    {
-        laneVector[i]->setPosition(0, 990 - landHeight * (i + 1));
-        for(int j = 0; j < laneVector[i]->getStuffVector().size(); j++)
-        {
-            stuffVector.push_back(laneVector[i]->getStuffVector()[j]);
-        }
-    }
-}
-
-void Level_4::handleEvent()
-{
-    const float movementSpeed = 10.0f; 
-    int framesPerDirection = 2;
-    while (window->pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
-            window->close();
-        }        
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-            window->close();
-        }
-        
-        if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W)) {
-            player->update(static_cast<Direction>(1));
-            player->updateWindowBoundsCollision(window, windowTranslateY);
-        }
-        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)) {
-            player->update(static_cast<Direction>(2));
-            player->updateWindowBoundsCollision(window, windowTranslateY);
-        }
-        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)){
-            player->update(static_cast<Direction>(3));
-            player->updateWindowBoundsCollision(window, windowTranslateY);
-        }
-        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)){
-            player->update(static_cast<Direction>(4));
-            player->updateWindowBoundsCollision(window, windowTranslateY);
-        }
-        else {
-            player->update(static_cast<Direction>(0));
-        }
-        setting->handleEvent(event);
-    }
-}
-
-int Level_4::getLevel(){
-    return level;
-}
-
-void Level_4::win(){
-    sf::SoundBuffer gameWinBuffer;
-    sf::Sound gameWinSound; 
-    if (!gameWinBuffer.loadFromFile("../resource/audio/gameWin.wav")) {
-        std::cout << "Cannot load soundfile" << std::endl;
-    }
-    gameWinSound.setBuffer(gameWinBuffer);
-    gameWinSound.play();       
-    player->setMovementSpeed(0);
-    for (auto& stuff : stuffVector) {
-        stuff->setSpeed(0);
-    }
-
-    sf::Texture backgroundTexture;
-    backgroundTexture.create(window->getSize().x, window->getSize().y);
-    backgroundTexture.update(*window);
-
-    sf::Clock delayTimer;
-    while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
-        // Wait for 2 seconds
-    }
-    states->push(new Win(window, states, player, music, backgroundTexture, getLevel()));
-}
-
-void Level_4::update()
-{
-    setting->update();
-    for (int i = 0; i < laneVector.size(); i++) laneVector[i]->update();
-    bool gameRunning = true;
-    Time = Clock.getElapsedTime();
-    if (Time.asSeconds() >= 0.01) {
-        view->move(0, -1);
-        setting->move(-1);
-        windowTranslateY += -1;
-        player->updateWindowBoundsCollision(window, windowTranslateY);
-        playerCollision(stuffVector); 
-        notBridge();
-        Clock.restart();
-    }
-
-    for (const auto& lane : laneVector) {
-        if (lane->type == laneType::snow_finish || lane->type == laneType::desert_finish || lane->type == laneType::garden_finish){
-            float playerY = player->getPlayerSprite().getPosition().y;
-            float laneY = lane->getPosition().y;
-            float laneHeight = 165.f;
-            if (playerY >= laneY && playerY <= laneY + laneHeight - 150){
-                win();                
-            }
-        }
-    }
-}
-
-void Level_4::notBridge(){
-    laneType playerLaneType = laneType::river; 
-    for (const auto& lane : laneVector) {
-        if (player->getPlayerSprite().getPosition().y+92.f >= lane->getPosition().y && player->getPlayerSprite().getPosition().y +92.f < lane->getPosition().y + 165.f) {
-            playerLaneType = lane->type;
-            if (lane->type == laneType::river) {
-                Bridge* bridges = lane->getBridge();
-                sf::Vector2f bridge0 = bridges[0].getPosition();
-                sf::Vector2f bridge1 = bridges[1].getPosition();
-                sf::Vector2f playerB = player->getPlayerSprite().getPosition();
-                if ((playerB.x >= bridge0.x && playerB.x <= bridge0.x + bridges[0].getGlobalBounds().width) || 
-                (playerB.x >= bridge1.x && playerB.x <= bridge1.x + bridges[1].getGlobalBounds().width)){}
-                else gameOver();
-            }
-        }
-    }
-}
-
-
-void Level_4::playerCollision(std::vector<Stuff*> stuffVector) {
-    for (auto& stuff : stuffVector) {
-        float negativeMargin = -5.0f;
-        bool isCollision = player->isCollisionWithMargin(stuff->getGlobalBounds(), negativeMargin);
-        if (isCollision) gameOver();
-    } 
-}
-
-void Level_4::gameOver(){
-    gameOverSound.play();        
-    player->setMovementSpeed(0);
-    for (auto& stuff : stuffVector) {
-        stuff->setSpeed(0);
-    }
-
-    sf::Texture backgroundTexture;
-    backgroundTexture.create(window->getSize().x, window->getSize().y);
-    backgroundTexture.update(*window);
-
-    sf::Clock delayTimer;
-    while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
-        // Wait for 2 seconds
-    }
-    states->push(new Lose(window, states, music, backgroundTexture, player));
-}
-
-void Level_4::render() {
-    window->setView(*view);
-    for (int i = 0; i < laneVector.size(); i++) {
-        window->draw(*laneVector[i]);
-    }
-    window->draw(player->getPlayerSprite());
-    for (int i = 0; i < stuffVector.size(); i++)
-    {
-        window->draw(*stuffVector[i]);
-    }
-    window->draw(*setting);
-}
-
-Level_5::Level_5(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) {
-    setting = new Setting(window, states);
-    if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
-        std::cout << "Cannot load soundfile" << std::endl;
-    }
     gameOverSound.setBuffer(gameOverBuffer);
     player->renderInGame();
     laneVector.push_back(new Lane(laneType::desert_first_lane));
@@ -1083,166 +652,12 @@ Level_5::Level_5(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     laneVector.push_back(new Lane(laneType::desert_road));
     laneVector.push_back(new Lane(laneType::desert_path));
     initShape();
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view, 5);
 }
 
-void Level_5::initShape()
+Level_6::Level_6(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level) : Level(window, states, player, music, level) 
 {
-    view = new sf::View;
-    view->setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
-    view->setCenter(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2));
-    windowTranslateY = 0;
 
-    Time = sf::Time::Zero;
-    increaseSpeedTime = sf::Time::Zero;
-    srand(time(0));
-
-    int n = laneVector.size();
-    for(int i = 0; i < n; i++)
-    {
-        laneVector[i]->setPosition(0, 990 - landHeight * (i + 1));
-        for(int j = 0; j < laneVector[i]->getStuffVector().size(); j++)
-        {
-            stuffVector.push_back(laneVector[i]->getStuffVector()[j]);
-        }
-    }
-}
-
-void Level_5::handleEvent()
-{
-    const float movementSpeed = 10.0f; 
-    int framesPerDirection = 2;
-    while (window->pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
-            window->close();
-        }        
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-            window->close();
-        }
-        
-        if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W)) {
-            player->update(static_cast<Direction>(1));
-            player->updateWindowBoundsCollision(window, windowTranslateY);
-        }
-        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)) {
-            player->update(static_cast<Direction>(2));
-            player->updateWindowBoundsCollision(window, windowTranslateY);
-        }
-        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)){
-            player->update(static_cast<Direction>(3));
-            player->updateWindowBoundsCollision(window, windowTranslateY);
-        }
-        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)){
-            player->update(static_cast<Direction>(4));
-            player->updateWindowBoundsCollision(window, windowTranslateY);
-        }
-        else {
-            player->update(static_cast<Direction>(0));
-        }
-        setting->handleEvent(event);
-    }
-}
-
-int Level_5::getLevel(){
-    return level;
-}
-
-void Level_5::update()
-{
-    setting->update();
-    for (int i = 0; i < laneVector.size(); i++) laneVector[i]->update();
-    bool gameRunning = true;
-    Time = Clock.getElapsedTime();
-    if (Time.asSeconds() >= 0.01) {
-        view->move(0, -1);
-        setting->move(-1);
-        windowTranslateY += -1;
-        player->updateWindowBoundsCollision(window, windowTranslateY);
-        playerCollision(stuffVector); 
-        Clock.restart();
-    }
-
-    for (const auto& lane : laneVector) {
-        if (lane->type == laneType::snow_finish || lane->type == laneType::desert_finish || lane->type == laneType::garden_finish){
-            float playerY = player->getPlayerSprite().getPosition().y;
-            float laneY = lane->getPosition().y;
-            float laneHeight = 165.f;
-            if (playerY >= laneY && playerY <= laneY + laneHeight - 150){
-                win();                
-            }
-        }
-    }
-}
-
-void Level_5::playerCollision(std::vector<Stuff*> stuffVector) {
-    for (auto& stuff : stuffVector) {
-        float negativeMargin = -5.0f;
-        bool isCollision = player->isCollisionWithMargin(stuff->getGlobalBounds(), negativeMargin);
-        if (isCollision) gameOver();
-        
-    } 
-}
-
-void Level_5::win(){
-    sf::SoundBuffer gameWinBuffer;
-    sf::Sound gameWinSound; 
-    if (!gameWinBuffer.loadFromFile("../resource/audio/gameWin.wav")) {
-        std::cout << "Cannot load soundfile" << std::endl;
-    }
-    gameWinSound.setBuffer(gameWinBuffer);   
-    gameWinSound.play();    
-    player->setMovementSpeed(0);
-    for (auto& stuff : stuffVector) {
-        stuff->setSpeed(0);
-    }
-
-    sf::Texture backgroundTexture;
-    backgroundTexture.create(window->getSize().x, window->getSize().y);
-    backgroundTexture.update(*window);
-
-    sf::Clock delayTimer;
-    while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
-        // Wait for 2 seconds
-    }
-    states->push(new Win(window, states, player, music, backgroundTexture, getLevel()));
-}
-
-void Level_5::gameOver() {
-    gameOverSound.play();        
-    player->setMovementSpeed(0);
-    for (auto& stuff : stuffVector) {
-        stuff->setSpeed(0);
-    }
-
-    sf::Texture backgroundTexture;
-    backgroundTexture.create(window->getSize().x, window->getSize().y);
-    backgroundTexture.update(*window);
-
-    sf::Clock delayTimer;
-    while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
-        // Wait for 2 seconds
-    }
-    states->push(new Lose(window, states, music, backgroundTexture, player));
-}
-
-void Level_5::render()
-{
-    window->setView(*view);
-    for (int i = 0; i < laneVector.size(); i++) {
-        window->draw(*laneVector[i]);
-    }
-    window->draw(player->getPlayerSprite());
-    for (int i = 0; i < stuffVector.size(); i++)
-    {
-        window->draw(*stuffVector[i]);
-    }
-    window->draw(*setting);
-}
-
-Level_6::Level_6(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) {
-    setting = new Setting(window, states);
-    if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
-        std::cout << "Cannot load soundfile" << std::endl;
-    }
     gameOverSound.setBuffer(gameOverBuffer);
     player->renderInGame();
     laneVector.push_back(new Lane(laneType::desert_first_lane));
@@ -1274,156 +689,222 @@ Level_6::Level_6(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     laneVector.push_back(new Lane(laneType::desert_road));
     laneVector.push_back(new Lane(laneType::desert_path));
     initShape();
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view, 6);
 }
 
-void Level_6::initShape()
+Level_7::Level_7(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level) : Level(window, states, player, music, level) 
 {
-    view = new sf::View;
-    view->setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
-    view->setCenter(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2));
-    windowTranslateY = 0;
-
-    Time = sf::Time::Zero;
-    increaseSpeedTime = sf::Time::Zero;
-    srand(time(0));
-
-    int n = laneVector.size();
-    for(int i = 0; i < n; i++)
-    {
-        laneVector[i]->setPosition(0, 990 - landHeight * (i + 1));
-        for(int j = 0; j < laneVector[i]->getStuffVector().size(); j++)
-        {
-            stuffVector.push_back(laneVector[i]->getStuffVector()[j]);
-        }
-    }
+    gameOverSound.setBuffer(gameOverBuffer);
+    player->renderInGame();
+    laneVector.push_back(new Lane(laneType::snow_first_lane));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_finish));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    initShape();
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view, 7);
 }
 
-void Level_6::handleEvent()
+Level_8::Level_8(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level) : Level(window, states, player, music, level) 
 {
-    const float movementSpeed = 10.0f; 
-    int framesPerDirection = 2;
-    while (window->pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
-            window->close();
-        }        
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-            window->close();
-        }
-        
-        if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W)) {
-            player->update(static_cast<Direction>(1));
-            player->updateWindowBoundsCollision(window, windowTranslateY);
-        }
-        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)) {
-            player->update(static_cast<Direction>(2));
-            player->updateWindowBoundsCollision(window, windowTranslateY);
-        }
-        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)){
-            player->update(static_cast<Direction>(3));
-            player->updateWindowBoundsCollision(window, windowTranslateY);
-        }
-        else if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)){
-            player->update(static_cast<Direction>(4));
-            player->updateWindowBoundsCollision(window, windowTranslateY);
-        }
-        else {
-            player->update(static_cast<Direction>(0));
-        }
-        setting->handleEvent(event);
-    }
+
+    gameOverSound.setBuffer(gameOverBuffer);
+    player->renderInGame();
+    laneVector.push_back(new Lane(laneType::snow_first_lane));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::ice));
+    laneVector.push_back(new Lane(laneType::snow_first_lane));
+    laneVector.push_back(new Lane(laneType::ice));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::ice));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::ice));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_finish));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));  
+    initShape();
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view, 8);
 }
 
-int Level_6::getLevel(){
-    return level;
-}
-
-void Level_6::update()
+Level_9::Level_9(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level) : Level(window, states, player, music, level)
 {
-    setting->update();
-    for (int i = 0; i < laneVector.size(); i++) laneVector[i]->update();
-    bool gameRunning = true;
-    Time = Clock.getElapsedTime();
-    if (Time.asSeconds() >= 0.01) {
-        view->move(0, -1);
-        setting->move(-1);
-        windowTranslateY += -1;
-        player->updateWindowBoundsCollision(window, windowTranslateY);
-        playerCollision(stuffVector); 
-        Clock.restart();
-    }
+    gameOverSound.setBuffer(gameOverBuffer);
+    player->renderInGame();
+    laneVector.push_back(new Lane(laneType::snow_first_lane));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_finish));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    initShape();
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view, 9);
+};
 
-    for (const auto& lane : laneVector) {
-        if (lane->type == laneType::snow_finish || lane->type == laneType::desert_finish || lane->type == laneType::garden_finish){
-            float playerY = player->getPlayerSprite().getPosition().y;
-            float laneY = lane->getPosition().y;
-            float laneHeight = 165.f;
-            if (playerY >= laneY && playerY <= laneY + laneHeight - 150){
-                win();                
-            }
-        }
-    }
-}
-
-void Level_6::win(){
-    sf::SoundBuffer gameWinBuffer;
-    sf::Sound gameWinSound; 
-    if (!gameWinBuffer.loadFromFile("../resource/audio/gameWin.wav")) {
-        std::cout << "Cannot load soundfile" << std::endl;
-    }
-    gameWinSound.setBuffer(gameWinBuffer);    
-    gameWinSound.play();   
-    player->setMovementSpeed(0);
-    for (auto& stuff : stuffVector) {
-        stuff->setSpeed(0);
-    }
-
-    sf::Texture backgroundTexture;
-    backgroundTexture.create(window->getSize().x, window->getSize().y);
-    backgroundTexture.update(*window);
-
-    sf::Clock delayTimer;
-    while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
-        // Wait for 2 seconds
-    }
-    states->push(new Win(window, states, player, music, backgroundTexture, getLevel()));
-}
-
-void Level_6::playerCollision(std::vector<Stuff*> stuffVector) {
-    for (auto& stuff : stuffVector) {
-        float negativeMargin = -5.0f;
-        bool isCollision = player->isCollisionWithMargin(stuff->getGlobalBounds(), negativeMargin);
-        if (isCollision) gameOver();
-    } 
-}
-
-void Level_6::gameOver() {
-    gameOverSound.play();        
-    player->setMovementSpeed(0);
-    for (auto& stuff : stuffVector) {
-        stuff->setSpeed(0);
-    }
-
-    sf::Texture backgroundTexture;
-    backgroundTexture.create(window->getSize().x, window->getSize().y);
-    backgroundTexture.update(*window);
-
-    sf::Clock delayTimer;
-    while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
-        // Wait for 2 seconds
-    }
-    states->push(new Lose(window, states, music, backgroundTexture, player));
-}
-
-void Level_6::render()
+Level_10::Level_10(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level) : Level(window, states, player, music, level)
 {
-    window->setView(*view);
-    for (int i = 0; i < laneVector.size(); i++) {
-        window->draw(*laneVector[i]);
-    }
-    window->draw(player->getPlayerSprite());
-    for (int i = 0; i < stuffVector.size(); i++)
-    {
-        window->draw(*stuffVector[i]);
-    }
-    window->draw(*setting);
-}
+    gameOverSound.setBuffer(gameOverBuffer);
+    player->renderInGame();
+    laneVector.push_back(new Lane(laneType::snow_first_lane));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::ice));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::ice));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::ice));
+    laneVector.push_back(new Lane(laneType::snow_first_lane));
+    laneVector.push_back(new Lane(laneType::ice));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::rail)); 
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::ice));
+    laneVector.push_back(new Lane(laneType::ice));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::ice));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::snow_finish));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path)); 
+    initShape();
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view, 10);
+};
+
+Level_11::Level_11(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level) : Level(window, states, player, music, level)
+{
+    gameOverSound.setBuffer(gameOverBuffer);
+    player->renderInGame();
+    laneVector.push_back(new Lane(laneType::desert_first_lane));
+    laneVector.push_back(new Lane(laneType::desert_road));
+    laneVector.push_back(new Lane(laneType::desert_road));
+    laneVector.push_back(new Lane(laneType::desert_path));
+    laneVector.push_back(new Lane(laneType::desert_road));
+    laneVector.push_back(new Lane(laneType::desert_path));
+    laneVector.push_back(new Lane(laneType::desert_rail));
+    laneVector.push_back(new Lane(laneType::desert_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::road)); 
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_finish));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path)); 
+    initShape();
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view, 10);
+};
+
+Level_12::Level_12(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int level) : Level(window, states, player, music, level)
+{
+    gameOverSound.setBuffer(gameOverBuffer);
+    player->renderInGame();
+    laneVector.push_back(new Lane(laneType::desert_first_lane));
+    laneVector.push_back(new Lane(laneType::desert_road));
+    laneVector.push_back(new Lane(laneType::desert_rail));
+    laneVector.push_back(new Lane(laneType::desert_rail));
+    laneVector.push_back(new Lane(laneType::desert_road));
+    laneVector.push_back(new Lane(laneType::desert_path));
+    laneVector.push_back(new Lane(laneType::desert_road));
+    laneVector.push_back(new Lane(laneType::desert_rail));
+    laneVector.push_back(new Lane(laneType::desert_rail));
+    laneVector.push_back(new Lane(laneType::desert_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::rail)); 
+    laneVector.push_back(new Lane(laneType::river));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::river));
+    laneVector.push_back(new Lane(laneType::grass));
+    laneVector.push_back(new Lane(laneType::river));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::ice));
+    laneVector.push_back(new Lane(laneType::ice));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::rail));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_finish));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::road));
+    laneVector.push_back(new Lane(laneType::snow_path)); 
+    initShape();
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view, 10);
+};

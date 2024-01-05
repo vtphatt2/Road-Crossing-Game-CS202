@@ -5,10 +5,10 @@ Game::Game() : widthWindow(1430), heightWindow(990) {
     window->setFramerateLimit(60);
     setup();
     player = new Player(PlayerSkin::GREEN);
-    // states.push(new Entry(window, &states, music, player));
+    states.push(new Entry(window, &states, music, player));
 
-    // debugg
-    states.push(new Endless(window, &states, player, music, 1));
+    // // debug
+    // states.push(new Endless(window, &states, player, music));
 }
 
 Game::~Game() {

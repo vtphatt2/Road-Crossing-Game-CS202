@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <filesystem>
 #include <stack>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
@@ -15,12 +16,16 @@
 #include "lose.hpp"
 #include "lane.hpp"
 #include "win.hpp"
+#include "weather.hpp"
+#include "countDown.hpp"
 
 class Player;
 class Lose;
 class Win;
 enum class laneType;
 class Bridge;
+class Weather;
+class Setting;
 
 class Endless : public State
 {
@@ -39,14 +44,19 @@ class Endless : public State
         void render();
         void playerCollision(std::vector<Stuff*> stuffVector);
         void eatCredit();
+        void increaseScore(int offset);
         void gameOver();
         void notBridge();
         void saveToFile(std::string fileName);
+        void rainy();
 
         // LOAD GAME
         void loadSkinFromFile(std::string fileName);
         void loadPositionFromFile(std::string fileName);
         void loadLane(std::string fileName);
+        void clearDataLoadGame();
+        void updateHighScore(std::string fileName);
+        void setup();
 
     private:
         sf::RenderWindow* window;
@@ -56,9 +66,10 @@ class Endless : public State
         sf::Music& music;
         Player* player;
         int choice;
-        std::vector<Stuff*> stuffVector;
+        int level;
+        std::vector <Stuff*> stuffVector;
         Setting* setting = nullptr;
-        std::vector<Lane*> laneVector;
+        std::vector <Lane*> laneVector;
         int desert = 0, garden = 0, snow = 0;
         int cont_path = 0, cont_road = 0;
         int points = 0;
@@ -66,6 +77,7 @@ class Endless : public State
         Lane* desertLane();
         Lane* gardenLane();
         Lane* snowLane();
+        Weather* weather;
 
         sf::Texture scoreBoardTexture;
         sf::Sprite scoreBoardImage;
@@ -79,6 +91,18 @@ class Endless : public State
         float speedCoe = 1.0;
 
         bool isGameOver = 0;
+        bool isRaining = false;
+        sf::Clock Rain;
+
+        int score;
+        bool save = true;
+        sf::Font font;
+        sf::Text scoreText;  
+        int count = 0;
+        sf::SoundBuffer coinEatenBuffer;
+        sf::Sound coinEaten; 
+
+        bool countedDown = false;
 };
 
 #endif

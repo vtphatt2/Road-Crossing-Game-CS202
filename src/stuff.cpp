@@ -134,6 +134,10 @@ void Coin::run() {
 }
 void Coin::vanish() {
 	sprite.setColor(sf::Color::Transparent);
+	exist = false;
+}
+bool Coin::isExist() {
+	return exist;
 }
 void Coin::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(sprite);

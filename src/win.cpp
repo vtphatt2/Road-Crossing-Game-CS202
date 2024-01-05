@@ -78,16 +78,18 @@ void Win::handleEvent() {
 }
 
 void Win::pushNewLevel(){
-    if (currentLevel == 1) states->push(new Level_2(window, states, player, music));
-    if (currentLevel == 2) states->push(new Level_3(window, states, player, music));
-    if (currentLevel == 3) states->push(new Level_4(window, states, player, music));
-    if (currentLevel == 4) states->push(new Level_5(window, states, player, music));
-    if (currentLevel == 5) states->push(new Level_6(window, states, player, music));
-    // if (currentLevel == 6) states->push(new Level_7(window, states, player, music));
-    // if (currentLevel == 7) states->push(new Level_8(window, states, player, music));
-    // if (currentLevel == 8) states->push(new Level_9(window, states, player, music));
-    // if (currentLevel == 9) states->push(new Level_10(window, states, player, music));
-    // if (currentLevel == 10) states->push(new Level_11(window, states, player, music));
+    if (currentLevel == 1) states->push(new Level_2(window, states, player, music, 2));
+    if (currentLevel == 2) states->push(new Level_3(window, states, player, music, 3));
+    if (currentLevel == 3) states->push(new Level_4(window, states, player, music, 4));
+    if (currentLevel == 4) states->push(new Level_5(window, states, player, music, 5));
+    if (currentLevel == 5) states->push(new Level_6(window, states, player, music, 6));
+    if (currentLevel == 6) states->push(new Level_7(window, states, player, music, 7));
+    if (currentLevel == 7) states->push(new Level_8(window, states, player, music, 8));
+    if (currentLevel == 8) states->push(new Level_9(window, states, player, music, 9));
+    if (currentLevel == 9) states->push(new Level_10(window, states, player, music, 10));
+    if (currentLevel == 10) states->push(new Level_11(window, states, player, music, 11));
+    if (currentLevel == 11) states->push(new Level_12(window, states, player, music, 12));
+    if (currentLevel == 12) states->push(new Levels(window, states, player, music));
 }
 
 

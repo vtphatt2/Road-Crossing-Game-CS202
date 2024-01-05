@@ -1,38 +1,33 @@
 #include "header/endless.hpp"
 
 Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music, int a) : window(window), states(states), player(player), music(music) {
-    setting = new Setting(window, states);
-
-    if (!gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav")) {
-        std::cout << "Cannot load soundfile" << std::endl;
-    }
+    gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav");
     gameOverSound.setBuffer(gameOverBuffer);
+    coinEatenBuffer.loadFromFile("../resource/audio/short-success.mp3");
+    coinEaten.setBuffer(coinEatenBuffer);
+
+    weather = new Weather(window);
 
     loadSkinFromFile("../data/save-game.txt");
     player->renderInGame();
     player->setMovementSpeed(10.0f);
 
     initShape();
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view);
     loadPositionFromFile("../data/save-game.txt");
     loadLane("../data/save-game.txt");
-
-    stuffVector.clear();
-    for (int i = 0 ; i < laneVector.size() ; ++i)
-    {
-        for (int j = 0 ; j < laneVector[i]->getStuffVector().size(); ++j)
-        {
-            stuffVector.push_back(laneVector[i]->getStuffVector()[j]);
-        }
-    }
 }
 
 Endless::~Endless() {
-    if (!isGameOver) saveToFile("../data/save-game.txt");
-    else {
-        // make the file empty
-        std::ofstream fout("../data/save-game.txt", std::ofstream::trunc);
-        fout.close();
-    }
+    if (save) saveToFile("../data/save-game.txt");
+    coinEaten.stop();
+    delete weather;
+    delete setting;
+}
+
+void Endless::clearDataLoadGame() {
+    std::ofstream fout("../data/save-game.txt", std::ofstream::trunc);
+    fout.close();
 }
 
 void Endless::saveToFile(std::string fileName) {
@@ -53,10 +48,7 @@ void Endless::saveToFile(std::string fileName) {
 
     fout << setting->positionComponents() << "\n";
 
-    fout << desert << " " << garden << " " << snow << " ";
-    fout << cont_path << " " << cont_road << " ";
-    fout << points << " ";
-    fout << railed << " " << rivered << " " << iced << "\n";
+    fout << score << " " << (int)scoreText.getPosition().x << " " << (int)scoreText.getPosition().y << "\n";
     
     fout << laneVector.size() << "\n";
     for (int i = 0 ; i < laneVector.size() ; ++i)
@@ -99,42 +91,6 @@ void Endless::saveToFile(std::string fileName) {
         }
     }
 
-    fout << stuffVector.size() << "\n";
-    for (Stuff* stuff : stuffVector) {
-        if (typeid(*stuff) == typeid(UFO)) 
-            fout << "UFO ";
-        else if (typeid(*stuff) == typeid(Ant)) 
-            fout << "Ant ";
-        else if (typeid(*stuff) == typeid(Bird)) 
-            fout << "Bird ";
-        else if (typeid(*stuff) == typeid(Bat))
-            fout << "Bat ";
-        else if (typeid(*stuff) == typeid(Worm))
-            fout << "Worm ";
-        else if (typeid(*stuff) == typeid(Monster))
-            fout << "Monster ";
-        else if (typeid(*stuff) == typeid(Slime))
-            fout << "Slime ";
-        else if (typeid(*stuff) == typeid(Snail))
-            fout << "Snail ";
-        else if (typeid(*stuff) == typeid(Ghost))
-            fout << "Ghost ";
-        else if (typeid(*stuff) == typeid(Frog))
-            fout << "Frog ";
-        else if (typeid(*stuff) == typeid(Mouse))
-            fout << "Mouse ";
-        else if (typeid(*stuff) == typeid(Moon))
-            fout << "Moon ";
-        else if (typeid(*stuff) == typeid(SeaWheet))
-            fout << "SeaWheet ";
-        else if (typeid(*stuff) == typeid(Moon))
-            fout << "Moon ";
-        else if (typeid(*stuff) == typeid(Fish))
-            fout << "Fish ";
-
-        fout << stuff->getColor() << " " << (int)stuff->getPosition().x << " " << (int)stuff->getPosition().y << "\n";
-    }
-
     fout.close();
 }
 
@@ -168,9 +124,11 @@ void Endless::loadPositionFromFile(std::string fileName) {
     fin >> posX >> posY;
     scoreBoardImage.setPosition(posX, posY);
 
-    int x1, y1, x2, y2, x3, y3, x4, y4;
-    fin >> x1 >> y1 >> x2 >> y2 >> x3 >> y3 >> x4 >> y4;
-    setting->setPositionComponents(x1, y1, x2, y2, x3, y3, x4, y4);
+    fin >> posX >> posY;
+    setting->setPositionComponents(posX, posY);
+
+    fin >> score >> posX >> posY;
+    scoreText.setPosition(posX, posY);
 
     fin.close();
 }
@@ -251,59 +209,35 @@ void Endless::loadLane(std::string fileName) {
         laneVector[i]->setStuffVector(subStuffVector);
     }
 
-    // fin >> n;
-    // std::string stuffName;
-    // for (int i = 0 ; i < n ; ++i)
-    // {
-    //     fin >> stuffName;
-
-    //     if (stuffName == "UFO") {
-    //         fin >> type;
-    //         stuffVector.push_back(new UFO(static_cast<UFOColor>(type)));
-    //     }
-    //     else if (stuffName == "Ant") {
-    //         stuffVector.push_back(new Ant());
-    //     }
-    //     else if (stuffName == "Bird") {
-    //         stuffVector.push_back(new Bird());
-    //     }
-    //     else if (stuffName == "Bat") {
-    //         stuffVector.push_back(new Bat());
-    //     }
-    //     else if (stuffName == "Worm") {
-    //         stuffVector.push_back(new Worm());
-    //     }
-    //     else if (stuffName == "Monster") {
-    //         stuffVector.push_back(new Monster());
-    //     }
-    //     else if (stuffName == "Slime") {
-    //         stuffVector.push_back(new Slime());
-    //     }
-    //     else if (stuffName == "Snail") {
-    //         stuffVector.push_back(new Snail());
-    //     }
-    //     else if (stuffName == "Ghost") {
-    //         stuffVector.push_back(new Ghost());
-    //     }
-    //     else if (stuffName == "Frog") {
-    //         stuffVector.push_back(new Frog());
-    //     }
-    //     else if (stuffName == "Mouse") {
-    //         stuffVector.push_back(new Mouse());
-    //     }
-    //     else if (stuffName == "Moon") {
-    //         stuffVector.push_back(new Moon());
-    //     }
-    //     else if (stuffName == "SeaWheet") {
-    //         stuffVector.push_back(new SeaWheet());
-    //     }
-    //     else if (stuffName == "Fish") {
-    //         fin >> type;
-    //         stuffVector.push_back(new Fish(static_cast<fishColor>(type)));
-    //     }
-    //     fin >> posX >> posY;
-    //     stuffVector[i]->setPosition(posX, posY);
-    // }
-
     fin.close();
+
+    stuffVector.clear();
+    for (int i = 0 ; i < laneVector.size() ; ++i)
+    {
+        for (int j = 0 ; j < laneVector[i]->getStuffVector().size(); ++j)
+        {
+            stuffVector.push_back(laneVector[i]->getStuffVector()[j]);
+        }
+    }
 }
+
+
+void Endless::updateHighScore(std::string fileName) {
+    std::ifstream fin(fileName);
+    std::priority_queue <int> scores;
+    int x;
+    while (fin >> x) scores.push(x);
+    fin.close();
+    scores.push(0);
+    scores.push(0);
+    scores.push(0);
+    scores.push(this->score);
+
+    std::ofstream fout(fileName);
+    fout << scores.top() << "\n";
+    scores.pop();
+    fout << scores.top() << "\n";
+    scores.pop();
+    fout << scores.top() << "\n";
+    fout.close();
+} 

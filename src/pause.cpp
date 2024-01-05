@@ -64,8 +64,8 @@ void Pause::handleEvent() {
                 else if (level == 8) states->push(new Level_8(window, states, player, music, 8));
                 else if (level == 9) states->push(new Level_9(window, states, player, music, 9));
                 else if (level == 10) states->push(new Level_10(window, states, player, music, 10));
-                // else if (level == 11) states->push(new Level_11(window, states, player, music, 11));
-                // else if (level == 12) states->push(new Level_12(window, states, player, music, 12));
+                else if (level == 11) states->push(new Level_11(window, states, player, music, 11));
+                else if (level == 12) states->push(new Level_12(window, states, player, music, 12));
             }
             else if (continueImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y - window->getSize().y / 2 + view->getCenter().y)) {
                 music.play();

@@ -284,6 +284,9 @@ Level::Level(sf::RenderWindow* window, std::stack<State*>* states, Player* playe
 
 Level::~Level(){
     delete weather;
+    weather = nullptr;
+    delete view;
+    view = nullptr;
 }
 
 void Level::initShape()
@@ -304,6 +307,15 @@ void Level::initShape()
         for(int j = 0; j < laneVector[i]->getStuffVector().size(); j++)
         {
             stuffVector.push_back(laneVector[i]->getStuffVector()[j]);
+        }
+    }
+
+    for (int i = 0 ; i < laneVector.size() ; ++i) {
+        Coin* coins = laneVector[i]->getCoin();
+        if (coins != nullptr) {
+            coins[0].vanish();
+            coins[1].vanish();
+            coins[2].vanish();
         }
     }
 }
@@ -357,8 +369,8 @@ void Level::update()
         backgroundTexture.update(*window);
 
         sf::Clock delayTimer;
-        while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
-            // Wait for 2 seconds
+        while (delayTimer.getElapsedTime().asSeconds() < 1.0f) {
+            // Wait for 1 seconds
         }
         states->push(new Lose(window, states, music, backgroundTexture, player, getLevel(), 0));
     }

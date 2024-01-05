@@ -5,7 +5,7 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 
-class Weather{
+class Weather {
 public:
     //Weather();
     Weather(sf::RenderWindow* window);

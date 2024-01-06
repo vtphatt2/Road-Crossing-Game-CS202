@@ -13,7 +13,6 @@ Pause::~Pause() {
         states->pop();
         delete tmp;
     }
-    music.play();
     window->setView(window->getDefaultView());
     states->push(new Menu(window, states, music, player));
 }

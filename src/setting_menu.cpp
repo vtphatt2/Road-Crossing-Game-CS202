@@ -17,15 +17,15 @@ void SettingMenu::initShape() {
 
     soundTitleTexture.loadFromFile("../resource/audio/Music.png");
     soundTitleImage.setTexture(soundTitleTexture);
-    soundTitleImage.setPosition(454, 361);    
+    soundTitleImage.setPosition(456, 320);    
 
     volumeTitleTexture.loadFromFile("../resource/audio/VOLUME.png");
     volumeTitleImage.setTexture(volumeTitleTexture);
-    volumeTitleImage.setPosition(435, 552);  
+    volumeTitleImage.setPosition(435, 464);  
     
     soundButtonTexture.loadFromFile("../resource/music_on.png");
     soundButtonImage.setTexture(soundButtonTexture);
-    soundButtonImage.setPosition(793, 342);
+    soundButtonImage.setPosition(803, 298);
     soundButtonImage.setColor(sf::Color(255, 255, 255, 220));
     soundButtonRect.left = soundButtonImage.getPosition().x;  
     soundButtonRect.top = soundButtonImage.getPosition().y;  
@@ -34,7 +34,7 @@ void SettingMenu::initShape() {
 
     upButtonTexture.loadFromFile("../resource/audio/Up.png");
     upButtonImage.setTexture(upButtonTexture);
-    upButtonImage.setPosition(900,700);
+    upButtonImage.setPosition(900,600);
     upButtonImage.setColor(sf::Color(255, 255, 255, 220));
     upButtonRect.left = upButtonImage.getPosition().x;
     upButtonRect.top = upButtonImage.getPosition().y;
@@ -43,7 +43,7 @@ void SettingMenu::initShape() {
 
     downButtonTexture.loadFromFile("../resource/audio/Down.png");
     downButtonImage.setTexture(downButtonTexture);
-    downButtonImage.setPosition(470, 700);  
+    downButtonImage.setPosition(470, 600);  
     downButtonImage.setColor(sf::Color(255, 255, 255, 220));
     downButtonRect.left = downButtonImage.getPosition().x;
     downButtonRect.top = downButtonImage.getPosition().y;
@@ -58,6 +58,16 @@ void SettingMenu::initShape() {
     backButtonRect.top = 27;   
     backButtonRect.width = 115;
     backButtonRect.height = 116;
+
+    restartButtonTexture.loadFromFile("../resource/RestarButton.png");
+    restartButtonImage.setTexture(restartButtonTexture);
+    restartButtonImage.setPosition(417, 708);
+    restartButtonImage.setColor(sf::Color(255, 255, 255, 220));
+    restartButtonRect.left = restartButtonImage.getPosition().x;
+    restartButtonRect.top = restartButtonImage.getPosition().y;
+    restartButtonRect.width = restartButtonImage.getGlobalBounds().width;
+    restartButtonRect.height = restartButtonImage.getGlobalBounds().height;
+
 }
 
 void SettingMenu::handleEvent() {
@@ -87,6 +97,10 @@ void SettingMenu::handleEvent() {
                    (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left)) {
             setMusicVolume(decreaseVolume()); 
             updateVolumeText();
+        }
+
+        if (event.type == sf::Event::MouseButtonPressed && restartButtonRect.contains(event.mouseButton.x, event.mouseButton.y)){
+           restartGame();
         }
     }
 }
@@ -139,6 +153,11 @@ void SettingMenu::update() {
         downButtonImage.setColor(sf::Color(255, 255, 255, 255));
     else 
         downButtonImage.setColor(sf::Color(255, 255, 255, 200));
+
+    if (restartButtonImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) 
+        restartButtonImage.setColor(sf::Color(255, 255, 255, 255));
+    else 
+        restartButtonImage.setColor(sf::Color(255, 255, 255, 200));
 }
 
 void SettingMenu::render() {
@@ -150,6 +169,7 @@ void SettingMenu::render() {
     window->draw(volumeText);
     window->draw(upButtonImage);
     window->draw(downButtonImage);
+    window->draw(restartButtonImage);
 }
 
 void SettingMenu::stopMusic(){
@@ -189,4 +209,16 @@ float SettingMenu::increaseVolume(){
 float SettingMenu::decreaseVolume(){
     musicVolume = std::max(musicVolume - 10, 0.0f);
     return musicVolume;
+}
+
+void SettingMenu::restartGame(){
+    std::ofstream fout("../data/score.txt", std::ofstream::trunc);
+    int x = 0;
+    fout << x << std::endl; 
+    fout << x << std::endl;
+    fout << x << std::endl; 
+    fout.close();
+
+    std::ofstream fo("../data/save-game.txt", std::ofstream::trunc);
+    fo.close();
 }

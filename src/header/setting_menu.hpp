@@ -26,6 +26,7 @@ class SettingMenu: public State {
         float getMusicVolume() const;
         float increaseVolume();
         float decreaseVolume();
+        void restartGame();
 
     private :
         sf::RenderWindow* window;
@@ -61,6 +62,10 @@ class SettingMenu: public State {
         sf::Texture backButtonTexture;
         sf::Sprite backButtonImage;
         sf::IntRect backButtonRect;
+
+        sf::Texture restartButtonTexture;
+        sf::Sprite restartButtonImage;
+        sf::IntRect restartButtonRect;
 };
 
 #endif

@@ -812,8 +812,10 @@ void Endless::update()
         return ;
     }
 
-    if (isGameOver) {
-        gameOverSound.play();
+    if (isGameOver) {        
+        weather->stopSound();
+        coinEaten.stop();
+        gameOverSound.play();        
         player->setMovementSpeed(0);
         for (auto& stuff : stuffVector) {
             stuff->setSpeed(0);
@@ -823,13 +825,12 @@ void Endless::update()
         backgroundTexture.create(window->getSize().x, window->getSize().y);
         backgroundTexture.update(*window);
         sf::Clock delayTimer;
-        while (delayTimer.getElapsedTime().asSeconds() < 1.0f) {
-            // Wait for 1 seconds
+        while (delayTimer.getElapsedTime().asSeconds() < 2.0f) {
+            // Wait for 2 seconds
         }
         clearDataLoadGame();
         updateHighScore("../data/score.txt");
         save = false;
-        weather->stopSound();
         states->push(new Lose(window, states, music, backgroundTexture, player, 0, score));
         isGameOver = 0;
     }

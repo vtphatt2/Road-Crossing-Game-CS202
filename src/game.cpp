@@ -17,6 +17,7 @@ Game::~Game() {
         states.pop();
         delete tmp;
     }
+    music.stop();
     delete player;
     player = nullptr;
     delete window;

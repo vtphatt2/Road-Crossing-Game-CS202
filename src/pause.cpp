@@ -9,8 +9,9 @@ Pause::Pause(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& m
 
 Pause::~Pause() {
     while (!states->empty()) {
-        delete states->top();
+        State* tmp =  states->top();
         states->pop();
+        delete tmp;
     }
     music.play();
     window->setView(window->getDefaultView());

@@ -13,8 +13,9 @@ Game::Game() : widthWindow(1430), heightWindow(990) {
 
 Game::~Game() {
     while (!states.empty()) {
-        delete states.top();
+        State* tmp =  states.top();
         states.pop();
+        delete tmp;
     }
     delete player;
     player = nullptr;

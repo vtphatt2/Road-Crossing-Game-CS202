@@ -11,18 +11,20 @@
 #include "pause.hpp"
 #include "stuff.hpp"
 #include "lane.hpp"
+#include "weather.hpp"
 
 class Setting : public sf::Drawable
 {
     public:
-        Setting(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, Player* player, std::vector<Stuff*> &stuffVector, std::vector<Lane*> &laneVector, sf::View *view);
-        Setting(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, Player* player, std::vector<Stuff*>& stuffVector, std::vector<Lane*>& laneVector, sf::View *view, int currentLevel);
+        Setting(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, Player* player, std::vector<Stuff*> &stuffVector, std::vector<Lane*> &laneVector, sf::View *view, Weather* weather);
+        Setting(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, Player* player, std::vector<Stuff*>& stuffVector, std::vector<Lane*>& laneVector, sf::View *view, Weather* weather, int currentLevel);
         void initShape();
         void handleEvent(sf::Event event);
         void update();
         void move(int translateY);
         std::string positionComponents();
         void setPositionComponents(int x, int y);
+        ~Setting();
     private:
         sf::View *view;
         
@@ -36,6 +38,7 @@ class Setting : public sf::Drawable
         std::vector<Stuff*> &stuffVector; 
         std::vector<Lane*> &laneVector;
         int level;
+        Weather* weather;
 
         sf::Texture pauseButtonTexture;
         sf::Sprite pauseButtonImage;

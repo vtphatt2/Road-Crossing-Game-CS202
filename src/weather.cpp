@@ -17,6 +17,10 @@ void Weather::initShape(){
 
 }
 
+Weather::~Weather(){
+    rainSound.stop();
+}
+
 void Weather::startRain() { 
     for (int i = 0; i < rand() % 20; ++i) {
         int textureIndex = rand() % 3;

@@ -13,7 +13,7 @@ Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* 
     player->setMovementSpeed(10.0f);
 
     initShape();
-    setting = new Setting(window, states, music, player, stuffVector, laneVector, view);
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view, weather);
     loadPositionFromFile("../data/save-game.txt");
     loadLane("../data/save-game.txt");
 }
@@ -21,6 +21,7 @@ Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* 
 Endless::~Endless() {
     if (save) saveToFile("../data/save-game.txt");
     coinEaten.stop();
+    gameOverSound.stop();
     delete setting;
     delete weather;
     delete view;

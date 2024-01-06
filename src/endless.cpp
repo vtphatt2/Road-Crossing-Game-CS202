@@ -3,7 +3,7 @@
 Endless::Endless(sf::RenderWindow* window, std::stack <State*>* states, Player* player, sf::Music& music) : window(window), states(states), player(player), music(music) {
     initShape();
     weather = new Weather(window);
-    setting = new Setting(window, states, music, player, stuffVector, laneVector, view);
+    setting = new Setting(window, states, music, player, stuffVector, laneVector, view, weather);
     gameOverBuffer.loadFromFile("../resource/audio/gameOver.wav");
     gameOverSound.setBuffer(gameOverBuffer);
     coinEatenBuffer.loadFromFile("../resource/audio/short-success.mp3");
@@ -829,6 +829,7 @@ void Endless::update()
         clearDataLoadGame();
         updateHighScore("../data/score.txt");
         save = false;
+        weather->stopSound();
         states->push(new Lose(window, states, music, backgroundTexture, player, 0, score));
         isGameOver = 0;
     }

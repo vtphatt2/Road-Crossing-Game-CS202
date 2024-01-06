@@ -9,6 +9,7 @@ class Weather {
 public:
     //Weather();
     Weather(sf::RenderWindow* window);
+    ~Weather();
     void initShape();
     void startRain();
     void updateRain(int windowTranslateY);

@@ -135,6 +135,8 @@ class Level : public State
 
         sf::SoundBuffer gameOverBuffer;
         sf::Sound gameOverSound;
+        sf::SoundBuffer gameWinBuffer;
+        sf::Sound gameWinSound; 
 
         sf::Time increaseSpeedTime;
         sf::Time increaseSpeedClock;

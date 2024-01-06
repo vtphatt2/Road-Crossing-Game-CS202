@@ -1,16 +1,20 @@
 #include "header/setting_ingame.hpp"
 
-Setting::Setting(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, Player* player, std::vector<Stuff*>& stuffVector, std::vector<Lane*>& laneVector, sf::View *view)
-    : window(window), states(states), music(music), player(player), stuffVector(stuffVector), laneVector(laneVector), view(view)
+Setting::Setting(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, Player* player, std::vector<Stuff*>& stuffVector, std::vector<Lane*>& laneVector, sf::View *view, Weather* weather)
+    : window(window), states(states), music(music), player(player), stuffVector(stuffVector), laneVector(laneVector), view(view), weather(weather)
 {
     level = 0;
     initShape();
 }
 
-Setting::Setting(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, Player* player, std::vector<Stuff*>& stuffVector, std::vector<Lane*>& laneVector, sf::View *view, int currentLevel)
-    : window(window), states(states), music(music), player(player), stuffVector(stuffVector), laneVector(laneVector), view(view), level(currentLevel)
+Setting::Setting(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, Player* player, std::vector<Stuff*>& stuffVector, std::vector<Lane*>& laneVector, sf::View *view, Weather* weather, int currentLevel)
+    : window(window), states(states), music(music), player(player), stuffVector(stuffVector), laneVector(laneVector), view(view), weather(weather), level(currentLevel)
 {
     initShape();
+}
+
+Setting::~Setting(){
+    weather->stopSound();
 }
 
 void Setting::initShape() {
@@ -29,6 +33,7 @@ void Setting::handleEvent(sf::Event event) {
         if (pauseButtonRect.contains(mousePosition)) 
         {
             window->setView(*view);
+            weather->stopSound();
             states->push(new Pause(window, states, music, player, stuffVector, laneVector, view, level));
         }
     }

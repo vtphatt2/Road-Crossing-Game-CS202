@@ -15,7 +15,7 @@ void SettingMenu::initShape() {
     backgroundImage.setTexture(backgroundTexture);
     backgroundImage.setPosition(0, 0);
 
-    soundTitleTexture.loadFromFile("../resource/audio/Sound.png");
+    soundTitleTexture.loadFromFile("../resource/audio/Music.png");
     soundTitleImage.setTexture(soundTitleTexture);
     soundTitleImage.setPosition(454, 361);    
 

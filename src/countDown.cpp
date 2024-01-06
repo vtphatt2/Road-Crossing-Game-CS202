@@ -15,7 +15,7 @@ void CountDown::initShape() {
     blurLayer.setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
     blurLayer.setFillColor(sf::Color(255, 255, 255, 100));
 
-    // countDownBuffer.loadFromFile("../resource/audio/count-down.wav");
+    countDownBuffer.loadFromFile("../resource/audio/count-down.wav");
     countDownSound.setBuffer(countDownBuffer);
     countDownSound.play();
 }

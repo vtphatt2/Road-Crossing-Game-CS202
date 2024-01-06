@@ -25,7 +25,7 @@ Game::~Game() {
 }
 
 void Game::setup() {
-    // music.openFromFile("../resource/audio/audio1.mp3");
+    music.openFromFile("../resource/audio/audio1.mp3");
     music.setVolume(50);
     music.setLoop(true);
     music.play();

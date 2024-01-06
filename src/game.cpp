@@ -17,7 +17,9 @@ Game::~Game() {
         states.pop();
     }
     delete player;
+    player = nullptr;
     delete window;
+    window = nullptr;
     std::cout << "Deallocated ok !\n";
 }
 

@@ -9,7 +9,7 @@
 #include "setting_ingame.hpp"
 #include "player.hpp"
 #include "lane.hpp"
-#include"stuff.hpp"
+#include "stuff.hpp"
 #include "player.hpp"
 #include "lose.hpp"
 #include "lane.hpp"
@@ -117,7 +117,7 @@ class Level : public State
         virtual void rainy();
         
     protected:
-        sf::View *view;
+        sf::View* view;
         sf::Time Time;
         sf::Clock Clock;
         int windowTranslateY;

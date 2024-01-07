@@ -181,7 +181,7 @@ void Levels::handleEvent()
 }
 
 void Levels::update()
-{
+{   
     if(backButtonRect.contains(sf::Mouse::getPosition(*window))) {
         backButtonImage.setColor(sf::Color(255, 255, 255, 255));
     } else {
@@ -359,6 +359,13 @@ void Level::handleEvent()
 
 void Level::update()
 {
+    if (!countedDown) {
+        countedDown = true;
+        window->setView(*view);
+        states->push(new CountDown(window, states, laneVector, stuffVector, player, view));
+        return ;
+    }
+    
     if (isGameOver){
         weather->stopSound();
         gameOverSound.play();        

@@ -145,6 +145,8 @@ class Level : public State
         bool isGameOver = 0;
         bool isRaining = false;
         sf::Clock Rain;
+
+        bool countedDown = false;
 };
 
 class Level_1 : public Level

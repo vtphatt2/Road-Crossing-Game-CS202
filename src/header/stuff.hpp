@@ -110,7 +110,7 @@ private:
 	sf::Texture texture;
 	sf::Sprite sprite;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-	float speed = defaultSpeed;
+	float speed = 0.01 * 60 * 5;
 	int numOfMoves = 0;
 	bool isRunning = true;
 	int limit = 20 / speed;

@@ -3,7 +3,6 @@
 Pause::Pause(sf::RenderWindow* window, std::stack <State*>* states, sf::Music& music, Player* player, std::vector<Stuff*> &stuffVector, std::vector<Lane*> &laneVector, sf::View* view, int currentLevel)
     : window(window), states(states), music(music), player(player), stuffVector(stuffVector), laneVector(laneVector), view(view), level(currentLevel)
 {
-    music.stop();
     initShape();
 }
 
@@ -58,7 +57,6 @@ void Pause::handleEvent() {
             if (restartImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y - window->getSize().y / 2 + view->getCenter().y)) {
                 states->pop();
                 states->pop();
-                music.play();
                 if (level == 0) states->push(new Endless(window, states, player, music));
                 else if (level == 1) states->push(new Level_1(window, states, player, music, 1));
                 else if (level == 2) states->push(new Level_2(window, states, player, music, 2));
@@ -74,7 +72,6 @@ void Pause::handleEvent() {
                 else if (level == 12) states->push(new Level_12(window, states, player, music, 12));
             }
             else if (continueImage.getGlobalBounds().contains(mousePosition.x, mousePosition.y - window->getSize().y / 2 + view->getCenter().y)) {
-                music.play();
                 states->pop();
                 states->push(new CountDown(window, states, laneVector, stuffVector, player, view));
             }

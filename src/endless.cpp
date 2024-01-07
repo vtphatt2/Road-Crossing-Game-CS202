@@ -889,27 +889,28 @@ void Endless::update()
     rainy();
 }
 
-void Endless::rainy(){
-    if (Rain.getElapsedTime().asSeconds() >= 20.0f){
+void Endless::rainy() {
+    bool initialMusicStatus = music.getStatus() == sf::SoundSource::Status::Playing;
+
+    if (Rain.getElapsedTime().asSeconds() >= 20.0f) {
         isRaining = rand() % 2;
-        if (isRaining){
-            music.pause();
+        if (isRaining) {
+            if (initialMusicStatus) music.pause();
             weather->playSound();
-            player->setMovementSpeed(5.0f);           
+            player->setMovementSpeed(5.0f);
             Rain.restart();
         }
-    }
-    else if (isRaining && Rain.getElapsedTime().asSeconds() >= 8.0f) {
+    } else if (isRaining && Rain.getElapsedTime().asSeconds() >= 8.0f) {
         isRaining = false;
         weather->stopSound();
-        music.play();
+        if (initialMusicStatus) music.play();
         player->setMovementSpeed(10.0f);
     }
 
-    if (isRaining){ 
-        weather->startRain();   
-        weather->updateRain(windowTranslateY);            
-    }  
+    if (isRaining) {
+        weather->startRain();
+        weather->updateRain(windowTranslateY);
+    }
 }
 
 void Endless::notBridge(){

@@ -147,6 +147,7 @@ class Level : public State
         sf::Clock Rain;
 
         bool countedDown = false;
+        bool die = false;
 };
 
 class Level_1 : public Level

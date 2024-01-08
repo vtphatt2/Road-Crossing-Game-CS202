@@ -462,13 +462,17 @@ void Level::playerCollision(std::vector<Stuff*> stuffVector)
     for (auto& stuff : stuffVector) {
         float negativeMargin = -5.0f;
         bool isCollision = player->isCollisionWithMargin(stuff->getGlobalBounds(), negativeMargin);
-        if (isCollision) gameOver();
+        if (isCollision) {
+            die = 1;
+            gameOver();
+        }
     } 
 }
 
 void Level::gameOver() 
 {
     isGameOver = 1;
+    if (die) player->updatePlayerDie();
 }
 
 void Level::notBridge()

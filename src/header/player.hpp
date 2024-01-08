@@ -51,6 +51,7 @@ class Player{
         void changeSkinRight();
         void updatePlayerTexture(int skinIndex);
         void updatePlayerDrown();
+        void updatePlayerDie();
         
     private: 
         sf::Texture playerTexture;

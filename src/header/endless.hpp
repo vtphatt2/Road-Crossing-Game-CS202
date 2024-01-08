@@ -103,6 +103,7 @@ class Endless : public State
         sf::Sound coinEaten; 
 
         bool countedDown = false;
+        bool die = false;
 };
 
 #endif

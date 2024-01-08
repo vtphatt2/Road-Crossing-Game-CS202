@@ -300,3 +300,28 @@ void Player::updatePlayerDrown(){
 void Player::setPlayerSkin(PlayerSkin skin) {
 	playerSkin = skin;
 }
+
+void Player::updatePlayerDie(){
+	std::string texturePath;
+	switch (playerSkin) {
+        case PlayerSkin::GREEN:
+            texturePath = "../resource/player/DieGreen.png";
+            break;
+        case PlayerSkin::BLUE:
+            texturePath = "../resource/player/DieBlue.png";
+            break;
+        case PlayerSkin::RED:
+            texturePath = "../resource/player/DiePink.png";
+            break;
+		case PlayerSkin::YELLOW:
+            texturePath = "../resource/player/DieYellow.png";
+            break;
+		case PlayerSkin::BROWN:
+            texturePath = "../resource/player/DieBeige.png";
+            break;  
+		case PlayerSkin::NUM_SKINS:   
+			break;      
+    }
+	playerTexture.loadFromFile(texturePath);
+    playerSprite.setTexture(playerTexture, true);
+}

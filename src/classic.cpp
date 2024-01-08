@@ -306,7 +306,7 @@ void Level::initShape()
     for(int i = 0; i < n; i++)
     {
         laneVector[i]->setPosition(0, 990 - landHeight * (i + 1));
-        for(int j = 1; j < laneVector[i]->getStuffVector().size(); j++)
+        for(int j = 0; j < laneVector[i]->getStuffVector().size(); j++)
         {
             stuffVector.push_back(laneVector[i]->getStuffVector()[j]);
         }
@@ -413,7 +413,7 @@ void Level::update()
 
 void Level::render()
 {
-    window->setView(*view);
+window->setView(*view);
     for (int i = 0; i < laneVector.size(); i++) {
         window->draw(*laneVector[i]);
     }
@@ -501,7 +501,7 @@ void Level::notBridge()
 
 void Level::rainy(){
     if (Rain.getElapsedTime().asSeconds() >= 20.0f){
-        isRaining = rand() % 2;
+        isRaining = rand() % 2; 
             if (isRaining==1){
             music.pause();
             weather->playSound();

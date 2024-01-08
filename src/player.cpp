@@ -182,7 +182,7 @@ void Player::update(Direction direction){
 }
 
 void Player::initMoveVariable(){
-	movementSpeed = 10.f;
+	movementSpeed = 11.f;
 	preWidth = 0.f;
 	preHeight = 0.f;
 	width = 70.f;

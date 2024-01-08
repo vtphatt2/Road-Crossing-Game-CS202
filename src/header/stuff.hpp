@@ -65,7 +65,7 @@
 #define yellowLightPath "../resource/yellowLight.png"
 #define greenLightPath "../resource/greenLight.png"
 
-#define defaultSpeed 0.01 * 60;
+const float defaultSpeed = 0.01 * 60;
 
 class Stuff: public sf::Drawable
 {
@@ -110,7 +110,7 @@ private:
 	sf::Texture texture;
 	sf::Sprite sprite;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-	float speed = 0.01 * 60 * 5;
+	float speed = 5 * defaultSpeed;
 	int numOfMoves = 0;
 	bool isRunning = true;
 	int limit = 20 / speed;
@@ -184,7 +184,7 @@ private:
 	sf::Texture texture[2];
 	sf::Sprite sprite;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-	float speed = defaultSpeed;
+	float speed = 3 * defaultSpeed;
 	int numOfMoves = 0;
 	bool isRunning = true;
 	int limit = 20 / speed;
@@ -209,7 +209,7 @@ private:
 	sf::Texture texture[3];
 	sf::Sprite sprite;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-	float speed = defaultSpeed;
+	float speed = 3.5 * defaultSpeed;
 	int numOfMoves = 0;
 	bool isRunning = true;
 	int limit = 20 / speed;
@@ -234,7 +234,7 @@ private:
 	sf::Texture texture[2];
 	sf::Sprite sprite;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-	float speed = defaultSpeed;
+	float speed = 2 * defaultSpeed;
 	int numOfMoves = 0;
 	bool isRunning = true;
 	int limit = 20 / speed;
@@ -259,7 +259,7 @@ private:
 	sf::Texture texture[3];
 	sf::Sprite sprite;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-	float speed = defaultSpeed;
+	float speed = 3 * defaultSpeed;
 	int numOfMoves = 0;
 	bool isRunning = true;
 	int limit = 20 / speed;
@@ -285,7 +285,7 @@ private:
 	sf::Texture texture[3];
 	sf::Sprite sprite;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-	float speed = defaultSpeed;
+	float speed = 2 * defaultSpeed;
 	int numOfMoves = 0;
 	bool isRunning = true;
 	int limit = 20 / speed;
@@ -336,7 +336,7 @@ private:
 	sf::Texture texture[3];
 	sf::Sprite sprite;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-	float speed = defaultSpeed;
+	float speed = 2.5 * defaultSpeed;
 	int numOfMoves = 0;
 	bool isRunning = true;
 	int limit = 20 / speed;
@@ -386,7 +386,7 @@ private:
 	sf::Texture texture[3];
 	sf::Sprite sprite;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-	float speed = defaultSpeed;
+	float speed = 2.5 * defaultSpeed;
 	int numOfMoves = 0;
 	bool isRunning = true;
 	int limit = 20 / speed;
@@ -468,7 +468,7 @@ private:
 	sf::Texture texture;
 	sf::Sprite sprite;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-	float speed = defaultSpeed;
+	float speed = 0.75 * defaultSpeed;
 	int numOfMoves = 0;
 	bool isRunning = true;
 	int limit = 20 / speed;

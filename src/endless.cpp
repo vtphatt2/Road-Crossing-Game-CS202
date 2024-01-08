@@ -890,8 +890,7 @@ void Endless::update()
 }
 
 void Endless::rainy() {
-    bool initialMusicStatus = music.getStatus() == sf::SoundSource::Status::Playing;
-
+    if (Rain.getElapsedTime().asSeconds() == 0.0f) initialMusicStatus = music.getStatus() == sf::SoundSource::Status::Playing;
     if (Rain.getElapsedTime().asSeconds() >= 20.0f) {
         isRaining = rand() % 2;
         if (isRaining) {

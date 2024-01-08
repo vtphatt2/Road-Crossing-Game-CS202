@@ -104,6 +104,7 @@ class Endless : public State
 
         bool countedDown = false;
         bool die = false;
+        bool initialMusicStatus = music.getStatus() == sf::SoundSource::Status::Playing;
 };
 
 #endif

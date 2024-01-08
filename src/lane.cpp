@@ -110,6 +110,14 @@ Lane::Lane(laneType type) : type(type) {
 		for (int i = 0; i < 3; i++) {
 			if (!(rand() % 3)) {
 				stuffVector.push_back(new Mouse());
+				Mouse mouse;
+				float x = stuffVector[stuffVector.size() - 1]->getPosition().x;
+				float y = stuffVector[stuffVector.size() - 1]->getPosition().y;
+				for(int i = 1; i <= 5; ++i)
+				{
+					stuffVector.push_back(new Mouse());
+					stuffVector[stuffVector.size() - 1]->setPosition(x + mouse.getGlobalBounds().width * i, y);
+				}
 			}
 		}
 		break;
@@ -118,7 +126,14 @@ Lane::Lane(laneType type) : type(type) {
 		for (int i = 0; i < 3; i++) {
 			if (!(rand() % 3)) {
 				stuffVector.push_back(new Mouse());
-
+				Mouse mouse;
+				float x = stuffVector[stuffVector.size() - 1]->getPosition().x;
+				float y = stuffVector[stuffVector.size() - 1]->getPosition().y;
+				for(int i = 1; i <= 5; ++i)
+				{
+					stuffVector.push_back(new Mouse());
+					stuffVector[stuffVector.size() - 1]->setPosition(x + mouse.getGlobalBounds().width * i, y);
+				}
 			}
 		}
 		break;
@@ -194,6 +209,14 @@ void Lane::setPosition(float x, float y) {
 	{
 		for (int i = 0; i < stuffVector.size(); i++) {
 			int speed = stuffVector[i]->getSpeed() * 4;
+			stuffVector[i]->setSpeed(speed);
+		}
+	
+	}
+	if(type == laneType::rail || type == laneType::desert_rail)
+	{
+		for (int i = 0; i < stuffVector.size(); i++) {
+			int speed = stuffVector[i]->getSpeed() * 5;
 			stuffVector[i]->setSpeed(speed);
 		}
 	

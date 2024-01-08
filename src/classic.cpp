@@ -306,7 +306,7 @@ void Level::initShape()
     for(int i = 0; i < n; i++)
     {
         laneVector[i]->setPosition(0, 990 - landHeight * (i + 1));
-        for(int j = 0; j < laneVector[i]->getStuffVector().size(); j++)
+        for(int j = 1; j < laneVector[i]->getStuffVector().size(); j++)
         {
             stuffVector.push_back(laneVector[i]->getStuffVector()[j]);
         }

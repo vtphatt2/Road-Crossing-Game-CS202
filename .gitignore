@@ -36,3 +36,4 @@
 *.sh
 build/
 .vscode/
+*.txt

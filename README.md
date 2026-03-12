@@ -1,37 +1,21 @@
-# Road-Crossing-Game-CS202
-In this project, my team will apply **Object-oriented programming** and **Design patterns** concepts to build a "cross the road" game.
+# Overview
 
-# Members information
+This project was developed as part of the **CS202 - Programming Systems** course. It demonstrates the application of **Object-Oriented Programming** principles and **Design Patterns** in building a road-crossing game. Our team received a **10/10 score** for this project.
 
-- Vo Thinh Phat - APCS - University of Science, VNUHCM
+# Team Members
 
-- Nguyen Duc Duy - APCS - University of Science, VNUHCM
+| Name | University |
+|------|-------------|
+| Vo Thinh Phat | University of Science, VNU-HCM |
+| Nguyen Duc Duy | University of Science, VNU-HCM |
+| Dao Ba Thanh | University of Science, VNU-HCM |
+| Pham Ngoc Phuong Uyen | University of Science, VNU-HCM |
 
-- Dao Ba Thanh - APCS - University of Science, VNUHCM
+All team members are enrolled in the **Advanced Program in Computer Science (APCS)** at the University of Science, VNU-HCM.
 
-- Pham Ngoc Phuong Uyen - APCS - University of Science, VNUHCM
+## Project Structure
 
-('APCS' stands for Advanced Program in Computer Science)
-
-# Coding Rules
-- Whenever you code a new feature, you should create a new branch for your work.
-
-- Rule of commit message : 
-
-            git commit -m "[folder that you change]/[file that you change] - message"
-
-    For example :
-        if you changed file "road.cpp" in folder named "Road" to change the size of the road, then your commit command should be :
-
-            git commit -m "Road/road.cpp - Change the size of road"
-        
-- Don't try to comment every line of code, instead of that, please try to make your code meaningful.
-
-# Structure of project
-- folder src : all source codes of our project
-
-- folder resource : contains images, fonts and audio sounds
-
-- folder build : our product is built here
-
-- folder SFML : all header files of SFML library
+- `src/`: contains all source code files of the project.
+- `resource/`: stores project assets, including images, fonts, and audio files.
+- `build/`: contains the compiled output of the project.
+- `SFML/`: includes the header files of the SFML library.
